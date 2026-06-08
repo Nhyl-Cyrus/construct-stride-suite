@@ -9,38 +9,189 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppSiteRouteImport } from './routes/_app.site'
+import { Route as AppReportsRouteImport } from './routes/_app.reports'
+import { Route as AppProjectsRouteImport } from './routes/_app.projects'
+import { Route as AppHrRouteImport } from './routes/_app.hr'
+import { Route as AppFinanceRouteImport } from './routes/_app.finance'
+import { Route as AppEngineerRouteImport } from './routes/_app.engineer'
+import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
+import { Route as AppConsultantRouteImport } from './routes/_app.consultant'
+import { Route as AppArchitectRouteImport } from './routes/_app.architect'
+import { Route as AppApprovalsRouteImport } from './routes/_app.approvals'
+import { Route as AppAiInsightsRouteImport } from './routes/_app.ai-insights'
 
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppSiteRoute = AppSiteRouteImport.update({
+  id: '/site',
+  path: '/site',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppReportsRoute = AppReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppProjectsRoute = AppProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppHrRoute = AppHrRouteImport.update({
+  id: '/hr',
+  path: '/hr',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppFinanceRoute = AppFinanceRouteImport.update({
+  id: '/finance',
+  path: '/finance',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppEngineerRoute = AppEngineerRouteImport.update({
+  id: '/engineer',
+  path: '/engineer',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardRoute = AppDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppConsultantRoute = AppConsultantRouteImport.update({
+  id: '/consultant',
+  path: '/consultant',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppArchitectRoute = AppArchitectRouteImport.update({
+  id: '/architect',
+  path: '/architect',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppApprovalsRoute = AppApprovalsRouteImport.update({
+  id: '/approvals',
+  path: '/approvals',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAiInsightsRoute = AppAiInsightsRouteImport.update({
+  id: '/ai-insights',
+  path: '/ai-insights',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-insights': typeof AppAiInsightsRoute
+  '/approvals': typeof AppApprovalsRoute
+  '/architect': typeof AppArchitectRoute
+  '/consultant': typeof AppConsultantRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/engineer': typeof AppEngineerRoute
+  '/finance': typeof AppFinanceRoute
+  '/hr': typeof AppHrRoute
+  '/projects': typeof AppProjectsRoute
+  '/reports': typeof AppReportsRoute
+  '/site': typeof AppSiteRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-insights': typeof AppAiInsightsRoute
+  '/approvals': typeof AppApprovalsRoute
+  '/architect': typeof AppArchitectRoute
+  '/consultant': typeof AppConsultantRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/engineer': typeof AppEngineerRoute
+  '/finance': typeof AppFinanceRoute
+  '/hr': typeof AppHrRoute
+  '/projects': typeof AppProjectsRoute
+  '/reports': typeof AppReportsRoute
+  '/site': typeof AppSiteRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_app': typeof AppRouteWithChildren
+  '/_app/ai-insights': typeof AppAiInsightsRoute
+  '/_app/approvals': typeof AppApprovalsRoute
+  '/_app/architect': typeof AppArchitectRoute
+  '/_app/consultant': typeof AppConsultantRoute
+  '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/engineer': typeof AppEngineerRoute
+  '/_app/finance': typeof AppFinanceRoute
+  '/_app/hr': typeof AppHrRoute
+  '/_app/projects': typeof AppProjectsRoute
+  '/_app/reports': typeof AppReportsRoute
+  '/_app/site': typeof AppSiteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/ai-insights'
+    | '/approvals'
+    | '/architect'
+    | '/consultant'
+    | '/dashboard'
+    | '/engineer'
+    | '/finance'
+    | '/hr'
+    | '/projects'
+    | '/reports'
+    | '/site'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/ai-insights'
+    | '/approvals'
+    | '/architect'
+    | '/consultant'
+    | '/dashboard'
+    | '/engineer'
+    | '/finance'
+    | '/hr'
+    | '/projects'
+    | '/reports'
+    | '/site'
+  id:
+    | '__root__'
+    | '/'
+    | '/_app'
+    | '/_app/ai-insights'
+    | '/_app/approvals'
+    | '/_app/architect'
+    | '/_app/consultant'
+    | '/_app/dashboard'
+    | '/_app/engineer'
+    | '/_app/finance'
+    | '/_app/hr'
+    | '/_app/projects'
+    | '/_app/reports'
+    | '/_app/site'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +199,119 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/site': {
+      id: '/_app/site'
+      path: '/site'
+      fullPath: '/site'
+      preLoaderRoute: typeof AppSiteRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/reports': {
+      id: '/_app/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AppReportsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/projects': {
+      id: '/_app/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof AppProjectsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr': {
+      id: '/_app/hr'
+      path: '/hr'
+      fullPath: '/hr'
+      preLoaderRoute: typeof AppHrRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/finance': {
+      id: '/_app/finance'
+      path: '/finance'
+      fullPath: '/finance'
+      preLoaderRoute: typeof AppFinanceRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/engineer': {
+      id: '/_app/engineer'
+      path: '/engineer'
+      fullPath: '/engineer'
+      preLoaderRoute: typeof AppEngineerRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dashboard': {
+      id: '/_app/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/consultant': {
+      id: '/_app/consultant'
+      path: '/consultant'
+      fullPath: '/consultant'
+      preLoaderRoute: typeof AppConsultantRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/architect': {
+      id: '/_app/architect'
+      path: '/architect'
+      fullPath: '/architect'
+      preLoaderRoute: typeof AppArchitectRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/approvals': {
+      id: '/_app/approvals'
+      path: '/approvals'
+      fullPath: '/approvals'
+      preLoaderRoute: typeof AppApprovalsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/ai-insights': {
+      id: '/_app/ai-insights'
+      path: '/ai-insights'
+      fullPath: '/ai-insights'
+      preLoaderRoute: typeof AppAiInsightsRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppAiInsightsRoute: typeof AppAiInsightsRoute
+  AppApprovalsRoute: typeof AppApprovalsRoute
+  AppArchitectRoute: typeof AppArchitectRoute
+  AppConsultantRoute: typeof AppConsultantRoute
+  AppDashboardRoute: typeof AppDashboardRoute
+  AppEngineerRoute: typeof AppEngineerRoute
+  AppFinanceRoute: typeof AppFinanceRoute
+  AppHrRoute: typeof AppHrRoute
+  AppProjectsRoute: typeof AppProjectsRoute
+  AppReportsRoute: typeof AppReportsRoute
+  AppSiteRoute: typeof AppSiteRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAiInsightsRoute: AppAiInsightsRoute,
+  AppApprovalsRoute: AppApprovalsRoute,
+  AppArchitectRoute: AppArchitectRoute,
+  AppConsultantRoute: AppConsultantRoute,
+  AppDashboardRoute: AppDashboardRoute,
+  AppEngineerRoute: AppEngineerRoute,
+  AppFinanceRoute: AppFinanceRoute,
+  AppHrRoute: AppHrRoute,
+  AppProjectsRoute: AppProjectsRoute,
+  AppReportsRoute: AppReportsRoute,
+  AppSiteRoute: AppSiteRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
