@@ -80,7 +80,7 @@ const risks = [
 ];
 
 function ProjectDetailPage() {
-  const { project } = Route.useLoaderData();
+  const { project } = Route.useLoaderData() as { project: Project };
 
   return (
     <>
