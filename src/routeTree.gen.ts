@@ -11,17 +11,24 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppWorkflowsRouteImport } from './routes/_app.workflows'
+import { Route as AppSupportRouteImport } from './routes/_app.support'
 import { Route as AppSiteRouteImport } from './routes/_app.site'
+import { Route as AppResourcesRouteImport } from './routes/_app.resources'
 import { Route as AppReportsRouteImport } from './routes/_app.reports'
 import { Route as AppProjectsRouteImport } from './routes/_app.projects'
 import { Route as AppHrRouteImport } from './routes/_app.hr'
 import { Route as AppFinanceRouteImport } from './routes/_app.finance'
 import { Route as AppEngineerRouteImport } from './routes/_app.engineer'
+import { Route as AppDocumentsRouteImport } from './routes/_app.documents'
 import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
 import { Route as AppConsultantRouteImport } from './routes/_app.consultant'
+import { Route as AppAuditRouteImport } from './routes/_app.audit'
 import { Route as AppArchitectRouteImport } from './routes/_app.architect'
 import { Route as AppApprovalsRouteImport } from './routes/_app.approvals'
 import { Route as AppAiInsightsRouteImport } from './routes/_app.ai-insights'
+import { Route as AppProjectsNewRouteImport } from './routes/_app.projects.new'
+import { Route as AppProjectsProjectIdRouteImport } from './routes/_app.projects.$projectId'
 
 const AppRoute = AppRouteImport.update({
   id: '/_app',
@@ -32,9 +39,24 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppWorkflowsRoute = AppWorkflowsRouteImport.update({
+  id: '/workflows',
+  path: '/workflows',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSupportRoute = AppSupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppSiteRoute = AppSiteRouteImport.update({
   id: '/site',
   path: '/site',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppResourcesRoute = AppResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
   getParentRoute: () => AppRoute,
 } as any)
 const AppReportsRoute = AppReportsRouteImport.update({
@@ -62,6 +84,11 @@ const AppEngineerRoute = AppEngineerRouteImport.update({
   path: '/engineer',
   getParentRoute: () => AppRoute,
 } as any)
+const AppDocumentsRoute = AppDocumentsRouteImport.update({
+  id: '/documents',
+  path: '/documents',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppDashboardRoute = AppDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -70,6 +97,11 @@ const AppDashboardRoute = AppDashboardRouteImport.update({
 const AppConsultantRoute = AppConsultantRouteImport.update({
   id: '/consultant',
   path: '/consultant',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAuditRoute = AppAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
   getParentRoute: () => AppRoute,
 } as any)
 const AppArchitectRoute = AppArchitectRouteImport.update({
@@ -87,34 +119,58 @@ const AppAiInsightsRoute = AppAiInsightsRouteImport.update({
   path: '/ai-insights',
   getParentRoute: () => AppRoute,
 } as any)
+const AppProjectsNewRoute = AppProjectsNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => AppProjectsRoute,
+} as any)
+const AppProjectsProjectIdRoute = AppProjectsProjectIdRouteImport.update({
+  id: '/$projectId',
+  path: '/$projectId',
+  getParentRoute: () => AppProjectsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ai-insights': typeof AppAiInsightsRoute
   '/approvals': typeof AppApprovalsRoute
   '/architect': typeof AppArchitectRoute
+  '/audit': typeof AppAuditRoute
   '/consultant': typeof AppConsultantRoute
   '/dashboard': typeof AppDashboardRoute
+  '/documents': typeof AppDocumentsRoute
   '/engineer': typeof AppEngineerRoute
   '/finance': typeof AppFinanceRoute
   '/hr': typeof AppHrRoute
-  '/projects': typeof AppProjectsRoute
+  '/projects': typeof AppProjectsRouteWithChildren
   '/reports': typeof AppReportsRoute
+  '/resources': typeof AppResourcesRoute
   '/site': typeof AppSiteRoute
+  '/support': typeof AppSupportRoute
+  '/workflows': typeof AppWorkflowsRoute
+  '/projects/$projectId': typeof AppProjectsProjectIdRoute
+  '/projects/new': typeof AppProjectsNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ai-insights': typeof AppAiInsightsRoute
   '/approvals': typeof AppApprovalsRoute
   '/architect': typeof AppArchitectRoute
+  '/audit': typeof AppAuditRoute
   '/consultant': typeof AppConsultantRoute
   '/dashboard': typeof AppDashboardRoute
+  '/documents': typeof AppDocumentsRoute
   '/engineer': typeof AppEngineerRoute
   '/finance': typeof AppFinanceRoute
   '/hr': typeof AppHrRoute
-  '/projects': typeof AppProjectsRoute
+  '/projects': typeof AppProjectsRouteWithChildren
   '/reports': typeof AppReportsRoute
+  '/resources': typeof AppResourcesRoute
   '/site': typeof AppSiteRoute
+  '/support': typeof AppSupportRoute
+  '/workflows': typeof AppWorkflowsRoute
+  '/projects/$projectId': typeof AppProjectsProjectIdRoute
+  '/projects/new': typeof AppProjectsNewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -123,14 +179,21 @@ export interface FileRoutesById {
   '/_app/ai-insights': typeof AppAiInsightsRoute
   '/_app/approvals': typeof AppApprovalsRoute
   '/_app/architect': typeof AppArchitectRoute
+  '/_app/audit': typeof AppAuditRoute
   '/_app/consultant': typeof AppConsultantRoute
   '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/documents': typeof AppDocumentsRoute
   '/_app/engineer': typeof AppEngineerRoute
   '/_app/finance': typeof AppFinanceRoute
   '/_app/hr': typeof AppHrRoute
-  '/_app/projects': typeof AppProjectsRoute
+  '/_app/projects': typeof AppProjectsRouteWithChildren
   '/_app/reports': typeof AppReportsRoute
+  '/_app/resources': typeof AppResourcesRoute
   '/_app/site': typeof AppSiteRoute
+  '/_app/support': typeof AppSupportRoute
+  '/_app/workflows': typeof AppWorkflowsRoute
+  '/_app/projects/$projectId': typeof AppProjectsProjectIdRoute
+  '/_app/projects/new': typeof AppProjectsNewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -139,28 +202,42 @@ export interface FileRouteTypes {
     | '/ai-insights'
     | '/approvals'
     | '/architect'
+    | '/audit'
     | '/consultant'
     | '/dashboard'
+    | '/documents'
     | '/engineer'
     | '/finance'
     | '/hr'
     | '/projects'
     | '/reports'
+    | '/resources'
     | '/site'
+    | '/support'
+    | '/workflows'
+    | '/projects/$projectId'
+    | '/projects/new'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/ai-insights'
     | '/approvals'
     | '/architect'
+    | '/audit'
     | '/consultant'
     | '/dashboard'
+    | '/documents'
     | '/engineer'
     | '/finance'
     | '/hr'
     | '/projects'
     | '/reports'
+    | '/resources'
     | '/site'
+    | '/support'
+    | '/workflows'
+    | '/projects/$projectId'
+    | '/projects/new'
   id:
     | '__root__'
     | '/'
@@ -168,14 +245,21 @@ export interface FileRouteTypes {
     | '/_app/ai-insights'
     | '/_app/approvals'
     | '/_app/architect'
+    | '/_app/audit'
     | '/_app/consultant'
     | '/_app/dashboard'
+    | '/_app/documents'
     | '/_app/engineer'
     | '/_app/finance'
     | '/_app/hr'
     | '/_app/projects'
     | '/_app/reports'
+    | '/_app/resources'
     | '/_app/site'
+    | '/_app/support'
+    | '/_app/workflows'
+    | '/_app/projects/$projectId'
+    | '/_app/projects/new'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -199,11 +283,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/workflows': {
+      id: '/_app/workflows'
+      path: '/workflows'
+      fullPath: '/workflows'
+      preLoaderRoute: typeof AppWorkflowsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/support': {
+      id: '/_app/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof AppSupportRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/site': {
       id: '/_app/site'
       path: '/site'
       fullPath: '/site'
       preLoaderRoute: typeof AppSiteRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/resources': {
+      id: '/_app/resources'
+      path: '/resources'
+      fullPath: '/resources'
+      preLoaderRoute: typeof AppResourcesRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/reports': {
@@ -241,6 +346,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEngineerRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/documents': {
+      id: '/_app/documents'
+      path: '/documents'
+      fullPath: '/documents'
+      preLoaderRoute: typeof AppDocumentsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/dashboard': {
       id: '/_app/dashboard'
       path: '/dashboard'
@@ -253,6 +365,13 @@ declare module '@tanstack/react-router' {
       path: '/consultant'
       fullPath: '/consultant'
       preLoaderRoute: typeof AppConsultantRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/audit': {
+      id: '/_app/audit'
+      path: '/audit'
+      fullPath: '/audit'
+      preLoaderRoute: typeof AppAuditRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/architect': {
@@ -276,35 +395,73 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAiInsightsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/projects/new': {
+      id: '/_app/projects/new'
+      path: '/new'
+      fullPath: '/projects/new'
+      preLoaderRoute: typeof AppProjectsNewRouteImport
+      parentRoute: typeof AppProjectsRoute
+    }
+    '/_app/projects/$projectId': {
+      id: '/_app/projects/$projectId'
+      path: '/$projectId'
+      fullPath: '/projects/$projectId'
+      preLoaderRoute: typeof AppProjectsProjectIdRouteImport
+      parentRoute: typeof AppProjectsRoute
+    }
   }
 }
+
+interface AppProjectsRouteChildren {
+  AppProjectsProjectIdRoute: typeof AppProjectsProjectIdRoute
+  AppProjectsNewRoute: typeof AppProjectsNewRoute
+}
+
+const AppProjectsRouteChildren: AppProjectsRouteChildren = {
+  AppProjectsProjectIdRoute: AppProjectsProjectIdRoute,
+  AppProjectsNewRoute: AppProjectsNewRoute,
+}
+
+const AppProjectsRouteWithChildren = AppProjectsRoute._addFileChildren(
+  AppProjectsRouteChildren,
+)
 
 interface AppRouteChildren {
   AppAiInsightsRoute: typeof AppAiInsightsRoute
   AppApprovalsRoute: typeof AppApprovalsRoute
   AppArchitectRoute: typeof AppArchitectRoute
+  AppAuditRoute: typeof AppAuditRoute
   AppConsultantRoute: typeof AppConsultantRoute
   AppDashboardRoute: typeof AppDashboardRoute
+  AppDocumentsRoute: typeof AppDocumentsRoute
   AppEngineerRoute: typeof AppEngineerRoute
   AppFinanceRoute: typeof AppFinanceRoute
   AppHrRoute: typeof AppHrRoute
-  AppProjectsRoute: typeof AppProjectsRoute
+  AppProjectsRoute: typeof AppProjectsRouteWithChildren
   AppReportsRoute: typeof AppReportsRoute
+  AppResourcesRoute: typeof AppResourcesRoute
   AppSiteRoute: typeof AppSiteRoute
+  AppSupportRoute: typeof AppSupportRoute
+  AppWorkflowsRoute: typeof AppWorkflowsRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppAiInsightsRoute: AppAiInsightsRoute,
   AppApprovalsRoute: AppApprovalsRoute,
   AppArchitectRoute: AppArchitectRoute,
+  AppAuditRoute: AppAuditRoute,
   AppConsultantRoute: AppConsultantRoute,
   AppDashboardRoute: AppDashboardRoute,
+  AppDocumentsRoute: AppDocumentsRoute,
   AppEngineerRoute: AppEngineerRoute,
   AppFinanceRoute: AppFinanceRoute,
   AppHrRoute: AppHrRoute,
-  AppProjectsRoute: AppProjectsRoute,
+  AppProjectsRoute: AppProjectsRouteWithChildren,
   AppReportsRoute: AppReportsRoute,
+  AppResourcesRoute: AppResourcesRoute,
   AppSiteRoute: AppSiteRoute,
+  AppSupportRoute: AppSupportRoute,
+  AppWorkflowsRoute: AppWorkflowsRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
@@ -316,13 +473,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
