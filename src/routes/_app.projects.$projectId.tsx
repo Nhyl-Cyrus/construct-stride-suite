@@ -1,4 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import type { Project } from "@/lib/pm-data";
 import {
   ArrowLeft,
   MapPin,
