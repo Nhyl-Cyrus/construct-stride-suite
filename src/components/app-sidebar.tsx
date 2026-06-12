@@ -7,11 +7,16 @@ import {
   Wallet,
   Compass,
   Wrench,
-  ClipboardList,
   Sparkles,
   FileBarChart2,
   CheckSquare,
   Building2,
+  GitBranch,
+  Files,
+  CalendarRange,
+  ShieldCheck,
+  LifeBuoy,
+  ClipboardList,
 } from "lucide-react";
 
 import {
@@ -30,9 +35,17 @@ import {
 const overview = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
   { title: "Projects", url: "/projects", icon: FolderKanban },
+  { title: "Workflows", url: "/workflows", icon: GitBranch },
   { title: "Approvals", url: "/approvals", icon: CheckSquare },
+  { title: "Documents", url: "/documents", icon: Files },
+];
+
+const intelligence = [
   { title: "AI Insights", url: "/ai-insights", icon: Sparkles },
+  { title: "Resources", url: "/resources", icon: CalendarRange },
   { title: "Reports", url: "/reports", icon: FileBarChart2 },
+  { title: "Audit & Security", url: "/audit", icon: ShieldCheck },
+  { title: "Support", url: "/support", icon: LifeBuoy },
 ];
 
 const roles = [
@@ -47,7 +60,8 @@ const roles = [
 
 export function AppSidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const isActive = (url: string) => pathname === url;
+  const isActive = (url: string) =>
+    pathname === url || (url !== "/dashboard" && pathname.startsWith(url + "/"));
 
   return (
     <Sidebar collapsible="icon" className="border-r">
@@ -69,6 +83,24 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {overview.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild isActive={isActive(item.url)} tooltip={item.title}>
+                    <Link to={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Intelligence</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {intelligence.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild isActive={isActive(item.url)} tooltip={item.title}>
                     <Link to={item.url}>
