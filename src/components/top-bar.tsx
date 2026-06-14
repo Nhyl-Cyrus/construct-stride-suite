@@ -30,6 +30,7 @@ export function TopBar({ title, subtitle }: TopBarProps) {
           />
         </div>
       </div>
+      <ThemeToggle />
       <Button variant="ghost" size="icon" className="rounded-xl" aria-label="Notifications">
         <Bell className="h-4 w-4" />
       </Button>
