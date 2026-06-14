@@ -3,6 +3,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 interface TopBarProps {
   title: string;
@@ -29,6 +30,7 @@ export function TopBar({ title, subtitle }: TopBarProps) {
           />
         </div>
       </div>
+      <ThemeToggle />
       <Button variant="ghost" size="icon" className="rounded-xl" aria-label="Notifications">
         <Bell className="h-4 w-4" />
       </Button>
