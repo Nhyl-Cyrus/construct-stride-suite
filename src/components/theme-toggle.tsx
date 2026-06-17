@@ -28,8 +28,9 @@ export function ThemeToggle() {
           size="icon"
           className="rounded-xl"
           aria-label={`Switch theme (current: ${theme})`}
+          suppressHydrationWarning
         >
-          <Icon className="h-4 w-4" />
+          <Icon className="h-4 w-4" suppressHydrationWarning />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-44">
