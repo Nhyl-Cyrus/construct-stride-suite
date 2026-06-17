@@ -88,7 +88,41 @@ export const Route = createFileRoute("/_app/hr")({
   component: HRPage,
 });
 
+const HASH_TO_TAB: Record<string, string> = {
+  "": "overview",
+  overview: "overview",
+  employees: "employees",
+  profiles: "employees",
+  documents: "employees",
+  performance: "employees",
+  attendance: "attendance",
+  verification: "attendance",
+  geofence: "attendance",
+  "photo-auth": "attendance",
+  issues: "attendance",
+  payroll: "payroll",
+  "payroll-history": "payroll",
+  "payroll-approvals": "payroll",
+  "gross-labor": "payroll",
+  workforce: "workforce",
+  capacity: "workforce",
+  availability: "workforce",
+  departments: "workforce",
+  reports: "reports",
+  "reports-att": "reports",
+  "reports-pay": "reports",
+  "ai-forecast": "reports",
+  "ai-risk": "reports",
+  "ai-retention": "reports",
+  "ai-anomaly": "reports",
+  notifications: "overview",
+};
+
 function HRPage() {
+  const hash = useRouterState({ select: (s) => s.location.hash });
+  const value = HASH_TO_TAB[hash] ?? "overview";
+  const navigate = useNavigate();
+
   return (
     <>
       <TopBar
@@ -96,16 +130,16 @@ function HRPage() {
         subtitle="Workforce, attendance, payroll & people intelligence"
       />
       <div className="flex-1 space-y-6 p-4 md:p-6">
-        <Tabs defaultValue="overview" className="space-y-6">
+        <Tabs
+          value={value}
+          onValueChange={(v) => navigate({ to: "/hr", hash: v })}
+          className="space-y-6"
+        >
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-            <TabsList className="h-auto flex-wrap rounded-xl bg-muted p-1">
-              <TabsTrigger value="overview" className="rounded-lg">Overview</TabsTrigger>
-              <TabsTrigger value="employees" className="rounded-lg">Employees</TabsTrigger>
-              <TabsTrigger value="attendance" className="rounded-lg">Attendance</TabsTrigger>
-              <TabsTrigger value="payroll" className="rounded-lg">Payroll</TabsTrigger>
-              <TabsTrigger value="workforce" className="rounded-lg">Workforce</TabsTrigger>
-              <TabsTrigger value="reports" className="rounded-lg">Reports</TabsTrigger>
-            </TabsList>
+            <div className="text-xs text-muted-foreground">
+              Current section ·{" "}
+              <span className="font-medium text-foreground">{value}</span>
+            </div>
             <div className="flex items-center gap-2">
               <Button variant="outline" size="sm" className="rounded-xl">
                 <Download className="h-4 w-4" /> Export
@@ -139,6 +173,7 @@ function HRPage() {
     </>
   );
 }
+
 
 /* ---------- Overview ---------- */
 
