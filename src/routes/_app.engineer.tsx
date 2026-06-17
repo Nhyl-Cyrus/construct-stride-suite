@@ -1,18 +1,89 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { PlaceholderPage } from "@/components/placeholder-page";
+import {
+  ClipboardList,
+  FileSearch,
+  ShieldCheck,
+  Layers,
+  CalendarRange,
+  AlertTriangle,
+  Sparkles,
+  Plus,
+  Upload,
+} from "lucide-react";
+import { RoleWorkspacePage } from "@/components/role-workspace-page";
+import { Badge } from "@/components/ui/badge";
 
 export const Route = createFileRoute("/_app/engineer")({
   head: () => ({
     meta: [
       { title: "Engineer — EasyConstruct" },
-      { name: "description", content: "Engineer workspace in EasyConstruct." },
+      { name: "description", content: "Site reports, technical reviews and inspections workspace." },
     ],
   }),
-  component: () => (
-    <PlaceholderPage
-      title="Engineer"
-      subtitle="Module scaffold"
-      description="This workspace is wired into the navigation shell. Content for Engineer will appear here in the next iteration."
-    />
-  ),
+  component: EngineerPage,
 });
+
+function EngineerPage() {
+  return (
+    <RoleWorkspacePage
+      defaultSection="reports"
+      kpis={[
+        { label: "Site reports today", value: "26", delta: "5 awaiting sign-off", icon: ClipboardList, up: true },
+        { label: "Open inspections", value: "9", delta: "2 overdue", icon: ShieldCheck, up: false },
+        { label: "Technical reviews", value: "14", delta: "3 with consultants", icon: FileSearch, up: true },
+        { label: "Drawings on file", value: "412", delta: "v-controlled", icon: Layers, up: true },
+        { label: "Resources booked", value: "78%", delta: "Next 14 days", icon: CalendarRange, up: true },
+        { label: "Safety flags", value: "3", delta: "1 critical", icon: AlertTriangle, up: false },
+      ]}
+      aiInsights={[
+        {
+          title: "Foundation cure window",
+          body: "Pour at Westgate Tower zone B should be delayed 6h based on rising humidity forecast.",
+        },
+        {
+          title: "Inspection prioritisation",
+          body: "Electrical inspection at Phoenix HQ basement is blocking 3 downstream tasks — escalate today.",
+        },
+        {
+          title: "Drawing conflict",
+          body: "Rebar layout in drawing S-204-v3 contradicts revised architectural plan A-114-v3.",
+        },
+      ]}
+      quickActions={[
+        { label: "File site report", icon: Plus, description: "Daily progress + observations" },
+        { label: "Upload drawing", icon: Upload, description: "Versioned upload with notes" },
+        { label: "Schedule inspection", icon: ShieldCheck, description: "Coordinate with safety officer" },
+        { label: "Run AI analysis", icon: Sparkles, description: "Detect technical conflicts" },
+      ]}
+      sections={[
+        {
+          id: "reports",
+          title: "Recent site reports",
+          content: (
+            <div className="space-y-2">
+              {[
+                { id: "SR-2218", site: "Westgate Tower", author: "K. Okafor", status: "Submitted" },
+                { id: "SR-2219", site: "Harborline Hub", author: "L. Mendes", status: "Approved" },
+                { id: "SR-2220", site: "Phoenix HQ", author: "T. Nakamura", status: "Revisions" },
+              ].map((r) => (
+                <div key={r.id} className="flex items-center justify-between rounded-xl border p-3">
+                  <div>
+                    <div className="font-mono text-xs text-muted-foreground">{r.id}</div>
+                    <div className="text-sm font-medium">
+                      {r.site} · <span className="text-muted-foreground">{r.author}</span>
+                    </div>
+                  </div>
+                  <Badge variant="outline" className="rounded-full text-[10px]">{r.status}</Badge>
+                </div>
+              ))}
+            </div>
+          ),
+        },
+        { id: "reviews", title: "Technical reviews", content: <p className="text-sm text-muted-foreground">14 technical reviews in progress across structural, MEP and civil disciplines.</p> },
+        { id: "inspections", title: "Inspection schedule", content: <p className="text-sm text-muted-foreground">Calendar of upcoming inspections across active sites and zones.</p> },
+        { id: "drawings", title: "Drawing register", content: <p className="text-sm text-muted-foreground">Versioned register with cross-references and clash detection.</p> },
+        { id: "resources", title: "Resource bookings", content: <p className="text-sm text-muted-foreground">Equipment, lab time and engineering capacity allocations.</p> },
+      ]}
+    />
+  );
+}
