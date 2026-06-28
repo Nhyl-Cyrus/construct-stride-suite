@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Monitor, Moon, Sun, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,7 +19,11 @@ const options: { value: Theme; label: string; icon: typeof Sun }[] = [
 
 export function ThemeToggle() {
   const { theme, resolvedTheme, setTheme } = useTheme();
-  const Icon = resolvedTheme === "dark" ? Moon : Sun;
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  // Render Sun on SSR + first client paint to keep markup identical;
+  // swap to the resolved icon only after mount.
+  const Icon = mounted && resolvedTheme === "dark" ? Moon : Sun;
 
   return (
     <DropdownMenu>
@@ -28,9 +33,8 @@ export function ThemeToggle() {
           size="icon"
           className="rounded-xl"
           aria-label={`Switch theme (current: ${theme})`}
-          suppressHydrationWarning
         >
-          <Icon className="h-4 w-4" suppressHydrationWarning />
+          <Icon className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-44">
