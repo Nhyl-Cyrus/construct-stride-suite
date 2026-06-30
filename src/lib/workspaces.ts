@@ -213,7 +213,7 @@ const pm: Workspace = {
 
 const finance: Workspace = {
   id: "finance",
-  name: "Finance",
+  name: "Finance Operations",
   shortName: "FIN",
   systemContext: "Financial Operations",
   rootPath: "/finance",
@@ -221,37 +221,78 @@ const finance: Workspace = {
   accentBg: "bg-emerald-500",
   icon: Wallet,
   primaryAi: "Financial Intelligence",
-  primaryNotifications: "Budget Alerts",
-  primaryAction: { label: "New entry", icon: Receipt },
-  searchPlaceholder: "Search budgets, vendors, invoices…",
+  primaryNotifications: "Finance Alerts",
+  primaryAction: { label: "Record transaction", icon: Receipt },
+  searchPlaceholder: "Search budgets, vendors, invoices, batches…",
   tabs: [
-    { title: "Budgets", url: "/finance#budgets", icon: Wallet },
-    { title: "Expenses", url: "/finance#expenses", icon: Receipt },
-    { title: "Payroll Review", url: "/finance#payroll", icon: ClipboardList },
-    { title: "Financial Reports", url: "/finance#reports", icon: FileBarChart2 },
-    { title: "Forecasting", url: "/finance#forecast", icon: TrendingUp },
+    { title: "Budgets", url: "/finance/budgets", icon: Wallet },
+    { title: "Payroll Review", url: "/finance/payroll-review", icon: ClipboardList },
+    { title: "Expenses", url: "/finance/expenses", icon: Receipt },
+    { title: "Reports", url: "/finance/reports", icon: FileBarChart2 },
+    { title: "AI Intelligence", url: "/finance/ai", icon: Sparkles },
+    { title: "Approvals", url: "/finance/approvals", icon: CheckSquare },
   ],
   sidebar: [
     {
       label: "Overview",
-      items: [{ title: "Finance Dashboard", url: "/finance#overview", icon: LayoutDashboard }],
-    },
-    {
-      label: "Operations",
       items: [
-        { title: "Budgets", url: "/finance#budgets", icon: Wallet },
-        { title: "Expenses", url: "/finance#expenses", icon: Receipt },
-        { title: "Invoices", url: "/finance#invoices", icon: Files },
-        { title: "Payroll Review", url: "/finance#payroll", icon: ClipboardList },
+        { title: "Finance Dashboard", url: "/finance", icon: LayoutDashboard },
       ],
     },
     {
-      label: "Insight",
+      label: "Budget Management",
       items: [
-        { title: "Forecasting", url: "/finance#forecast", icon: TrendingUp },
-        { title: "Financial Reports", url: "/finance#reports", icon: FileBarChart2 },
-        { title: "AI Cost Insights", url: "/finance#ai", icon: Sparkles },
-        { title: "Alerts", url: "/finance#alerts", icon: Bell },
+        { title: "Budget Overview", url: "/finance/budgets", icon: Wallet },
+        { title: "Budget Allocation", url: "/finance/budgets#allocation", icon: PieChart },
+        { title: "Budget Adjustments", url: "/finance/budgets#adjustments", icon: GitBranch },
+        { title: "Budget History", url: "/finance/budgets#history", icon: BookOpen },
+      ],
+    },
+    {
+      label: "Payroll Review",
+      items: [
+        { title: "Pending Payroll", url: "/finance/payroll-review", icon: ClipboardList },
+        { title: "Payroll Approvals", url: "/finance/payroll-review#approvals", icon: CheckSquare },
+        { title: "Payroll History", url: "/finance/payroll-review#history", icon: Receipt },
+        { title: "Labor Cost Summary", url: "/finance/payroll-review#labor", icon: PieChart },
+      ],
+    },
+    {
+      label: "Expense Management",
+      items: [
+        { title: "Expense Tracking", url: "/finance/expenses", icon: Receipt },
+        { title: "Purchase Requests", url: "/finance/expenses#requests", icon: ListChecks },
+        { title: "Reimbursements", url: "/finance/expenses#reimbursements", icon: Wallet },
+        { title: "Procurement", url: "/finance/expenses#procurement", icon: Truck },
+      ],
+    },
+    {
+      label: "Financial Reports",
+      items: [
+        { title: "Budget Reports", url: "/finance/reports#budget", icon: FileBarChart2 },
+        { title: "Expense Reports", url: "/finance/reports#expense", icon: FileBarChart2 },
+        { title: "Payroll Reports", url: "/finance/reports#payroll", icon: FileBarChart2 },
+        { title: "Profit & Loss", url: "/finance/reports#pnl", icon: TrendingUp },
+        { title: "Cash Flow", url: "/finance/reports#cashflow", icon: Activity },
+        { title: "Executive", url: "/finance/reports#executive", icon: FileSearch },
+      ],
+    },
+    {
+      label: "Financial Intelligence",
+      items: [
+        { title: "Budget Forecasting", url: "/finance/ai#forecast", icon: TrendingUp },
+        { title: "Cost Prediction", url: "/finance/ai#cost", icon: Brain },
+        { title: "Spending Trends", url: "/finance/ai#trends", icon: Activity },
+        { title: "Risk Detection", url: "/finance/ai#risk", icon: ShieldAlert },
+        { title: "AI Recommendations", url: "/finance/ai#recommendations", icon: Sparkles },
+      ],
+    },
+    {
+      label: "Governance",
+      items: [
+        { title: "Approvals", url: "/finance/approvals", icon: CheckSquare },
+        { title: "Audit Logs", url: "/finance/audit", icon: ShieldCheck },
+        { title: "Notifications", url: "/finance/notifications", icon: Bell },
       ],
     },
   ],
