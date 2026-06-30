@@ -27,8 +27,15 @@ import { Route as AppAuditRouteImport } from './routes/_app.audit'
 import { Route as AppArchitectRouteImport } from './routes/_app.architect'
 import { Route as AppApprovalsRouteImport } from './routes/_app.approvals'
 import { Route as AppAiInsightsRouteImport } from './routes/_app.ai-insights'
+import { Route as AppFinanceIndexRouteImport } from './routes/_app.finance.index'
 import { Route as AppProjectsNewRouteImport } from './routes/_app.projects.new'
 import { Route as AppProjectsProjectIdRouteImport } from './routes/_app.projects.$projectId'
+import { Route as AppFinanceReportsRouteImport } from './routes/_app.finance.reports'
+import { Route as AppFinancePayrollReviewRouteImport } from './routes/_app.finance.payroll-review'
+import { Route as AppFinanceExpensesRouteImport } from './routes/_app.finance.expenses'
+import { Route as AppFinanceBudgetsRouteImport } from './routes/_app.finance.budgets'
+import { Route as AppFinanceApprovalsRouteImport } from './routes/_app.finance.approvals'
+import { Route as AppFinanceAiRouteImport } from './routes/_app.finance.ai'
 
 const AppRoute = AppRouteImport.update({
   id: '/_app',
@@ -119,6 +126,11 @@ const AppAiInsightsRoute = AppAiInsightsRouteImport.update({
   path: '/ai-insights',
   getParentRoute: () => AppRoute,
 } as any)
+const AppFinanceIndexRoute = AppFinanceIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppFinanceRoute,
+} as any)
 const AppProjectsNewRoute = AppProjectsNewRouteImport.update({
   id: '/new',
   path: '/new',
@@ -128,6 +140,36 @@ const AppProjectsProjectIdRoute = AppProjectsProjectIdRouteImport.update({
   id: '/$projectId',
   path: '/$projectId',
   getParentRoute: () => AppProjectsRoute,
+} as any)
+const AppFinanceReportsRoute = AppFinanceReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AppFinanceRoute,
+} as any)
+const AppFinancePayrollReviewRoute = AppFinancePayrollReviewRouteImport.update({
+  id: '/payroll-review',
+  path: '/payroll-review',
+  getParentRoute: () => AppFinanceRoute,
+} as any)
+const AppFinanceExpensesRoute = AppFinanceExpensesRouteImport.update({
+  id: '/expenses',
+  path: '/expenses',
+  getParentRoute: () => AppFinanceRoute,
+} as any)
+const AppFinanceBudgetsRoute = AppFinanceBudgetsRouteImport.update({
+  id: '/budgets',
+  path: '/budgets',
+  getParentRoute: () => AppFinanceRoute,
+} as any)
+const AppFinanceApprovalsRoute = AppFinanceApprovalsRouteImport.update({
+  id: '/approvals',
+  path: '/approvals',
+  getParentRoute: () => AppFinanceRoute,
+} as any)
+const AppFinanceAiRoute = AppFinanceAiRouteImport.update({
+  id: '/ai',
+  path: '/ai',
+  getParentRoute: () => AppFinanceRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -140,7 +182,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AppDashboardRoute
   '/documents': typeof AppDocumentsRoute
   '/engineer': typeof AppEngineerRoute
-  '/finance': typeof AppFinanceRoute
+  '/finance': typeof AppFinanceRouteWithChildren
   '/hr': typeof AppHrRoute
   '/projects': typeof AppProjectsRouteWithChildren
   '/reports': typeof AppReportsRoute
@@ -148,8 +190,15 @@ export interface FileRoutesByFullPath {
   '/site': typeof AppSiteRoute
   '/support': typeof AppSupportRoute
   '/workflows': typeof AppWorkflowsRoute
+  '/finance/ai': typeof AppFinanceAiRoute
+  '/finance/approvals': typeof AppFinanceApprovalsRoute
+  '/finance/budgets': typeof AppFinanceBudgetsRoute
+  '/finance/expenses': typeof AppFinanceExpensesRoute
+  '/finance/payroll-review': typeof AppFinancePayrollReviewRoute
+  '/finance/reports': typeof AppFinanceReportsRoute
   '/projects/$projectId': typeof AppProjectsProjectIdRoute
   '/projects/new': typeof AppProjectsNewRoute
+  '/finance/': typeof AppFinanceIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -161,7 +210,6 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AppDashboardRoute
   '/documents': typeof AppDocumentsRoute
   '/engineer': typeof AppEngineerRoute
-  '/finance': typeof AppFinanceRoute
   '/hr': typeof AppHrRoute
   '/projects': typeof AppProjectsRouteWithChildren
   '/reports': typeof AppReportsRoute
@@ -169,8 +217,15 @@ export interface FileRoutesByTo {
   '/site': typeof AppSiteRoute
   '/support': typeof AppSupportRoute
   '/workflows': typeof AppWorkflowsRoute
+  '/finance/ai': typeof AppFinanceAiRoute
+  '/finance/approvals': typeof AppFinanceApprovalsRoute
+  '/finance/budgets': typeof AppFinanceBudgetsRoute
+  '/finance/expenses': typeof AppFinanceExpensesRoute
+  '/finance/payroll-review': typeof AppFinancePayrollReviewRoute
+  '/finance/reports': typeof AppFinanceReportsRoute
   '/projects/$projectId': typeof AppProjectsProjectIdRoute
   '/projects/new': typeof AppProjectsNewRoute
+  '/finance': typeof AppFinanceIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -184,7 +239,7 @@ export interface FileRoutesById {
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/documents': typeof AppDocumentsRoute
   '/_app/engineer': typeof AppEngineerRoute
-  '/_app/finance': typeof AppFinanceRoute
+  '/_app/finance': typeof AppFinanceRouteWithChildren
   '/_app/hr': typeof AppHrRoute
   '/_app/projects': typeof AppProjectsRouteWithChildren
   '/_app/reports': typeof AppReportsRoute
@@ -192,8 +247,15 @@ export interface FileRoutesById {
   '/_app/site': typeof AppSiteRoute
   '/_app/support': typeof AppSupportRoute
   '/_app/workflows': typeof AppWorkflowsRoute
+  '/_app/finance/ai': typeof AppFinanceAiRoute
+  '/_app/finance/approvals': typeof AppFinanceApprovalsRoute
+  '/_app/finance/budgets': typeof AppFinanceBudgetsRoute
+  '/_app/finance/expenses': typeof AppFinanceExpensesRoute
+  '/_app/finance/payroll-review': typeof AppFinancePayrollReviewRoute
+  '/_app/finance/reports': typeof AppFinanceReportsRoute
   '/_app/projects/$projectId': typeof AppProjectsProjectIdRoute
   '/_app/projects/new': typeof AppProjectsNewRoute
+  '/_app/finance/': typeof AppFinanceIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -215,8 +277,15 @@ export interface FileRouteTypes {
     | '/site'
     | '/support'
     | '/workflows'
+    | '/finance/ai'
+    | '/finance/approvals'
+    | '/finance/budgets'
+    | '/finance/expenses'
+    | '/finance/payroll-review'
+    | '/finance/reports'
     | '/projects/$projectId'
     | '/projects/new'
+    | '/finance/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -228,7 +297,6 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/documents'
     | '/engineer'
-    | '/finance'
     | '/hr'
     | '/projects'
     | '/reports'
@@ -236,8 +304,15 @@ export interface FileRouteTypes {
     | '/site'
     | '/support'
     | '/workflows'
+    | '/finance/ai'
+    | '/finance/approvals'
+    | '/finance/budgets'
+    | '/finance/expenses'
+    | '/finance/payroll-review'
+    | '/finance/reports'
     | '/projects/$projectId'
     | '/projects/new'
+    | '/finance'
   id:
     | '__root__'
     | '/'
@@ -258,8 +333,15 @@ export interface FileRouteTypes {
     | '/_app/site'
     | '/_app/support'
     | '/_app/workflows'
+    | '/_app/finance/ai'
+    | '/_app/finance/approvals'
+    | '/_app/finance/budgets'
+    | '/_app/finance/expenses'
+    | '/_app/finance/payroll-review'
+    | '/_app/finance/reports'
     | '/_app/projects/$projectId'
     | '/_app/projects/new'
+    | '/_app/finance/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -395,6 +477,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAiInsightsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/finance/': {
+      id: '/_app/finance/'
+      path: '/'
+      fullPath: '/finance/'
+      preLoaderRoute: typeof AppFinanceIndexRouteImport
+      parentRoute: typeof AppFinanceRoute
+    }
     '/_app/projects/new': {
       id: '/_app/projects/new'
       path: '/new'
@@ -409,8 +498,74 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProjectsProjectIdRouteImport
       parentRoute: typeof AppProjectsRoute
     }
+    '/_app/finance/reports': {
+      id: '/_app/finance/reports'
+      path: '/reports'
+      fullPath: '/finance/reports'
+      preLoaderRoute: typeof AppFinanceReportsRouteImport
+      parentRoute: typeof AppFinanceRoute
+    }
+    '/_app/finance/payroll-review': {
+      id: '/_app/finance/payroll-review'
+      path: '/payroll-review'
+      fullPath: '/finance/payroll-review'
+      preLoaderRoute: typeof AppFinancePayrollReviewRouteImport
+      parentRoute: typeof AppFinanceRoute
+    }
+    '/_app/finance/expenses': {
+      id: '/_app/finance/expenses'
+      path: '/expenses'
+      fullPath: '/finance/expenses'
+      preLoaderRoute: typeof AppFinanceExpensesRouteImport
+      parentRoute: typeof AppFinanceRoute
+    }
+    '/_app/finance/budgets': {
+      id: '/_app/finance/budgets'
+      path: '/budgets'
+      fullPath: '/finance/budgets'
+      preLoaderRoute: typeof AppFinanceBudgetsRouteImport
+      parentRoute: typeof AppFinanceRoute
+    }
+    '/_app/finance/approvals': {
+      id: '/_app/finance/approvals'
+      path: '/approvals'
+      fullPath: '/finance/approvals'
+      preLoaderRoute: typeof AppFinanceApprovalsRouteImport
+      parentRoute: typeof AppFinanceRoute
+    }
+    '/_app/finance/ai': {
+      id: '/_app/finance/ai'
+      path: '/ai'
+      fullPath: '/finance/ai'
+      preLoaderRoute: typeof AppFinanceAiRouteImport
+      parentRoute: typeof AppFinanceRoute
+    }
   }
 }
+
+interface AppFinanceRouteChildren {
+  AppFinanceAiRoute: typeof AppFinanceAiRoute
+  AppFinanceApprovalsRoute: typeof AppFinanceApprovalsRoute
+  AppFinanceBudgetsRoute: typeof AppFinanceBudgetsRoute
+  AppFinanceExpensesRoute: typeof AppFinanceExpensesRoute
+  AppFinancePayrollReviewRoute: typeof AppFinancePayrollReviewRoute
+  AppFinanceReportsRoute: typeof AppFinanceReportsRoute
+  AppFinanceIndexRoute: typeof AppFinanceIndexRoute
+}
+
+const AppFinanceRouteChildren: AppFinanceRouteChildren = {
+  AppFinanceAiRoute: AppFinanceAiRoute,
+  AppFinanceApprovalsRoute: AppFinanceApprovalsRoute,
+  AppFinanceBudgetsRoute: AppFinanceBudgetsRoute,
+  AppFinanceExpensesRoute: AppFinanceExpensesRoute,
+  AppFinancePayrollReviewRoute: AppFinancePayrollReviewRoute,
+  AppFinanceReportsRoute: AppFinanceReportsRoute,
+  AppFinanceIndexRoute: AppFinanceIndexRoute,
+}
+
+const AppFinanceRouteWithChildren = AppFinanceRoute._addFileChildren(
+  AppFinanceRouteChildren,
+)
 
 interface AppProjectsRouteChildren {
   AppProjectsProjectIdRoute: typeof AppProjectsProjectIdRoute
@@ -435,7 +590,7 @@ interface AppRouteChildren {
   AppDashboardRoute: typeof AppDashboardRoute
   AppDocumentsRoute: typeof AppDocumentsRoute
   AppEngineerRoute: typeof AppEngineerRoute
-  AppFinanceRoute: typeof AppFinanceRoute
+  AppFinanceRoute: typeof AppFinanceRouteWithChildren
   AppHrRoute: typeof AppHrRoute
   AppProjectsRoute: typeof AppProjectsRouteWithChildren
   AppReportsRoute: typeof AppReportsRoute
@@ -454,7 +609,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppDashboardRoute: AppDashboardRoute,
   AppDocumentsRoute: AppDocumentsRoute,
   AppEngineerRoute: AppEngineerRoute,
-  AppFinanceRoute: AppFinanceRoute,
+  AppFinanceRoute: AppFinanceRouteWithChildren,
   AppHrRoute: AppHrRoute,
   AppProjectsRoute: AppProjectsRouteWithChildren,
   AppReportsRoute: AppReportsRoute,
