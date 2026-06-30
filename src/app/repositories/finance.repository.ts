@@ -1,0 +1,38 @@
+import {
+  budgets,
+  budgetAdjustments,
+  budgetHistory,
+  expenses,
+  purchaseRequests,
+  reimbursements,
+  procurement,
+  payrollBatches,
+  invoices,
+  cashFlow,
+  projectProfit,
+  financialRisks,
+  approvalsQueue,
+  auditEvents,
+  notifications,
+  aiInsights,
+} from "@/app/models/finance";
+import { ok } from "./base.repository";
+
+export const financeRepository = {
+  budgets: () => ok(budgets),
+  budgetAdjustments: () => ok(budgetAdjustments),
+  budgetHistory: () => ok(budgetHistory),
+  expenses: () => ok(expenses),
+  purchaseRequests: () => ok(purchaseRequests),
+  reimbursements: () => ok(reimbursements),
+  procurement: () => ok(procurement),
+  payrollBatches: () => ok(payrollBatches),
+  invoices: () => ok(invoices),
+  cashFlow: () => ok(cashFlow),
+  projectProfit: () => ok(projectProfit),
+  risks: () => ok(financialRisks),
+  approvals: () => ok(approvalsQueue),
+  auditEvents: () => ok(auditEvents),
+  notifications: () => ok(notifications),
+  aiInsights: () => ok(aiInsights),
+};
