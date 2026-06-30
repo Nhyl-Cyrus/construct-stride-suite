@@ -38,7 +38,7 @@ export function FinanceApprovalsView() {
                   <TableCell className="text-xs text-muted-foreground">{a.requestedBy}</TableCell>
                   <TableCell className="text-right text-sm">{formatUSD(a.amount)}</TableCell>
                   <TableCell className="text-xs text-muted-foreground">{a.slaHours}h</TableCell>
-                  <TableCell><StatusBadge status={a.status} /></TableCell>
+                  <TableCell><StatusBadge status="pending" /></TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">
                       <Button size="icon" variant="ghost" className="h-7 w-7 rounded-lg"><Check className="h-3.5 w-3.5 text-emerald-500" /></Button>

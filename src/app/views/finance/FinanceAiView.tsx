@@ -33,19 +33,10 @@ export function FinanceAiView() {
                 <div className="text-[10px] uppercase tracking-wide text-muted-foreground">Confidence</div>
                 <Progress value={i.confidence * 100} className="h-1.5" />
               </div>
-              {i.suggestedActions && (
-                <div>
-                  <div className="mb-1 text-[10px] uppercase tracking-wide text-muted-foreground">Suggested actions</div>
-                  <ul className="space-y-1">
-                    {i.suggestedActions.map((a) => (
-                      <li key={a} className="flex items-start gap-1.5 text-xs">
-                        <span className="mt-1.5 h-1 w-1 rounded-full bg-primary" />
-                        <span>{a}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+              <div>
+                <div className="mb-1 text-[10px] uppercase tracking-wide text-muted-foreground">Impact</div>
+                <p className="text-xs text-muted-foreground">{i.impact}</p>
+              </div>
               <div className="flex gap-2 pt-1">
                 <Button size="sm" variant="outline" className="h-7 rounded-lg text-xs">Acknowledge</Button>
                 <Button size="sm" variant="ghost" className="h-7 rounded-lg text-xs">Dismiss</Button>
