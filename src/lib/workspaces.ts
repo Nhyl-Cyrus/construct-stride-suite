@@ -243,9 +243,12 @@ const finance: Workspace = {
       label: "Budget Management",
       items: [
         { title: "Budget Overview", url: "/finance/budgets", icon: Wallet },
-        { title: "Budget Allocation", url: "/finance/budgets#allocation", icon: PieChart },
-        { title: "Budget Adjustments", url: "/finance/budgets#adjustments", icon: GitBranch },
-        { title: "Budget History", url: "/finance/budgets#history", icon: BookOpen },
+        { title: "Allocation", url: "/finance/budgets/allocation", icon: PieChart },
+        { title: "Adjustments", url: "/finance/budgets/adjustments", icon: GitBranch },
+        { title: "Comparison", url: "/finance/budgets/comparison", icon: Activity },
+        { title: "History", url: "/finance/budgets/history", icon: BookOpen },
+        { title: "Approval Workflow", url: "/finance/budgets/approval", icon: CheckSquare },
+        { title: "Analytics", url: "/finance/budgets/analytics", icon: PieChart },
       ],
     },
     {
