@@ -36,6 +36,13 @@ import { Route as AppFinanceExpensesRouteImport } from './routes/_app.finance.ex
 import { Route as AppFinanceBudgetsRouteImport } from './routes/_app.finance.budgets'
 import { Route as AppFinanceApprovalsRouteImport } from './routes/_app.finance.approvals'
 import { Route as AppFinanceAiRouteImport } from './routes/_app.finance.ai'
+import { Route as AppFinanceBudgetsHistoryRouteImport } from './routes/_app.finance.budgets.history'
+import { Route as AppFinanceBudgetsComparisonRouteImport } from './routes/_app.finance.budgets.comparison'
+import { Route as AppFinanceBudgetsApprovalRouteImport } from './routes/_app.finance.budgets.approval'
+import { Route as AppFinanceBudgetsAnalyticsRouteImport } from './routes/_app.finance.budgets.analytics'
+import { Route as AppFinanceBudgetsAllocationRouteImport } from './routes/_app.finance.budgets.allocation'
+import { Route as AppFinanceBudgetsAdjustmentsRouteImport } from './routes/_app.finance.budgets.adjustments'
+import { Route as AppFinanceBudgetsBudgetIdRouteImport } from './routes/_app.finance.budgets.$budgetId'
 
 const AppRoute = AppRouteImport.update({
   id: '/_app',
@@ -171,6 +178,48 @@ const AppFinanceAiRoute = AppFinanceAiRouteImport.update({
   path: '/ai',
   getParentRoute: () => AppFinanceRoute,
 } as any)
+const AppFinanceBudgetsHistoryRoute =
+  AppFinanceBudgetsHistoryRouteImport.update({
+    id: '/history',
+    path: '/history',
+    getParentRoute: () => AppFinanceBudgetsRoute,
+  } as any)
+const AppFinanceBudgetsComparisonRoute =
+  AppFinanceBudgetsComparisonRouteImport.update({
+    id: '/comparison',
+    path: '/comparison',
+    getParentRoute: () => AppFinanceBudgetsRoute,
+  } as any)
+const AppFinanceBudgetsApprovalRoute =
+  AppFinanceBudgetsApprovalRouteImport.update({
+    id: '/approval',
+    path: '/approval',
+    getParentRoute: () => AppFinanceBudgetsRoute,
+  } as any)
+const AppFinanceBudgetsAnalyticsRoute =
+  AppFinanceBudgetsAnalyticsRouteImport.update({
+    id: '/analytics',
+    path: '/analytics',
+    getParentRoute: () => AppFinanceBudgetsRoute,
+  } as any)
+const AppFinanceBudgetsAllocationRoute =
+  AppFinanceBudgetsAllocationRouteImport.update({
+    id: '/allocation',
+    path: '/allocation',
+    getParentRoute: () => AppFinanceBudgetsRoute,
+  } as any)
+const AppFinanceBudgetsAdjustmentsRoute =
+  AppFinanceBudgetsAdjustmentsRouteImport.update({
+    id: '/adjustments',
+    path: '/adjustments',
+    getParentRoute: () => AppFinanceBudgetsRoute,
+  } as any)
+const AppFinanceBudgetsBudgetIdRoute =
+  AppFinanceBudgetsBudgetIdRouteImport.update({
+    id: '/$budgetId',
+    path: '/$budgetId',
+    getParentRoute: () => AppFinanceBudgetsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -192,13 +241,20 @@ export interface FileRoutesByFullPath {
   '/workflows': typeof AppWorkflowsRoute
   '/finance/ai': typeof AppFinanceAiRoute
   '/finance/approvals': typeof AppFinanceApprovalsRoute
-  '/finance/budgets': typeof AppFinanceBudgetsRoute
+  '/finance/budgets': typeof AppFinanceBudgetsRouteWithChildren
   '/finance/expenses': typeof AppFinanceExpensesRoute
   '/finance/payroll-review': typeof AppFinancePayrollReviewRoute
   '/finance/reports': typeof AppFinanceReportsRoute
   '/projects/$projectId': typeof AppProjectsProjectIdRoute
   '/projects/new': typeof AppProjectsNewRoute
   '/finance/': typeof AppFinanceIndexRoute
+  '/finance/budgets/$budgetId': typeof AppFinanceBudgetsBudgetIdRoute
+  '/finance/budgets/adjustments': typeof AppFinanceBudgetsAdjustmentsRoute
+  '/finance/budgets/allocation': typeof AppFinanceBudgetsAllocationRoute
+  '/finance/budgets/analytics': typeof AppFinanceBudgetsAnalyticsRoute
+  '/finance/budgets/approval': typeof AppFinanceBudgetsApprovalRoute
+  '/finance/budgets/comparison': typeof AppFinanceBudgetsComparisonRoute
+  '/finance/budgets/history': typeof AppFinanceBudgetsHistoryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -219,13 +275,20 @@ export interface FileRoutesByTo {
   '/workflows': typeof AppWorkflowsRoute
   '/finance/ai': typeof AppFinanceAiRoute
   '/finance/approvals': typeof AppFinanceApprovalsRoute
-  '/finance/budgets': typeof AppFinanceBudgetsRoute
+  '/finance/budgets': typeof AppFinanceBudgetsRouteWithChildren
   '/finance/expenses': typeof AppFinanceExpensesRoute
   '/finance/payroll-review': typeof AppFinancePayrollReviewRoute
   '/finance/reports': typeof AppFinanceReportsRoute
   '/projects/$projectId': typeof AppProjectsProjectIdRoute
   '/projects/new': typeof AppProjectsNewRoute
   '/finance': typeof AppFinanceIndexRoute
+  '/finance/budgets/$budgetId': typeof AppFinanceBudgetsBudgetIdRoute
+  '/finance/budgets/adjustments': typeof AppFinanceBudgetsAdjustmentsRoute
+  '/finance/budgets/allocation': typeof AppFinanceBudgetsAllocationRoute
+  '/finance/budgets/analytics': typeof AppFinanceBudgetsAnalyticsRoute
+  '/finance/budgets/approval': typeof AppFinanceBudgetsApprovalRoute
+  '/finance/budgets/comparison': typeof AppFinanceBudgetsComparisonRoute
+  '/finance/budgets/history': typeof AppFinanceBudgetsHistoryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -249,13 +312,20 @@ export interface FileRoutesById {
   '/_app/workflows': typeof AppWorkflowsRoute
   '/_app/finance/ai': typeof AppFinanceAiRoute
   '/_app/finance/approvals': typeof AppFinanceApprovalsRoute
-  '/_app/finance/budgets': typeof AppFinanceBudgetsRoute
+  '/_app/finance/budgets': typeof AppFinanceBudgetsRouteWithChildren
   '/_app/finance/expenses': typeof AppFinanceExpensesRoute
   '/_app/finance/payroll-review': typeof AppFinancePayrollReviewRoute
   '/_app/finance/reports': typeof AppFinanceReportsRoute
   '/_app/projects/$projectId': typeof AppProjectsProjectIdRoute
   '/_app/projects/new': typeof AppProjectsNewRoute
   '/_app/finance/': typeof AppFinanceIndexRoute
+  '/_app/finance/budgets/$budgetId': typeof AppFinanceBudgetsBudgetIdRoute
+  '/_app/finance/budgets/adjustments': typeof AppFinanceBudgetsAdjustmentsRoute
+  '/_app/finance/budgets/allocation': typeof AppFinanceBudgetsAllocationRoute
+  '/_app/finance/budgets/analytics': typeof AppFinanceBudgetsAnalyticsRoute
+  '/_app/finance/budgets/approval': typeof AppFinanceBudgetsApprovalRoute
+  '/_app/finance/budgets/comparison': typeof AppFinanceBudgetsComparisonRoute
+  '/_app/finance/budgets/history': typeof AppFinanceBudgetsHistoryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -286,6 +356,13 @@ export interface FileRouteTypes {
     | '/projects/$projectId'
     | '/projects/new'
     | '/finance/'
+    | '/finance/budgets/$budgetId'
+    | '/finance/budgets/adjustments'
+    | '/finance/budgets/allocation'
+    | '/finance/budgets/analytics'
+    | '/finance/budgets/approval'
+    | '/finance/budgets/comparison'
+    | '/finance/budgets/history'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -313,6 +390,13 @@ export interface FileRouteTypes {
     | '/projects/$projectId'
     | '/projects/new'
     | '/finance'
+    | '/finance/budgets/$budgetId'
+    | '/finance/budgets/adjustments'
+    | '/finance/budgets/allocation'
+    | '/finance/budgets/analytics'
+    | '/finance/budgets/approval'
+    | '/finance/budgets/comparison'
+    | '/finance/budgets/history'
   id:
     | '__root__'
     | '/'
@@ -342,6 +426,13 @@ export interface FileRouteTypes {
     | '/_app/projects/$projectId'
     | '/_app/projects/new'
     | '/_app/finance/'
+    | '/_app/finance/budgets/$budgetId'
+    | '/_app/finance/budgets/adjustments'
+    | '/_app/finance/budgets/allocation'
+    | '/_app/finance/budgets/analytics'
+    | '/_app/finance/budgets/approval'
+    | '/_app/finance/budgets/comparison'
+    | '/_app/finance/budgets/history'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -540,13 +631,85 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppFinanceAiRouteImport
       parentRoute: typeof AppFinanceRoute
     }
+    '/_app/finance/budgets/history': {
+      id: '/_app/finance/budgets/history'
+      path: '/history'
+      fullPath: '/finance/budgets/history'
+      preLoaderRoute: typeof AppFinanceBudgetsHistoryRouteImport
+      parentRoute: typeof AppFinanceBudgetsRoute
+    }
+    '/_app/finance/budgets/comparison': {
+      id: '/_app/finance/budgets/comparison'
+      path: '/comparison'
+      fullPath: '/finance/budgets/comparison'
+      preLoaderRoute: typeof AppFinanceBudgetsComparisonRouteImport
+      parentRoute: typeof AppFinanceBudgetsRoute
+    }
+    '/_app/finance/budgets/approval': {
+      id: '/_app/finance/budgets/approval'
+      path: '/approval'
+      fullPath: '/finance/budgets/approval'
+      preLoaderRoute: typeof AppFinanceBudgetsApprovalRouteImport
+      parentRoute: typeof AppFinanceBudgetsRoute
+    }
+    '/_app/finance/budgets/analytics': {
+      id: '/_app/finance/budgets/analytics'
+      path: '/analytics'
+      fullPath: '/finance/budgets/analytics'
+      preLoaderRoute: typeof AppFinanceBudgetsAnalyticsRouteImport
+      parentRoute: typeof AppFinanceBudgetsRoute
+    }
+    '/_app/finance/budgets/allocation': {
+      id: '/_app/finance/budgets/allocation'
+      path: '/allocation'
+      fullPath: '/finance/budgets/allocation'
+      preLoaderRoute: typeof AppFinanceBudgetsAllocationRouteImport
+      parentRoute: typeof AppFinanceBudgetsRoute
+    }
+    '/_app/finance/budgets/adjustments': {
+      id: '/_app/finance/budgets/adjustments'
+      path: '/adjustments'
+      fullPath: '/finance/budgets/adjustments'
+      preLoaderRoute: typeof AppFinanceBudgetsAdjustmentsRouteImport
+      parentRoute: typeof AppFinanceBudgetsRoute
+    }
+    '/_app/finance/budgets/$budgetId': {
+      id: '/_app/finance/budgets/$budgetId'
+      path: '/$budgetId'
+      fullPath: '/finance/budgets/$budgetId'
+      preLoaderRoute: typeof AppFinanceBudgetsBudgetIdRouteImport
+      parentRoute: typeof AppFinanceBudgetsRoute
+    }
   }
 }
+
+interface AppFinanceBudgetsRouteChildren {
+  AppFinanceBudgetsBudgetIdRoute: typeof AppFinanceBudgetsBudgetIdRoute
+  AppFinanceBudgetsAdjustmentsRoute: typeof AppFinanceBudgetsAdjustmentsRoute
+  AppFinanceBudgetsAllocationRoute: typeof AppFinanceBudgetsAllocationRoute
+  AppFinanceBudgetsAnalyticsRoute: typeof AppFinanceBudgetsAnalyticsRoute
+  AppFinanceBudgetsApprovalRoute: typeof AppFinanceBudgetsApprovalRoute
+  AppFinanceBudgetsComparisonRoute: typeof AppFinanceBudgetsComparisonRoute
+  AppFinanceBudgetsHistoryRoute: typeof AppFinanceBudgetsHistoryRoute
+}
+
+const AppFinanceBudgetsRouteChildren: AppFinanceBudgetsRouteChildren = {
+  AppFinanceBudgetsBudgetIdRoute: AppFinanceBudgetsBudgetIdRoute,
+  AppFinanceBudgetsAdjustmentsRoute: AppFinanceBudgetsAdjustmentsRoute,
+  AppFinanceBudgetsAllocationRoute: AppFinanceBudgetsAllocationRoute,
+  AppFinanceBudgetsAnalyticsRoute: AppFinanceBudgetsAnalyticsRoute,
+  AppFinanceBudgetsApprovalRoute: AppFinanceBudgetsApprovalRoute,
+  AppFinanceBudgetsComparisonRoute: AppFinanceBudgetsComparisonRoute,
+  AppFinanceBudgetsHistoryRoute: AppFinanceBudgetsHistoryRoute,
+}
+
+const AppFinanceBudgetsRouteWithChildren =
+  AppFinanceBudgetsRoute._addFileChildren(AppFinanceBudgetsRouteChildren)
 
 interface AppFinanceRouteChildren {
   AppFinanceAiRoute: typeof AppFinanceAiRoute
   AppFinanceApprovalsRoute: typeof AppFinanceApprovalsRoute
-  AppFinanceBudgetsRoute: typeof AppFinanceBudgetsRoute
+  AppFinanceBudgetsRoute: typeof AppFinanceBudgetsRouteWithChildren
   AppFinanceExpensesRoute: typeof AppFinanceExpensesRoute
   AppFinancePayrollReviewRoute: typeof AppFinancePayrollReviewRoute
   AppFinanceReportsRoute: typeof AppFinanceReportsRoute
@@ -556,7 +719,7 @@ interface AppFinanceRouteChildren {
 const AppFinanceRouteChildren: AppFinanceRouteChildren = {
   AppFinanceAiRoute: AppFinanceAiRoute,
   AppFinanceApprovalsRoute: AppFinanceApprovalsRoute,
-  AppFinanceBudgetsRoute: AppFinanceBudgetsRoute,
+  AppFinanceBudgetsRoute: AppFinanceBudgetsRouteWithChildren,
   AppFinanceExpensesRoute: AppFinanceExpensesRoute,
   AppFinancePayrollReviewRoute: AppFinancePayrollReviewRoute,
   AppFinanceReportsRoute: AppFinanceReportsRoute,
