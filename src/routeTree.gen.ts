@@ -36,6 +36,17 @@ import { Route as AppFinanceExpensesRouteImport } from './routes/_app.finance.ex
 import { Route as AppFinanceBudgetsRouteImport } from './routes/_app.finance.budgets'
 import { Route as AppFinanceApprovalsRouteImport } from './routes/_app.finance.approvals'
 import { Route as AppFinanceAiRouteImport } from './routes/_app.finance.ai'
+import { Route as AppProjectsProjectIdWorkforceRouteImport } from './routes/_app.projects.$projectId.workforce'
+import { Route as AppProjectsProjectIdTimelineRouteImport } from './routes/_app.projects.$projectId.timeline'
+import { Route as AppProjectsProjectIdTasksRouteImport } from './routes/_app.projects.$projectId.tasks'
+import { Route as AppProjectsProjectIdRisksRouteImport } from './routes/_app.projects.$projectId.risks'
+import { Route as AppProjectsProjectIdQualityRouteImport } from './routes/_app.projects.$projectId.quality'
+import { Route as AppProjectsProjectIdMilestonesRouteImport } from './routes/_app.projects.$projectId.milestones'
+import { Route as AppProjectsProjectIdIssuesRouteImport } from './routes/_app.projects.$projectId.issues'
+import { Route as AppProjectsProjectIdEquipmentRouteImport } from './routes/_app.projects.$projectId.equipment'
+import { Route as AppProjectsProjectIdDocumentsRouteImport } from './routes/_app.projects.$projectId.documents'
+import { Route as AppProjectsProjectIdDailyLogsRouteImport } from './routes/_app.projects.$projectId.daily-logs'
+import { Route as AppProjectsProjectIdAnalyticsRouteImport } from './routes/_app.projects.$projectId.analytics'
 import { Route as AppFinanceBudgetsHistoryRouteImport } from './routes/_app.finance.budgets.history'
 import { Route as AppFinanceBudgetsComparisonRouteImport } from './routes/_app.finance.budgets.comparison'
 import { Route as AppFinanceBudgetsApprovalRouteImport } from './routes/_app.finance.budgets.approval'
@@ -178,6 +189,72 @@ const AppFinanceAiRoute = AppFinanceAiRouteImport.update({
   path: '/ai',
   getParentRoute: () => AppFinanceRoute,
 } as any)
+const AppProjectsProjectIdWorkforceRoute =
+  AppProjectsProjectIdWorkforceRouteImport.update({
+    id: '/workforce',
+    path: '/workforce',
+    getParentRoute: () => AppProjectsProjectIdRoute,
+  } as any)
+const AppProjectsProjectIdTimelineRoute =
+  AppProjectsProjectIdTimelineRouteImport.update({
+    id: '/timeline',
+    path: '/timeline',
+    getParentRoute: () => AppProjectsProjectIdRoute,
+  } as any)
+const AppProjectsProjectIdTasksRoute =
+  AppProjectsProjectIdTasksRouteImport.update({
+    id: '/tasks',
+    path: '/tasks',
+    getParentRoute: () => AppProjectsProjectIdRoute,
+  } as any)
+const AppProjectsProjectIdRisksRoute =
+  AppProjectsProjectIdRisksRouteImport.update({
+    id: '/risks',
+    path: '/risks',
+    getParentRoute: () => AppProjectsProjectIdRoute,
+  } as any)
+const AppProjectsProjectIdQualityRoute =
+  AppProjectsProjectIdQualityRouteImport.update({
+    id: '/quality',
+    path: '/quality',
+    getParentRoute: () => AppProjectsProjectIdRoute,
+  } as any)
+const AppProjectsProjectIdMilestonesRoute =
+  AppProjectsProjectIdMilestonesRouteImport.update({
+    id: '/milestones',
+    path: '/milestones',
+    getParentRoute: () => AppProjectsProjectIdRoute,
+  } as any)
+const AppProjectsProjectIdIssuesRoute =
+  AppProjectsProjectIdIssuesRouteImport.update({
+    id: '/issues',
+    path: '/issues',
+    getParentRoute: () => AppProjectsProjectIdRoute,
+  } as any)
+const AppProjectsProjectIdEquipmentRoute =
+  AppProjectsProjectIdEquipmentRouteImport.update({
+    id: '/equipment',
+    path: '/equipment',
+    getParentRoute: () => AppProjectsProjectIdRoute,
+  } as any)
+const AppProjectsProjectIdDocumentsRoute =
+  AppProjectsProjectIdDocumentsRouteImport.update({
+    id: '/documents',
+    path: '/documents',
+    getParentRoute: () => AppProjectsProjectIdRoute,
+  } as any)
+const AppProjectsProjectIdDailyLogsRoute =
+  AppProjectsProjectIdDailyLogsRouteImport.update({
+    id: '/daily-logs',
+    path: '/daily-logs',
+    getParentRoute: () => AppProjectsProjectIdRoute,
+  } as any)
+const AppProjectsProjectIdAnalyticsRoute =
+  AppProjectsProjectIdAnalyticsRouteImport.update({
+    id: '/analytics',
+    path: '/analytics',
+    getParentRoute: () => AppProjectsProjectIdRoute,
+  } as any)
 const AppFinanceBudgetsHistoryRoute =
   AppFinanceBudgetsHistoryRouteImport.update({
     id: '/history',
@@ -245,7 +322,7 @@ export interface FileRoutesByFullPath {
   '/finance/expenses': typeof AppFinanceExpensesRoute
   '/finance/payroll-review': typeof AppFinancePayrollReviewRoute
   '/finance/reports': typeof AppFinanceReportsRoute
-  '/projects/$projectId': typeof AppProjectsProjectIdRoute
+  '/projects/$projectId': typeof AppProjectsProjectIdRouteWithChildren
   '/projects/new': typeof AppProjectsNewRoute
   '/finance/': typeof AppFinanceIndexRoute
   '/finance/budgets/$budgetId': typeof AppFinanceBudgetsBudgetIdRoute
@@ -255,6 +332,17 @@ export interface FileRoutesByFullPath {
   '/finance/budgets/approval': typeof AppFinanceBudgetsApprovalRoute
   '/finance/budgets/comparison': typeof AppFinanceBudgetsComparisonRoute
   '/finance/budgets/history': typeof AppFinanceBudgetsHistoryRoute
+  '/projects/$projectId/analytics': typeof AppProjectsProjectIdAnalyticsRoute
+  '/projects/$projectId/daily-logs': typeof AppProjectsProjectIdDailyLogsRoute
+  '/projects/$projectId/documents': typeof AppProjectsProjectIdDocumentsRoute
+  '/projects/$projectId/equipment': typeof AppProjectsProjectIdEquipmentRoute
+  '/projects/$projectId/issues': typeof AppProjectsProjectIdIssuesRoute
+  '/projects/$projectId/milestones': typeof AppProjectsProjectIdMilestonesRoute
+  '/projects/$projectId/quality': typeof AppProjectsProjectIdQualityRoute
+  '/projects/$projectId/risks': typeof AppProjectsProjectIdRisksRoute
+  '/projects/$projectId/tasks': typeof AppProjectsProjectIdTasksRoute
+  '/projects/$projectId/timeline': typeof AppProjectsProjectIdTimelineRoute
+  '/projects/$projectId/workforce': typeof AppProjectsProjectIdWorkforceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -279,7 +367,7 @@ export interface FileRoutesByTo {
   '/finance/expenses': typeof AppFinanceExpensesRoute
   '/finance/payroll-review': typeof AppFinancePayrollReviewRoute
   '/finance/reports': typeof AppFinanceReportsRoute
-  '/projects/$projectId': typeof AppProjectsProjectIdRoute
+  '/projects/$projectId': typeof AppProjectsProjectIdRouteWithChildren
   '/projects/new': typeof AppProjectsNewRoute
   '/finance': typeof AppFinanceIndexRoute
   '/finance/budgets/$budgetId': typeof AppFinanceBudgetsBudgetIdRoute
@@ -289,6 +377,17 @@ export interface FileRoutesByTo {
   '/finance/budgets/approval': typeof AppFinanceBudgetsApprovalRoute
   '/finance/budgets/comparison': typeof AppFinanceBudgetsComparisonRoute
   '/finance/budgets/history': typeof AppFinanceBudgetsHistoryRoute
+  '/projects/$projectId/analytics': typeof AppProjectsProjectIdAnalyticsRoute
+  '/projects/$projectId/daily-logs': typeof AppProjectsProjectIdDailyLogsRoute
+  '/projects/$projectId/documents': typeof AppProjectsProjectIdDocumentsRoute
+  '/projects/$projectId/equipment': typeof AppProjectsProjectIdEquipmentRoute
+  '/projects/$projectId/issues': typeof AppProjectsProjectIdIssuesRoute
+  '/projects/$projectId/milestones': typeof AppProjectsProjectIdMilestonesRoute
+  '/projects/$projectId/quality': typeof AppProjectsProjectIdQualityRoute
+  '/projects/$projectId/risks': typeof AppProjectsProjectIdRisksRoute
+  '/projects/$projectId/tasks': typeof AppProjectsProjectIdTasksRoute
+  '/projects/$projectId/timeline': typeof AppProjectsProjectIdTimelineRoute
+  '/projects/$projectId/workforce': typeof AppProjectsProjectIdWorkforceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -316,7 +415,7 @@ export interface FileRoutesById {
   '/_app/finance/expenses': typeof AppFinanceExpensesRoute
   '/_app/finance/payroll-review': typeof AppFinancePayrollReviewRoute
   '/_app/finance/reports': typeof AppFinanceReportsRoute
-  '/_app/projects/$projectId': typeof AppProjectsProjectIdRoute
+  '/_app/projects/$projectId': typeof AppProjectsProjectIdRouteWithChildren
   '/_app/projects/new': typeof AppProjectsNewRoute
   '/_app/finance/': typeof AppFinanceIndexRoute
   '/_app/finance/budgets/$budgetId': typeof AppFinanceBudgetsBudgetIdRoute
@@ -326,6 +425,17 @@ export interface FileRoutesById {
   '/_app/finance/budgets/approval': typeof AppFinanceBudgetsApprovalRoute
   '/_app/finance/budgets/comparison': typeof AppFinanceBudgetsComparisonRoute
   '/_app/finance/budgets/history': typeof AppFinanceBudgetsHistoryRoute
+  '/_app/projects/$projectId/analytics': typeof AppProjectsProjectIdAnalyticsRoute
+  '/_app/projects/$projectId/daily-logs': typeof AppProjectsProjectIdDailyLogsRoute
+  '/_app/projects/$projectId/documents': typeof AppProjectsProjectIdDocumentsRoute
+  '/_app/projects/$projectId/equipment': typeof AppProjectsProjectIdEquipmentRoute
+  '/_app/projects/$projectId/issues': typeof AppProjectsProjectIdIssuesRoute
+  '/_app/projects/$projectId/milestones': typeof AppProjectsProjectIdMilestonesRoute
+  '/_app/projects/$projectId/quality': typeof AppProjectsProjectIdQualityRoute
+  '/_app/projects/$projectId/risks': typeof AppProjectsProjectIdRisksRoute
+  '/_app/projects/$projectId/tasks': typeof AppProjectsProjectIdTasksRoute
+  '/_app/projects/$projectId/timeline': typeof AppProjectsProjectIdTimelineRoute
+  '/_app/projects/$projectId/workforce': typeof AppProjectsProjectIdWorkforceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -363,6 +473,17 @@ export interface FileRouteTypes {
     | '/finance/budgets/approval'
     | '/finance/budgets/comparison'
     | '/finance/budgets/history'
+    | '/projects/$projectId/analytics'
+    | '/projects/$projectId/daily-logs'
+    | '/projects/$projectId/documents'
+    | '/projects/$projectId/equipment'
+    | '/projects/$projectId/issues'
+    | '/projects/$projectId/milestones'
+    | '/projects/$projectId/quality'
+    | '/projects/$projectId/risks'
+    | '/projects/$projectId/tasks'
+    | '/projects/$projectId/timeline'
+    | '/projects/$projectId/workforce'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -397,6 +518,17 @@ export interface FileRouteTypes {
     | '/finance/budgets/approval'
     | '/finance/budgets/comparison'
     | '/finance/budgets/history'
+    | '/projects/$projectId/analytics'
+    | '/projects/$projectId/daily-logs'
+    | '/projects/$projectId/documents'
+    | '/projects/$projectId/equipment'
+    | '/projects/$projectId/issues'
+    | '/projects/$projectId/milestones'
+    | '/projects/$projectId/quality'
+    | '/projects/$projectId/risks'
+    | '/projects/$projectId/tasks'
+    | '/projects/$projectId/timeline'
+    | '/projects/$projectId/workforce'
   id:
     | '__root__'
     | '/'
@@ -433,6 +565,17 @@ export interface FileRouteTypes {
     | '/_app/finance/budgets/approval'
     | '/_app/finance/budgets/comparison'
     | '/_app/finance/budgets/history'
+    | '/_app/projects/$projectId/analytics'
+    | '/_app/projects/$projectId/daily-logs'
+    | '/_app/projects/$projectId/documents'
+    | '/_app/projects/$projectId/equipment'
+    | '/_app/projects/$projectId/issues'
+    | '/_app/projects/$projectId/milestones'
+    | '/_app/projects/$projectId/quality'
+    | '/_app/projects/$projectId/risks'
+    | '/_app/projects/$projectId/tasks'
+    | '/_app/projects/$projectId/timeline'
+    | '/_app/projects/$projectId/workforce'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -631,6 +774,83 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppFinanceAiRouteImport
       parentRoute: typeof AppFinanceRoute
     }
+    '/_app/projects/$projectId/workforce': {
+      id: '/_app/projects/$projectId/workforce'
+      path: '/workforce'
+      fullPath: '/projects/$projectId/workforce'
+      preLoaderRoute: typeof AppProjectsProjectIdWorkforceRouteImport
+      parentRoute: typeof AppProjectsProjectIdRoute
+    }
+    '/_app/projects/$projectId/timeline': {
+      id: '/_app/projects/$projectId/timeline'
+      path: '/timeline'
+      fullPath: '/projects/$projectId/timeline'
+      preLoaderRoute: typeof AppProjectsProjectIdTimelineRouteImport
+      parentRoute: typeof AppProjectsProjectIdRoute
+    }
+    '/_app/projects/$projectId/tasks': {
+      id: '/_app/projects/$projectId/tasks'
+      path: '/tasks'
+      fullPath: '/projects/$projectId/tasks'
+      preLoaderRoute: typeof AppProjectsProjectIdTasksRouteImport
+      parentRoute: typeof AppProjectsProjectIdRoute
+    }
+    '/_app/projects/$projectId/risks': {
+      id: '/_app/projects/$projectId/risks'
+      path: '/risks'
+      fullPath: '/projects/$projectId/risks'
+      preLoaderRoute: typeof AppProjectsProjectIdRisksRouteImport
+      parentRoute: typeof AppProjectsProjectIdRoute
+    }
+    '/_app/projects/$projectId/quality': {
+      id: '/_app/projects/$projectId/quality'
+      path: '/quality'
+      fullPath: '/projects/$projectId/quality'
+      preLoaderRoute: typeof AppProjectsProjectIdQualityRouteImport
+      parentRoute: typeof AppProjectsProjectIdRoute
+    }
+    '/_app/projects/$projectId/milestones': {
+      id: '/_app/projects/$projectId/milestones'
+      path: '/milestones'
+      fullPath: '/projects/$projectId/milestones'
+      preLoaderRoute: typeof AppProjectsProjectIdMilestonesRouteImport
+      parentRoute: typeof AppProjectsProjectIdRoute
+    }
+    '/_app/projects/$projectId/issues': {
+      id: '/_app/projects/$projectId/issues'
+      path: '/issues'
+      fullPath: '/projects/$projectId/issues'
+      preLoaderRoute: typeof AppProjectsProjectIdIssuesRouteImport
+      parentRoute: typeof AppProjectsProjectIdRoute
+    }
+    '/_app/projects/$projectId/equipment': {
+      id: '/_app/projects/$projectId/equipment'
+      path: '/equipment'
+      fullPath: '/projects/$projectId/equipment'
+      preLoaderRoute: typeof AppProjectsProjectIdEquipmentRouteImport
+      parentRoute: typeof AppProjectsProjectIdRoute
+    }
+    '/_app/projects/$projectId/documents': {
+      id: '/_app/projects/$projectId/documents'
+      path: '/documents'
+      fullPath: '/projects/$projectId/documents'
+      preLoaderRoute: typeof AppProjectsProjectIdDocumentsRouteImport
+      parentRoute: typeof AppProjectsProjectIdRoute
+    }
+    '/_app/projects/$projectId/daily-logs': {
+      id: '/_app/projects/$projectId/daily-logs'
+      path: '/daily-logs'
+      fullPath: '/projects/$projectId/daily-logs'
+      preLoaderRoute: typeof AppProjectsProjectIdDailyLogsRouteImport
+      parentRoute: typeof AppProjectsProjectIdRoute
+    }
+    '/_app/projects/$projectId/analytics': {
+      id: '/_app/projects/$projectId/analytics'
+      path: '/analytics'
+      fullPath: '/projects/$projectId/analytics'
+      preLoaderRoute: typeof AppProjectsProjectIdAnalyticsRouteImport
+      parentRoute: typeof AppProjectsProjectIdRoute
+    }
     '/_app/finance/budgets/history': {
       id: '/_app/finance/budgets/history'
       path: '/history'
@@ -730,13 +950,44 @@ const AppFinanceRouteWithChildren = AppFinanceRoute._addFileChildren(
   AppFinanceRouteChildren,
 )
 
+interface AppProjectsProjectIdRouteChildren {
+  AppProjectsProjectIdAnalyticsRoute: typeof AppProjectsProjectIdAnalyticsRoute
+  AppProjectsProjectIdDailyLogsRoute: typeof AppProjectsProjectIdDailyLogsRoute
+  AppProjectsProjectIdDocumentsRoute: typeof AppProjectsProjectIdDocumentsRoute
+  AppProjectsProjectIdEquipmentRoute: typeof AppProjectsProjectIdEquipmentRoute
+  AppProjectsProjectIdIssuesRoute: typeof AppProjectsProjectIdIssuesRoute
+  AppProjectsProjectIdMilestonesRoute: typeof AppProjectsProjectIdMilestonesRoute
+  AppProjectsProjectIdQualityRoute: typeof AppProjectsProjectIdQualityRoute
+  AppProjectsProjectIdRisksRoute: typeof AppProjectsProjectIdRisksRoute
+  AppProjectsProjectIdTasksRoute: typeof AppProjectsProjectIdTasksRoute
+  AppProjectsProjectIdTimelineRoute: typeof AppProjectsProjectIdTimelineRoute
+  AppProjectsProjectIdWorkforceRoute: typeof AppProjectsProjectIdWorkforceRoute
+}
+
+const AppProjectsProjectIdRouteChildren: AppProjectsProjectIdRouteChildren = {
+  AppProjectsProjectIdAnalyticsRoute: AppProjectsProjectIdAnalyticsRoute,
+  AppProjectsProjectIdDailyLogsRoute: AppProjectsProjectIdDailyLogsRoute,
+  AppProjectsProjectIdDocumentsRoute: AppProjectsProjectIdDocumentsRoute,
+  AppProjectsProjectIdEquipmentRoute: AppProjectsProjectIdEquipmentRoute,
+  AppProjectsProjectIdIssuesRoute: AppProjectsProjectIdIssuesRoute,
+  AppProjectsProjectIdMilestonesRoute: AppProjectsProjectIdMilestonesRoute,
+  AppProjectsProjectIdQualityRoute: AppProjectsProjectIdQualityRoute,
+  AppProjectsProjectIdRisksRoute: AppProjectsProjectIdRisksRoute,
+  AppProjectsProjectIdTasksRoute: AppProjectsProjectIdTasksRoute,
+  AppProjectsProjectIdTimelineRoute: AppProjectsProjectIdTimelineRoute,
+  AppProjectsProjectIdWorkforceRoute: AppProjectsProjectIdWorkforceRoute,
+}
+
+const AppProjectsProjectIdRouteWithChildren =
+  AppProjectsProjectIdRoute._addFileChildren(AppProjectsProjectIdRouteChildren)
+
 interface AppProjectsRouteChildren {
-  AppProjectsProjectIdRoute: typeof AppProjectsProjectIdRoute
+  AppProjectsProjectIdRoute: typeof AppProjectsProjectIdRouteWithChildren
   AppProjectsNewRoute: typeof AppProjectsNewRoute
 }
 
 const AppProjectsRouteChildren: AppProjectsRouteChildren = {
-  AppProjectsProjectIdRoute: AppProjectsProjectIdRoute,
+  AppProjectsProjectIdRoute: AppProjectsProjectIdRouteWithChildren,
   AppProjectsNewRoute: AppProjectsNewRoute,
 }
 
