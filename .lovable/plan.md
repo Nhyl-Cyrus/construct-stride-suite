@@ -1,157 +1,110 @@
-## Goal
 
-Reorganize EasyConstruct into a clean MVC architecture **without touching the working UI or breaking any route**. TanStack Router requires route files to physically live under `src/routes/`, so routes stay there and act as thin Views that delegate to Controllers, Services, and Models living in a new feature-first tree.
+## Scope
 
-## Constraints we must respect
+Finish the Project Manager and Human Resources workspaces so every sidebar link, tab, and action maps to a real implemented page with working interactions. Finance module is untouched. Design system, theme, layout, and shared components are untouched.
 
-- `src/routes/**` filenames are owned by TanStack Router — they cannot be moved into `views/` or `routes/project-manager/`. We'll keep the flat `_app.*.tsx` files and make each one a thin shell that renders a View component.
-- `src/components/ui/**` (shadcn) and the design system (`src/styles.css`, theme provider, tokens) must not change.
-- `src/lib/workspaces.ts`, `src/hooks/use-workspace.ts`, sidebar, top bar, role-workspace-page must keep working.
-- Existing mock data in `src/lib/hr-data.ts` and `src/lib/pm-data.ts` must remain reachable (re-exported from the new model layer) so nothing breaks during the move.
+Because this is a very large scope, I'll deliver it in **three sequential batches**. Each batch ends with a green typecheck and clickable flows. Please confirm the batches (or trim) before I start.
 
-## Target structure (overlay, additive)
+---
 
-```text
-src/
-  routes/                       # TanStack route files — thin Views only
-    _app.hr.tsx                 # renders <HRWorkspaceView/>
-    _app.projects.tsx           # renders <ProjectsListView/>
-    ...
-  app/
-    models/                     # Model layer — types, DTOs, schemas, mock data
-      employees/
-        employee.model.ts
-        employee.schema.ts
-        employee.mock.ts
-        index.ts
-      attendance/
-      payroll/
-      projects/
-      workflow/
-      reports/
-      notifications/
-      users/
-      roles/
-      permissions/
-      analytics/
-    repositories/               # Data access abstraction (swap mock → API later)
-      employee.repository.ts
-      attendance.repository.ts
-      payroll.repository.ts
-      project.repository.ts
-      workflow.repository.ts
-      ai.repository.ts
-      notification.repository.ts
-      base.repository.ts
-    services/                   # Business logic, orchestrates repositories
-      auth.service.ts
-      employee.service.ts
-      attendance.service.ts
-      payroll.service.ts
-      project.service.ts
-      workflow.service.ts
-      document.service.ts
-      ai.service.ts
-      report.service.ts
-      notification.service.ts
-      theme.service.ts
-    controllers/                # Hook-shaped controllers consumed by Views
-      hr/
-        useEmployeesController.ts
-        useAttendanceController.ts
-        usePayrollController.ts
-        useWorkforceController.ts
-        useHRDashboardController.ts
-      project-manager/
-        useProjectsController.ts
-        useProjectDetailController.ts
-        useWorkflowsController.ts
-        useApprovalsController.ts
-      finance/
-      architect/
-      engineer/
-      site/
-      consultant/
-    views/                      # Pure presentation — receives data + callbacks
-      hr/
-        HRWorkspaceView.tsx
-        sections/
-          OverviewSection.tsx
-          EmployeesSection.tsx
-          AttendanceSection.tsx
-          PayrollSection.tsx
-          WorkforceSection.tsx
-          ReportsSection.tsx
-          AIAssistantSection.tsx
-      project-manager/
-        ProjectsListView.tsx
-        ProjectDetailView.tsx
-        NewProjectView.tsx
-        WorkflowsView.tsx
-        ApprovalsView.tsx
-      finance/  architect/  engineer/  site/  consultant/
-      dashboard/  shared/
-    components/                 # Role-scoped composite components
-      hr/        project-manager/   finance/
-      architect/ engineer/          site/        consultant/
-      shared/    layout/            navigation/
-      dashboard/ forms/  tables/  charts/  dialogs/  cards/
-    hooks/                      # Cross-cutting hooks (useTheme, usePermissions, …)
-    api/                        # Future HTTP clients
-      auth/  employees/  attendance/  payroll/  projects/
-      workflow/  reports/  notifications/  ai/
-        # each: request.ts, response.ts, service.ts
-    validation/                 # Zod schemas (shared with models)
-    permissions/
-      roles.ts  abilities.ts  workspace.ts
-    state/
-      global/   workspace/   feature/
-    utils/
-      date.ts  currency.ts  attendance.ts  validation.ts
-      formatting.ts  permissions.ts  theme.ts  calculations.ts
-    constants/
-    contexts/
-    providers/
-  components/ui/                # shadcn — UNCHANGED
-  styles.css                    # design tokens — UNCHANGED
+## Batch 1 — Project Manager completion
+
+### New routes (converted from placeholders / hash anchors)
+```
+/projects/$projectId/timeline      Gantt-style schedule + critical path
+/projects/$projectId/tasks         Task board (kanban + list toggle)
+/projects/$projectId/milestones    Milestone tracker + status
+/projects/$projectId/workforce     Assigned crews, roles, utilization
+/projects/$projectId/equipment     Equipment assignments + availability
+/projects/$projectId/documents     Project-scoped doc list
+/projects/$projectId/daily-logs    Site diary entries
+/projects/$projectId/risks         Risk register (CRUD)
+/projects/$projectId/issues        Issue tracker (CRUD)
+/projects/$projectId/quality       QA inspections + checklists
+/projects/$projectId/analytics     Project-level analytics
+/notifications                     Global inbox
+/settings                          Workspace settings
 ```
 
-Path alias `@/app/*` will be added to `tsconfig.json` and `vite.config.ts` so imports read `@/app/services/employee.service`.
+### Sidebar refactor
+Add "Operations" group (Timeline, Tasks, Milestones, Workforce, Equipment, Risk, Issues, Quality) under a currently opened project. Add Notifications + Settings to Intelligence group.
 
-## Layer responsibilities & communication
+### Button audit — wire real actions
+Across `/projects`, `/projects/$id`, `/workflows`, `/approvals`, `/documents`, `/resources`, `/reports`, `/ai-insights`, `/audit`:
+- Create/Edit/Duplicate/Archive/Delete → open dialog + toast (mock persistence via in-memory service)
+- Approve/Reject → controller action + toast + row status update
+- Export/Import/Download/Print → toast + downloadable JSON/CSV blob
+- Share → clipboard copy + toast
+- View Details / Open Timeline / Open Analytics → Link to new route above
 
-- **Models** — Pure TypeScript: `Employee`, `Project`, `PayrollRow`, Zod schemas, mock fixtures. No React, no I/O. Shared by every layer above.
-- **Repositories** — The only place that knows *where* data lives. Today they return mock data from models; tomorrow they call `api/*`. Each exposes a narrow async interface (`list`, `getById`, `create`, …). Services depend on repository interfaces, not implementations.
-- **Services** — Business rules and orchestration (e.g. `payroll.service.runBatch()` validates with schema, calls `payrollRepository`, emits notifications). No React, no JSX. Reusable from controllers, server functions, tests.
-- **Controllers** — React hooks (`useEmployeesController`) that wrap services with React Query / local state, expose `{ data, isLoading, error, actions }`, run permission checks, and surface toast/error handling. No JSX.
-- **Views** — React components that consume one controller, render UI from `@/components/ui` + `app/components/*`, and call controller actions on events. No fetching, no business math.
-- **Route files** (`src/routes/_app.*.tsx`) — Stay where TanStack expects them. Each becomes a 5-line shell: `head()` meta + `<SomeView />`.
+---
 
-Flow: `Route → View → Controller (hook) → Service → Repository → Model`.
+## Batch 2 — Human Resources completion
 
-## Migration plan (incremental, non-breaking)
+Convert `/hr` from single tabbed page with hash sections into a proper sub-routed workspace matching the Finance pattern.
 
-1. **Scaffold the tree** under `src/app/**` with `index.ts` barrels; add `@/app/*` path alias.
-2. **Move models**: create `app/models/employees|attendance|payroll|projects/*` by re-exporting from existing `src/lib/hr-data.ts` and `src/lib/pm-data.ts`, then physically relocate the data and turn the old files into one-line re-exports (keeps current imports green).
-3. **Add repositories** wrapping the mock data with async signatures.
-4. **Add services** with the small amount of derived logic currently inline in routes (status tone mapping, KPI aggregation, AI insight selection).
-5. **Add controllers** as hooks that today simply `useMemo` over service output — ready for React Query swap later.
-6. **Extract Views** from each existing route into `app/views/<workspace>/*`. Each route file becomes a thin shell. Done one workspace at a time (start with HR, then Project Manager, then the role workspaces) so the app stays runnable after every step.
-7. **Permissions / validation / utils / api / state** scaffolds are created with README stubs and one real example each (`permissions/roles.ts`, `validation/employee.schema.ts`, `utils/currency.ts`, `api/employees/{request,response,service}.ts`) so future modules have a template.
-8. **Docs**: add `src/app/README.md` explaining the layers, the communication contract, and a "How to add a new module" recipe.
+### New routes
+```
+/hr                       Dashboard (existing overview extracted)
+/hr/employees             Directory (list + filters)
+/hr/employees/$id         Profile (tabs: Overview, Attendance, Payroll, Docs, Performance)
+/hr/attendance            Daily attendance
+/hr/attendance/verification
+/hr/attendance/geofence
+/hr/attendance/issues
+/hr/leave                 Leave management (requests, approvals, balance)
+/hr/schedule              Shift scheduling
+/hr/payroll               Payroll processing
+/hr/payroll/history
+/hr/payroll/approvals
+/hr/benefits
+/hr/deductions
+/hr/recruitment           Postings + applications
+/hr/recruitment/interviews
+/hr/performance           Reviews
+/hr/training              Programs + certifications
+/hr/documents
+/hr/workforce             Allocation + capacity + availability + departments (tabbed)
+/hr/reports
+/hr/ai                    Workforce intelligence
+/hr/notifications
+/hr/settings
+```
 
-## Out of scope
+Rewrite `src/lib/workspaces.ts` HR sidebar to use these real routes (drop hash URLs).
 
-- No visual changes, no route URL changes, no theme/token changes.
-- No new backend wiring — repositories stay mock-backed; `api/*` is scaffolding only.
-- shadcn `components/ui` stays untouched.
+### Button audit — wire real actions
+Add Employee / Deactivate / Assign Dept / Approve Leave / Generate Payroll / Schedule Interview / Assign Training / Issue Certificate / Upload Docs — all open dialogs with Zod validation, update controller state, toast.
 
-## Deliverable per turn
+---
 
-Because this is a large refactor, I'll execute it in 3 batches and verify the build between each:
+## Batch 3 — Architecture polish
 
-- **Batch A**: scaffolding + path alias + models + repositories + services + permissions/utils stubs + README. No route edits.
-- **Batch B**: HR workspace migrated to View + Controller; `_app.hr.tsx` becomes a shell.
-- **Batch C**: Project Manager + role workspaces (Finance, Architect, Engineer, Site, Consultant) migrated the same way.
+### MVC additions per new feature
+- `models/` fixtures for tasks, milestones, risks, issues, quality, equipment, daily-logs, leave, schedule, benefits, recruitment, performance, training
+- `repositories/` + `services/` for each
+- `controllers/` hooks driving each view
+- `validation/` Zod schemas for every CRUD form
+- `api/*/service.ts` HTTP shim per feature
 
-After approval I'll start with Batch A.
+### PostgreSQL blueprint
+Single doc: `docs/pm-hr/data-model.md` — tables, FKs, indexes, soft-delete, audit columns for every new entity, plus REST endpoint map for future Express backend.
+
+### Refine.dev integration points
+Add `docs/pm-hr/refine-integration.md` mapping each controller to `useTable/useList/useShow/useCreate/useUpdate/useDelete` — actual Refine wiring stays out until Cloud is turned on (no live backend yet).
+
+---
+
+## What I will NOT do
+
+- Touch Finance module, design tokens, theme, sidebar chrome, shared components
+- Add real backend (no Lovable Cloud enablement in this pass; all persistence stays in-memory via services, matching the existing pattern)
+- Modify Architect/Engineer/Site/Consultant workspaces
+
+---
+
+## Confirm before I start
+
+1. **Green-light all 3 batches** as one continuous multi-turn implementation? Or start with Batch 1 only and re-scope after?
+2. **Persistence**: keep the current in-memory service pattern (no DB), correct? Full Cloud/Postgres wiring is a separate pass.
+3. **HR route restructure** (breaking `/hr#hash` → `/hr/subroute`) — OK? It's the right shape but changes URLs.
