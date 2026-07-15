@@ -209,6 +209,13 @@ const pm: Workspace = {
         { title: "Resources", url: "/resources", icon: CalendarRange },
         { title: "Reports", url: "/reports", icon: FileBarChart2 },
         { title: "Audit & Security", url: "/audit", icon: ShieldCheck },
+      ],
+    },
+    {
+      label: "Inbox",
+      items: [
+        { title: "Notifications", url: "/notifications", icon: Bell },
+        { title: "Settings", url: "/settings", icon: ShieldCheck },
         { title: "Support", url: "/support", icon: LifeBuoy },
       ],
     },
