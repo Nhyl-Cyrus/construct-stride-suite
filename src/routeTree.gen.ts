@@ -14,9 +14,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppWorkflowsRouteImport } from './routes/_app.workflows'
 import { Route as AppSupportRouteImport } from './routes/_app.support'
 import { Route as AppSiteRouteImport } from './routes/_app.site'
+import { Route as AppSettingsRouteImport } from './routes/_app.settings'
 import { Route as AppResourcesRouteImport } from './routes/_app.resources'
 import { Route as AppReportsRouteImport } from './routes/_app.reports'
 import { Route as AppProjectsRouteImport } from './routes/_app.projects'
+import { Route as AppNotificationsRouteImport } from './routes/_app.notifications'
 import { Route as AppHrRouteImport } from './routes/_app.hr'
 import { Route as AppFinanceRouteImport } from './routes/_app.finance'
 import { Route as AppEngineerRouteImport } from './routes/_app.engineer'
@@ -30,6 +32,22 @@ import { Route as AppAiInsightsRouteImport } from './routes/_app.ai-insights'
 import { Route as AppFinanceIndexRouteImport } from './routes/_app.finance.index'
 import { Route as AppProjectsNewRouteImport } from './routes/_app.projects.new'
 import { Route as AppProjectsProjectIdRouteImport } from './routes/_app.projects.$projectId'
+import { Route as AppHrWorkforceRouteImport } from './routes/_app.hr.workforce'
+import { Route as AppHrTrainingRouteImport } from './routes/_app.hr.training'
+import { Route as AppHrSettingsRouteImport } from './routes/_app.hr.settings'
+import { Route as AppHrScheduleRouteImport } from './routes/_app.hr.schedule'
+import { Route as AppHrReportsRouteImport } from './routes/_app.hr.reports'
+import { Route as AppHrRecruitmentRouteImport } from './routes/_app.hr.recruitment'
+import { Route as AppHrPerformanceRouteImport } from './routes/_app.hr.performance'
+import { Route as AppHrPayrollRouteImport } from './routes/_app.hr.payroll'
+import { Route as AppHrNotificationsRouteImport } from './routes/_app.hr.notifications'
+import { Route as AppHrLeaveRouteImport } from './routes/_app.hr.leave'
+import { Route as AppHrEmployeesRouteImport } from './routes/_app.hr.employees'
+import { Route as AppHrDocumentsRouteImport } from './routes/_app.hr.documents'
+import { Route as AppHrDeductionsRouteImport } from './routes/_app.hr.deductions'
+import { Route as AppHrBenefitsRouteImport } from './routes/_app.hr.benefits'
+import { Route as AppHrAttendanceRouteImport } from './routes/_app.hr.attendance'
+import { Route as AppHrAiRouteImport } from './routes/_app.hr.ai'
 import { Route as AppFinanceReportsRouteImport } from './routes/_app.finance.reports'
 import { Route as AppFinancePayrollReviewRouteImport } from './routes/_app.finance.payroll-review'
 import { Route as AppFinanceExpensesRouteImport } from './routes/_app.finance.expenses'
@@ -47,6 +65,12 @@ import { Route as AppProjectsProjectIdEquipmentRouteImport } from './routes/_app
 import { Route as AppProjectsProjectIdDocumentsRouteImport } from './routes/_app.projects.$projectId.documents'
 import { Route as AppProjectsProjectIdDailyLogsRouteImport } from './routes/_app.projects.$projectId.daily-logs'
 import { Route as AppProjectsProjectIdAnalyticsRouteImport } from './routes/_app.projects.$projectId.analytics'
+import { Route as AppHrRecruitmentInterviewsRouteImport } from './routes/_app.hr.recruitment.interviews'
+import { Route as AppHrPayrollHistoryRouteImport } from './routes/_app.hr.payroll.history'
+import { Route as AppHrPayrollApprovalsRouteImport } from './routes/_app.hr.payroll.approvals'
+import { Route as AppHrAttendanceVerificationRouteImport } from './routes/_app.hr.attendance.verification'
+import { Route as AppHrAttendanceIssuesRouteImport } from './routes/_app.hr.attendance.issues'
+import { Route as AppHrAttendanceGeofenceRouteImport } from './routes/_app.hr.attendance.geofence'
 import { Route as AppFinanceBudgetsHistoryRouteImport } from './routes/_app.finance.budgets.history'
 import { Route as AppFinanceBudgetsComparisonRouteImport } from './routes/_app.finance.budgets.comparison'
 import { Route as AppFinanceBudgetsApprovalRouteImport } from './routes/_app.finance.budgets.approval'
@@ -79,6 +103,11 @@ const AppSiteRoute = AppSiteRouteImport.update({
   path: '/site',
   getParentRoute: () => AppRoute,
 } as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppResourcesRoute = AppResourcesRouteImport.update({
   id: '/resources',
   path: '/resources',
@@ -92,6 +121,11 @@ const AppReportsRoute = AppReportsRouteImport.update({
 const AppProjectsRoute = AppProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppNotificationsRoute = AppNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
   getParentRoute: () => AppRoute,
 } as any)
 const AppHrRoute = AppHrRouteImport.update({
@@ -158,6 +192,86 @@ const AppProjectsProjectIdRoute = AppProjectsProjectIdRouteImport.update({
   id: '/$projectId',
   path: '/$projectId',
   getParentRoute: () => AppProjectsRoute,
+} as any)
+const AppHrWorkforceRoute = AppHrWorkforceRouteImport.update({
+  id: '/workforce',
+  path: '/workforce',
+  getParentRoute: () => AppHrRoute,
+} as any)
+const AppHrTrainingRoute = AppHrTrainingRouteImport.update({
+  id: '/training',
+  path: '/training',
+  getParentRoute: () => AppHrRoute,
+} as any)
+const AppHrSettingsRoute = AppHrSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppHrRoute,
+} as any)
+const AppHrScheduleRoute = AppHrScheduleRouteImport.update({
+  id: '/schedule',
+  path: '/schedule',
+  getParentRoute: () => AppHrRoute,
+} as any)
+const AppHrReportsRoute = AppHrReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AppHrRoute,
+} as any)
+const AppHrRecruitmentRoute = AppHrRecruitmentRouteImport.update({
+  id: '/recruitment',
+  path: '/recruitment',
+  getParentRoute: () => AppHrRoute,
+} as any)
+const AppHrPerformanceRoute = AppHrPerformanceRouteImport.update({
+  id: '/performance',
+  path: '/performance',
+  getParentRoute: () => AppHrRoute,
+} as any)
+const AppHrPayrollRoute = AppHrPayrollRouteImport.update({
+  id: '/payroll',
+  path: '/payroll',
+  getParentRoute: () => AppHrRoute,
+} as any)
+const AppHrNotificationsRoute = AppHrNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => AppHrRoute,
+} as any)
+const AppHrLeaveRoute = AppHrLeaveRouteImport.update({
+  id: '/leave',
+  path: '/leave',
+  getParentRoute: () => AppHrRoute,
+} as any)
+const AppHrEmployeesRoute = AppHrEmployeesRouteImport.update({
+  id: '/employees',
+  path: '/employees',
+  getParentRoute: () => AppHrRoute,
+} as any)
+const AppHrDocumentsRoute = AppHrDocumentsRouteImport.update({
+  id: '/documents',
+  path: '/documents',
+  getParentRoute: () => AppHrRoute,
+} as any)
+const AppHrDeductionsRoute = AppHrDeductionsRouteImport.update({
+  id: '/deductions',
+  path: '/deductions',
+  getParentRoute: () => AppHrRoute,
+} as any)
+const AppHrBenefitsRoute = AppHrBenefitsRouteImport.update({
+  id: '/benefits',
+  path: '/benefits',
+  getParentRoute: () => AppHrRoute,
+} as any)
+const AppHrAttendanceRoute = AppHrAttendanceRouteImport.update({
+  id: '/attendance',
+  path: '/attendance',
+  getParentRoute: () => AppHrRoute,
+} as any)
+const AppHrAiRoute = AppHrAiRouteImport.update({
+  id: '/ai',
+  path: '/ai',
+  getParentRoute: () => AppHrRoute,
 } as any)
 const AppFinanceReportsRoute = AppFinanceReportsRouteImport.update({
   id: '/reports',
@@ -255,6 +369,38 @@ const AppProjectsProjectIdAnalyticsRoute =
     path: '/analytics',
     getParentRoute: () => AppProjectsProjectIdRoute,
   } as any)
+const AppHrRecruitmentInterviewsRoute =
+  AppHrRecruitmentInterviewsRouteImport.update({
+    id: '/interviews',
+    path: '/interviews',
+    getParentRoute: () => AppHrRecruitmentRoute,
+  } as any)
+const AppHrPayrollHistoryRoute = AppHrPayrollHistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => AppHrPayrollRoute,
+} as any)
+const AppHrPayrollApprovalsRoute = AppHrPayrollApprovalsRouteImport.update({
+  id: '/approvals',
+  path: '/approvals',
+  getParentRoute: () => AppHrPayrollRoute,
+} as any)
+const AppHrAttendanceVerificationRoute =
+  AppHrAttendanceVerificationRouteImport.update({
+    id: '/verification',
+    path: '/verification',
+    getParentRoute: () => AppHrAttendanceRoute,
+  } as any)
+const AppHrAttendanceIssuesRoute = AppHrAttendanceIssuesRouteImport.update({
+  id: '/issues',
+  path: '/issues',
+  getParentRoute: () => AppHrAttendanceRoute,
+} as any)
+const AppHrAttendanceGeofenceRoute = AppHrAttendanceGeofenceRouteImport.update({
+  id: '/geofence',
+  path: '/geofence',
+  getParentRoute: () => AppHrAttendanceRoute,
+} as any)
 const AppFinanceBudgetsHistoryRoute =
   AppFinanceBudgetsHistoryRouteImport.update({
     id: '/history',
@@ -309,10 +455,12 @@ export interface FileRoutesByFullPath {
   '/documents': typeof AppDocumentsRoute
   '/engineer': typeof AppEngineerRoute
   '/finance': typeof AppFinanceRouteWithChildren
-  '/hr': typeof AppHrRoute
+  '/hr': typeof AppHrRouteWithChildren
+  '/notifications': typeof AppNotificationsRoute
   '/projects': typeof AppProjectsRouteWithChildren
   '/reports': typeof AppReportsRoute
   '/resources': typeof AppResourcesRoute
+  '/settings': typeof AppSettingsRoute
   '/site': typeof AppSiteRoute
   '/support': typeof AppSupportRoute
   '/workflows': typeof AppWorkflowsRoute
@@ -322,6 +470,22 @@ export interface FileRoutesByFullPath {
   '/finance/expenses': typeof AppFinanceExpensesRoute
   '/finance/payroll-review': typeof AppFinancePayrollReviewRoute
   '/finance/reports': typeof AppFinanceReportsRoute
+  '/hr/ai': typeof AppHrAiRoute
+  '/hr/attendance': typeof AppHrAttendanceRouteWithChildren
+  '/hr/benefits': typeof AppHrBenefitsRoute
+  '/hr/deductions': typeof AppHrDeductionsRoute
+  '/hr/documents': typeof AppHrDocumentsRoute
+  '/hr/employees': typeof AppHrEmployeesRoute
+  '/hr/leave': typeof AppHrLeaveRoute
+  '/hr/notifications': typeof AppHrNotificationsRoute
+  '/hr/payroll': typeof AppHrPayrollRouteWithChildren
+  '/hr/performance': typeof AppHrPerformanceRoute
+  '/hr/recruitment': typeof AppHrRecruitmentRouteWithChildren
+  '/hr/reports': typeof AppHrReportsRoute
+  '/hr/schedule': typeof AppHrScheduleRoute
+  '/hr/settings': typeof AppHrSettingsRoute
+  '/hr/training': typeof AppHrTrainingRoute
+  '/hr/workforce': typeof AppHrWorkforceRoute
   '/projects/$projectId': typeof AppProjectsProjectIdRouteWithChildren
   '/projects/new': typeof AppProjectsNewRoute
   '/finance/': typeof AppFinanceIndexRoute
@@ -332,6 +496,12 @@ export interface FileRoutesByFullPath {
   '/finance/budgets/approval': typeof AppFinanceBudgetsApprovalRoute
   '/finance/budgets/comparison': typeof AppFinanceBudgetsComparisonRoute
   '/finance/budgets/history': typeof AppFinanceBudgetsHistoryRoute
+  '/hr/attendance/geofence': typeof AppHrAttendanceGeofenceRoute
+  '/hr/attendance/issues': typeof AppHrAttendanceIssuesRoute
+  '/hr/attendance/verification': typeof AppHrAttendanceVerificationRoute
+  '/hr/payroll/approvals': typeof AppHrPayrollApprovalsRoute
+  '/hr/payroll/history': typeof AppHrPayrollHistoryRoute
+  '/hr/recruitment/interviews': typeof AppHrRecruitmentInterviewsRoute
   '/projects/$projectId/analytics': typeof AppProjectsProjectIdAnalyticsRoute
   '/projects/$projectId/daily-logs': typeof AppProjectsProjectIdDailyLogsRoute
   '/projects/$projectId/documents': typeof AppProjectsProjectIdDocumentsRoute
@@ -354,10 +524,12 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AppDashboardRoute
   '/documents': typeof AppDocumentsRoute
   '/engineer': typeof AppEngineerRoute
-  '/hr': typeof AppHrRoute
+  '/hr': typeof AppHrRouteWithChildren
+  '/notifications': typeof AppNotificationsRoute
   '/projects': typeof AppProjectsRouteWithChildren
   '/reports': typeof AppReportsRoute
   '/resources': typeof AppResourcesRoute
+  '/settings': typeof AppSettingsRoute
   '/site': typeof AppSiteRoute
   '/support': typeof AppSupportRoute
   '/workflows': typeof AppWorkflowsRoute
@@ -367,6 +539,22 @@ export interface FileRoutesByTo {
   '/finance/expenses': typeof AppFinanceExpensesRoute
   '/finance/payroll-review': typeof AppFinancePayrollReviewRoute
   '/finance/reports': typeof AppFinanceReportsRoute
+  '/hr/ai': typeof AppHrAiRoute
+  '/hr/attendance': typeof AppHrAttendanceRouteWithChildren
+  '/hr/benefits': typeof AppHrBenefitsRoute
+  '/hr/deductions': typeof AppHrDeductionsRoute
+  '/hr/documents': typeof AppHrDocumentsRoute
+  '/hr/employees': typeof AppHrEmployeesRoute
+  '/hr/leave': typeof AppHrLeaveRoute
+  '/hr/notifications': typeof AppHrNotificationsRoute
+  '/hr/payroll': typeof AppHrPayrollRouteWithChildren
+  '/hr/performance': typeof AppHrPerformanceRoute
+  '/hr/recruitment': typeof AppHrRecruitmentRouteWithChildren
+  '/hr/reports': typeof AppHrReportsRoute
+  '/hr/schedule': typeof AppHrScheduleRoute
+  '/hr/settings': typeof AppHrSettingsRoute
+  '/hr/training': typeof AppHrTrainingRoute
+  '/hr/workforce': typeof AppHrWorkforceRoute
   '/projects/$projectId': typeof AppProjectsProjectIdRouteWithChildren
   '/projects/new': typeof AppProjectsNewRoute
   '/finance': typeof AppFinanceIndexRoute
@@ -377,6 +565,12 @@ export interface FileRoutesByTo {
   '/finance/budgets/approval': typeof AppFinanceBudgetsApprovalRoute
   '/finance/budgets/comparison': typeof AppFinanceBudgetsComparisonRoute
   '/finance/budgets/history': typeof AppFinanceBudgetsHistoryRoute
+  '/hr/attendance/geofence': typeof AppHrAttendanceGeofenceRoute
+  '/hr/attendance/issues': typeof AppHrAttendanceIssuesRoute
+  '/hr/attendance/verification': typeof AppHrAttendanceVerificationRoute
+  '/hr/payroll/approvals': typeof AppHrPayrollApprovalsRoute
+  '/hr/payroll/history': typeof AppHrPayrollHistoryRoute
+  '/hr/recruitment/interviews': typeof AppHrRecruitmentInterviewsRoute
   '/projects/$projectId/analytics': typeof AppProjectsProjectIdAnalyticsRoute
   '/projects/$projectId/daily-logs': typeof AppProjectsProjectIdDailyLogsRoute
   '/projects/$projectId/documents': typeof AppProjectsProjectIdDocumentsRoute
@@ -402,10 +596,12 @@ export interface FileRoutesById {
   '/_app/documents': typeof AppDocumentsRoute
   '/_app/engineer': typeof AppEngineerRoute
   '/_app/finance': typeof AppFinanceRouteWithChildren
-  '/_app/hr': typeof AppHrRoute
+  '/_app/hr': typeof AppHrRouteWithChildren
+  '/_app/notifications': typeof AppNotificationsRoute
   '/_app/projects': typeof AppProjectsRouteWithChildren
   '/_app/reports': typeof AppReportsRoute
   '/_app/resources': typeof AppResourcesRoute
+  '/_app/settings': typeof AppSettingsRoute
   '/_app/site': typeof AppSiteRoute
   '/_app/support': typeof AppSupportRoute
   '/_app/workflows': typeof AppWorkflowsRoute
@@ -415,6 +611,22 @@ export interface FileRoutesById {
   '/_app/finance/expenses': typeof AppFinanceExpensesRoute
   '/_app/finance/payroll-review': typeof AppFinancePayrollReviewRoute
   '/_app/finance/reports': typeof AppFinanceReportsRoute
+  '/_app/hr/ai': typeof AppHrAiRoute
+  '/_app/hr/attendance': typeof AppHrAttendanceRouteWithChildren
+  '/_app/hr/benefits': typeof AppHrBenefitsRoute
+  '/_app/hr/deductions': typeof AppHrDeductionsRoute
+  '/_app/hr/documents': typeof AppHrDocumentsRoute
+  '/_app/hr/employees': typeof AppHrEmployeesRoute
+  '/_app/hr/leave': typeof AppHrLeaveRoute
+  '/_app/hr/notifications': typeof AppHrNotificationsRoute
+  '/_app/hr/payroll': typeof AppHrPayrollRouteWithChildren
+  '/_app/hr/performance': typeof AppHrPerformanceRoute
+  '/_app/hr/recruitment': typeof AppHrRecruitmentRouteWithChildren
+  '/_app/hr/reports': typeof AppHrReportsRoute
+  '/_app/hr/schedule': typeof AppHrScheduleRoute
+  '/_app/hr/settings': typeof AppHrSettingsRoute
+  '/_app/hr/training': typeof AppHrTrainingRoute
+  '/_app/hr/workforce': typeof AppHrWorkforceRoute
   '/_app/projects/$projectId': typeof AppProjectsProjectIdRouteWithChildren
   '/_app/projects/new': typeof AppProjectsNewRoute
   '/_app/finance/': typeof AppFinanceIndexRoute
@@ -425,6 +637,12 @@ export interface FileRoutesById {
   '/_app/finance/budgets/approval': typeof AppFinanceBudgetsApprovalRoute
   '/_app/finance/budgets/comparison': typeof AppFinanceBudgetsComparisonRoute
   '/_app/finance/budgets/history': typeof AppFinanceBudgetsHistoryRoute
+  '/_app/hr/attendance/geofence': typeof AppHrAttendanceGeofenceRoute
+  '/_app/hr/attendance/issues': typeof AppHrAttendanceIssuesRoute
+  '/_app/hr/attendance/verification': typeof AppHrAttendanceVerificationRoute
+  '/_app/hr/payroll/approvals': typeof AppHrPayrollApprovalsRoute
+  '/_app/hr/payroll/history': typeof AppHrPayrollHistoryRoute
+  '/_app/hr/recruitment/interviews': typeof AppHrRecruitmentInterviewsRoute
   '/_app/projects/$projectId/analytics': typeof AppProjectsProjectIdAnalyticsRoute
   '/_app/projects/$projectId/daily-logs': typeof AppProjectsProjectIdDailyLogsRoute
   '/_app/projects/$projectId/documents': typeof AppProjectsProjectIdDocumentsRoute
@@ -451,9 +669,11 @@ export interface FileRouteTypes {
     | '/engineer'
     | '/finance'
     | '/hr'
+    | '/notifications'
     | '/projects'
     | '/reports'
     | '/resources'
+    | '/settings'
     | '/site'
     | '/support'
     | '/workflows'
@@ -463,6 +683,22 @@ export interface FileRouteTypes {
     | '/finance/expenses'
     | '/finance/payroll-review'
     | '/finance/reports'
+    | '/hr/ai'
+    | '/hr/attendance'
+    | '/hr/benefits'
+    | '/hr/deductions'
+    | '/hr/documents'
+    | '/hr/employees'
+    | '/hr/leave'
+    | '/hr/notifications'
+    | '/hr/payroll'
+    | '/hr/performance'
+    | '/hr/recruitment'
+    | '/hr/reports'
+    | '/hr/schedule'
+    | '/hr/settings'
+    | '/hr/training'
+    | '/hr/workforce'
     | '/projects/$projectId'
     | '/projects/new'
     | '/finance/'
@@ -473,6 +709,12 @@ export interface FileRouteTypes {
     | '/finance/budgets/approval'
     | '/finance/budgets/comparison'
     | '/finance/budgets/history'
+    | '/hr/attendance/geofence'
+    | '/hr/attendance/issues'
+    | '/hr/attendance/verification'
+    | '/hr/payroll/approvals'
+    | '/hr/payroll/history'
+    | '/hr/recruitment/interviews'
     | '/projects/$projectId/analytics'
     | '/projects/$projectId/daily-logs'
     | '/projects/$projectId/documents'
@@ -496,9 +738,11 @@ export interface FileRouteTypes {
     | '/documents'
     | '/engineer'
     | '/hr'
+    | '/notifications'
     | '/projects'
     | '/reports'
     | '/resources'
+    | '/settings'
     | '/site'
     | '/support'
     | '/workflows'
@@ -508,6 +752,22 @@ export interface FileRouteTypes {
     | '/finance/expenses'
     | '/finance/payroll-review'
     | '/finance/reports'
+    | '/hr/ai'
+    | '/hr/attendance'
+    | '/hr/benefits'
+    | '/hr/deductions'
+    | '/hr/documents'
+    | '/hr/employees'
+    | '/hr/leave'
+    | '/hr/notifications'
+    | '/hr/payroll'
+    | '/hr/performance'
+    | '/hr/recruitment'
+    | '/hr/reports'
+    | '/hr/schedule'
+    | '/hr/settings'
+    | '/hr/training'
+    | '/hr/workforce'
     | '/projects/$projectId'
     | '/projects/new'
     | '/finance'
@@ -518,6 +778,12 @@ export interface FileRouteTypes {
     | '/finance/budgets/approval'
     | '/finance/budgets/comparison'
     | '/finance/budgets/history'
+    | '/hr/attendance/geofence'
+    | '/hr/attendance/issues'
+    | '/hr/attendance/verification'
+    | '/hr/payroll/approvals'
+    | '/hr/payroll/history'
+    | '/hr/recruitment/interviews'
     | '/projects/$projectId/analytics'
     | '/projects/$projectId/daily-logs'
     | '/projects/$projectId/documents'
@@ -543,9 +809,11 @@ export interface FileRouteTypes {
     | '/_app/engineer'
     | '/_app/finance'
     | '/_app/hr'
+    | '/_app/notifications'
     | '/_app/projects'
     | '/_app/reports'
     | '/_app/resources'
+    | '/_app/settings'
     | '/_app/site'
     | '/_app/support'
     | '/_app/workflows'
@@ -555,6 +823,22 @@ export interface FileRouteTypes {
     | '/_app/finance/expenses'
     | '/_app/finance/payroll-review'
     | '/_app/finance/reports'
+    | '/_app/hr/ai'
+    | '/_app/hr/attendance'
+    | '/_app/hr/benefits'
+    | '/_app/hr/deductions'
+    | '/_app/hr/documents'
+    | '/_app/hr/employees'
+    | '/_app/hr/leave'
+    | '/_app/hr/notifications'
+    | '/_app/hr/payroll'
+    | '/_app/hr/performance'
+    | '/_app/hr/recruitment'
+    | '/_app/hr/reports'
+    | '/_app/hr/schedule'
+    | '/_app/hr/settings'
+    | '/_app/hr/training'
+    | '/_app/hr/workforce'
     | '/_app/projects/$projectId'
     | '/_app/projects/new'
     | '/_app/finance/'
@@ -565,6 +849,12 @@ export interface FileRouteTypes {
     | '/_app/finance/budgets/approval'
     | '/_app/finance/budgets/comparison'
     | '/_app/finance/budgets/history'
+    | '/_app/hr/attendance/geofence'
+    | '/_app/hr/attendance/issues'
+    | '/_app/hr/attendance/verification'
+    | '/_app/hr/payroll/approvals'
+    | '/_app/hr/payroll/history'
+    | '/_app/hr/recruitment/interviews'
     | '/_app/projects/$projectId/analytics'
     | '/_app/projects/$projectId/daily-logs'
     | '/_app/projects/$projectId/documents'
@@ -620,6 +910,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSiteRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/settings': {
+      id: '/_app/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/resources': {
       id: '/_app/resources'
       path: '/resources'
@@ -639,6 +936,13 @@ declare module '@tanstack/react-router' {
       path: '/projects'
       fullPath: '/projects'
       preLoaderRoute: typeof AppProjectsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/notifications': {
+      id: '/_app/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof AppNotificationsRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/hr': {
@@ -731,6 +1035,118 @@ declare module '@tanstack/react-router' {
       fullPath: '/projects/$projectId'
       preLoaderRoute: typeof AppProjectsProjectIdRouteImport
       parentRoute: typeof AppProjectsRoute
+    }
+    '/_app/hr/workforce': {
+      id: '/_app/hr/workforce'
+      path: '/workforce'
+      fullPath: '/hr/workforce'
+      preLoaderRoute: typeof AppHrWorkforceRouteImport
+      parentRoute: typeof AppHrRoute
+    }
+    '/_app/hr/training': {
+      id: '/_app/hr/training'
+      path: '/training'
+      fullPath: '/hr/training'
+      preLoaderRoute: typeof AppHrTrainingRouteImport
+      parentRoute: typeof AppHrRoute
+    }
+    '/_app/hr/settings': {
+      id: '/_app/hr/settings'
+      path: '/settings'
+      fullPath: '/hr/settings'
+      preLoaderRoute: typeof AppHrSettingsRouteImport
+      parentRoute: typeof AppHrRoute
+    }
+    '/_app/hr/schedule': {
+      id: '/_app/hr/schedule'
+      path: '/schedule'
+      fullPath: '/hr/schedule'
+      preLoaderRoute: typeof AppHrScheduleRouteImport
+      parentRoute: typeof AppHrRoute
+    }
+    '/_app/hr/reports': {
+      id: '/_app/hr/reports'
+      path: '/reports'
+      fullPath: '/hr/reports'
+      preLoaderRoute: typeof AppHrReportsRouteImport
+      parentRoute: typeof AppHrRoute
+    }
+    '/_app/hr/recruitment': {
+      id: '/_app/hr/recruitment'
+      path: '/recruitment'
+      fullPath: '/hr/recruitment'
+      preLoaderRoute: typeof AppHrRecruitmentRouteImport
+      parentRoute: typeof AppHrRoute
+    }
+    '/_app/hr/performance': {
+      id: '/_app/hr/performance'
+      path: '/performance'
+      fullPath: '/hr/performance'
+      preLoaderRoute: typeof AppHrPerformanceRouteImport
+      parentRoute: typeof AppHrRoute
+    }
+    '/_app/hr/payroll': {
+      id: '/_app/hr/payroll'
+      path: '/payroll'
+      fullPath: '/hr/payroll'
+      preLoaderRoute: typeof AppHrPayrollRouteImport
+      parentRoute: typeof AppHrRoute
+    }
+    '/_app/hr/notifications': {
+      id: '/_app/hr/notifications'
+      path: '/notifications'
+      fullPath: '/hr/notifications'
+      preLoaderRoute: typeof AppHrNotificationsRouteImport
+      parentRoute: typeof AppHrRoute
+    }
+    '/_app/hr/leave': {
+      id: '/_app/hr/leave'
+      path: '/leave'
+      fullPath: '/hr/leave'
+      preLoaderRoute: typeof AppHrLeaveRouteImport
+      parentRoute: typeof AppHrRoute
+    }
+    '/_app/hr/employees': {
+      id: '/_app/hr/employees'
+      path: '/employees'
+      fullPath: '/hr/employees'
+      preLoaderRoute: typeof AppHrEmployeesRouteImport
+      parentRoute: typeof AppHrRoute
+    }
+    '/_app/hr/documents': {
+      id: '/_app/hr/documents'
+      path: '/documents'
+      fullPath: '/hr/documents'
+      preLoaderRoute: typeof AppHrDocumentsRouteImport
+      parentRoute: typeof AppHrRoute
+    }
+    '/_app/hr/deductions': {
+      id: '/_app/hr/deductions'
+      path: '/deductions'
+      fullPath: '/hr/deductions'
+      preLoaderRoute: typeof AppHrDeductionsRouteImport
+      parentRoute: typeof AppHrRoute
+    }
+    '/_app/hr/benefits': {
+      id: '/_app/hr/benefits'
+      path: '/benefits'
+      fullPath: '/hr/benefits'
+      preLoaderRoute: typeof AppHrBenefitsRouteImport
+      parentRoute: typeof AppHrRoute
+    }
+    '/_app/hr/attendance': {
+      id: '/_app/hr/attendance'
+      path: '/attendance'
+      fullPath: '/hr/attendance'
+      preLoaderRoute: typeof AppHrAttendanceRouteImport
+      parentRoute: typeof AppHrRoute
+    }
+    '/_app/hr/ai': {
+      id: '/_app/hr/ai'
+      path: '/ai'
+      fullPath: '/hr/ai'
+      preLoaderRoute: typeof AppHrAiRouteImport
+      parentRoute: typeof AppHrRoute
     }
     '/_app/finance/reports': {
       id: '/_app/finance/reports'
@@ -851,6 +1267,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProjectsProjectIdAnalyticsRouteImport
       parentRoute: typeof AppProjectsProjectIdRoute
     }
+    '/_app/hr/recruitment/interviews': {
+      id: '/_app/hr/recruitment/interviews'
+      path: '/interviews'
+      fullPath: '/hr/recruitment/interviews'
+      preLoaderRoute: typeof AppHrRecruitmentInterviewsRouteImport
+      parentRoute: typeof AppHrRecruitmentRoute
+    }
+    '/_app/hr/payroll/history': {
+      id: '/_app/hr/payroll/history'
+      path: '/history'
+      fullPath: '/hr/payroll/history'
+      preLoaderRoute: typeof AppHrPayrollHistoryRouteImport
+      parentRoute: typeof AppHrPayrollRoute
+    }
+    '/_app/hr/payroll/approvals': {
+      id: '/_app/hr/payroll/approvals'
+      path: '/approvals'
+      fullPath: '/hr/payroll/approvals'
+      preLoaderRoute: typeof AppHrPayrollApprovalsRouteImport
+      parentRoute: typeof AppHrPayrollRoute
+    }
+    '/_app/hr/attendance/verification': {
+      id: '/_app/hr/attendance/verification'
+      path: '/verification'
+      fullPath: '/hr/attendance/verification'
+      preLoaderRoute: typeof AppHrAttendanceVerificationRouteImport
+      parentRoute: typeof AppHrAttendanceRoute
+    }
+    '/_app/hr/attendance/issues': {
+      id: '/_app/hr/attendance/issues'
+      path: '/issues'
+      fullPath: '/hr/attendance/issues'
+      preLoaderRoute: typeof AppHrAttendanceIssuesRouteImport
+      parentRoute: typeof AppHrAttendanceRoute
+    }
+    '/_app/hr/attendance/geofence': {
+      id: '/_app/hr/attendance/geofence'
+      path: '/geofence'
+      fullPath: '/hr/attendance/geofence'
+      preLoaderRoute: typeof AppHrAttendanceGeofenceRouteImport
+      parentRoute: typeof AppHrAttendanceRoute
+    }
     '/_app/finance/budgets/history': {
       id: '/_app/finance/budgets/history'
       path: '/history'
@@ -950,6 +1408,87 @@ const AppFinanceRouteWithChildren = AppFinanceRoute._addFileChildren(
   AppFinanceRouteChildren,
 )
 
+interface AppHrAttendanceRouteChildren {
+  AppHrAttendanceGeofenceRoute: typeof AppHrAttendanceGeofenceRoute
+  AppHrAttendanceIssuesRoute: typeof AppHrAttendanceIssuesRoute
+  AppHrAttendanceVerificationRoute: typeof AppHrAttendanceVerificationRoute
+}
+
+const AppHrAttendanceRouteChildren: AppHrAttendanceRouteChildren = {
+  AppHrAttendanceGeofenceRoute: AppHrAttendanceGeofenceRoute,
+  AppHrAttendanceIssuesRoute: AppHrAttendanceIssuesRoute,
+  AppHrAttendanceVerificationRoute: AppHrAttendanceVerificationRoute,
+}
+
+const AppHrAttendanceRouteWithChildren = AppHrAttendanceRoute._addFileChildren(
+  AppHrAttendanceRouteChildren,
+)
+
+interface AppHrPayrollRouteChildren {
+  AppHrPayrollApprovalsRoute: typeof AppHrPayrollApprovalsRoute
+  AppHrPayrollHistoryRoute: typeof AppHrPayrollHistoryRoute
+}
+
+const AppHrPayrollRouteChildren: AppHrPayrollRouteChildren = {
+  AppHrPayrollApprovalsRoute: AppHrPayrollApprovalsRoute,
+  AppHrPayrollHistoryRoute: AppHrPayrollHistoryRoute,
+}
+
+const AppHrPayrollRouteWithChildren = AppHrPayrollRoute._addFileChildren(
+  AppHrPayrollRouteChildren,
+)
+
+interface AppHrRecruitmentRouteChildren {
+  AppHrRecruitmentInterviewsRoute: typeof AppHrRecruitmentInterviewsRoute
+}
+
+const AppHrRecruitmentRouteChildren: AppHrRecruitmentRouteChildren = {
+  AppHrRecruitmentInterviewsRoute: AppHrRecruitmentInterviewsRoute,
+}
+
+const AppHrRecruitmentRouteWithChildren =
+  AppHrRecruitmentRoute._addFileChildren(AppHrRecruitmentRouteChildren)
+
+interface AppHrRouteChildren {
+  AppHrAiRoute: typeof AppHrAiRoute
+  AppHrAttendanceRoute: typeof AppHrAttendanceRouteWithChildren
+  AppHrBenefitsRoute: typeof AppHrBenefitsRoute
+  AppHrDeductionsRoute: typeof AppHrDeductionsRoute
+  AppHrDocumentsRoute: typeof AppHrDocumentsRoute
+  AppHrEmployeesRoute: typeof AppHrEmployeesRoute
+  AppHrLeaveRoute: typeof AppHrLeaveRoute
+  AppHrNotificationsRoute: typeof AppHrNotificationsRoute
+  AppHrPayrollRoute: typeof AppHrPayrollRouteWithChildren
+  AppHrPerformanceRoute: typeof AppHrPerformanceRoute
+  AppHrRecruitmentRoute: typeof AppHrRecruitmentRouteWithChildren
+  AppHrReportsRoute: typeof AppHrReportsRoute
+  AppHrScheduleRoute: typeof AppHrScheduleRoute
+  AppHrSettingsRoute: typeof AppHrSettingsRoute
+  AppHrTrainingRoute: typeof AppHrTrainingRoute
+  AppHrWorkforceRoute: typeof AppHrWorkforceRoute
+}
+
+const AppHrRouteChildren: AppHrRouteChildren = {
+  AppHrAiRoute: AppHrAiRoute,
+  AppHrAttendanceRoute: AppHrAttendanceRouteWithChildren,
+  AppHrBenefitsRoute: AppHrBenefitsRoute,
+  AppHrDeductionsRoute: AppHrDeductionsRoute,
+  AppHrDocumentsRoute: AppHrDocumentsRoute,
+  AppHrEmployeesRoute: AppHrEmployeesRoute,
+  AppHrLeaveRoute: AppHrLeaveRoute,
+  AppHrNotificationsRoute: AppHrNotificationsRoute,
+  AppHrPayrollRoute: AppHrPayrollRouteWithChildren,
+  AppHrPerformanceRoute: AppHrPerformanceRoute,
+  AppHrRecruitmentRoute: AppHrRecruitmentRouteWithChildren,
+  AppHrReportsRoute: AppHrReportsRoute,
+  AppHrScheduleRoute: AppHrScheduleRoute,
+  AppHrSettingsRoute: AppHrSettingsRoute,
+  AppHrTrainingRoute: AppHrTrainingRoute,
+  AppHrWorkforceRoute: AppHrWorkforceRoute,
+}
+
+const AppHrRouteWithChildren = AppHrRoute._addFileChildren(AppHrRouteChildren)
+
 interface AppProjectsProjectIdRouteChildren {
   AppProjectsProjectIdAnalyticsRoute: typeof AppProjectsProjectIdAnalyticsRoute
   AppProjectsProjectIdDailyLogsRoute: typeof AppProjectsProjectIdDailyLogsRoute
@@ -1005,10 +1544,12 @@ interface AppRouteChildren {
   AppDocumentsRoute: typeof AppDocumentsRoute
   AppEngineerRoute: typeof AppEngineerRoute
   AppFinanceRoute: typeof AppFinanceRouteWithChildren
-  AppHrRoute: typeof AppHrRoute
+  AppHrRoute: typeof AppHrRouteWithChildren
+  AppNotificationsRoute: typeof AppNotificationsRoute
   AppProjectsRoute: typeof AppProjectsRouteWithChildren
   AppReportsRoute: typeof AppReportsRoute
   AppResourcesRoute: typeof AppResourcesRoute
+  AppSettingsRoute: typeof AppSettingsRoute
   AppSiteRoute: typeof AppSiteRoute
   AppSupportRoute: typeof AppSupportRoute
   AppWorkflowsRoute: typeof AppWorkflowsRoute
@@ -1024,10 +1565,12 @@ const AppRouteChildren: AppRouteChildren = {
   AppDocumentsRoute: AppDocumentsRoute,
   AppEngineerRoute: AppEngineerRoute,
   AppFinanceRoute: AppFinanceRouteWithChildren,
-  AppHrRoute: AppHrRoute,
+  AppHrRoute: AppHrRouteWithChildren,
+  AppNotificationsRoute: AppNotificationsRoute,
   AppProjectsRoute: AppProjectsRouteWithChildren,
   AppReportsRoute: AppReportsRoute,
   AppResourcesRoute: AppResourcesRoute,
+  AppSettingsRoute: AppSettingsRoute,
   AppSiteRoute: AppSiteRoute,
   AppSupportRoute: AppSupportRoute,
   AppWorkflowsRoute: AppWorkflowsRoute,
