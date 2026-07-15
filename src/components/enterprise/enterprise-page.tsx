@@ -346,4 +346,4 @@ export function EnterprisePage<T extends { id?: string | number }>(
 }
 
 // Convenience re-exports so route files stay short
-export { toast, Badge, Progress, Archive };
+export { toast, Badge, Progress, Fragment };
