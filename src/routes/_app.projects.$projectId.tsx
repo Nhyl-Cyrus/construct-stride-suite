@@ -285,6 +285,24 @@ function ProjectDetailPage() {
           </CardContent>
         </Card>
 
+        {/* Quick-access to sub-modules */}
+        <Card className="rounded-2xl border-border/70 shadow-sm">
+          <CardContent className="grid grid-cols-2 gap-2 p-3 sm:grid-cols-3 md:grid-cols-6 lg:grid-cols-11">
+            {quickLinks.map((q) => (
+              <Link
+                key={q.label}
+                to={q.to}
+                params={{ projectId: project.code }}
+                className="flex flex-col items-center gap-1.5 rounded-xl border border-transparent p-3 text-center text-xs font-medium text-muted-foreground hover:border-border/60 hover:bg-muted/40 hover:text-foreground"
+              >
+                <q.icon className="h-4 w-4" />
+                {q.label}
+              </Link>
+            ))}
+          </CardContent>
+        </Card>
+
+
         <Tabs defaultValue="overview" className="space-y-5">
           <TabsList className="h-10 rounded-xl">
             <TabsTrigger value="overview" className="rounded-lg">
