@@ -123,8 +123,40 @@ const risks = [
   { name: "Permit revision pending", severity: "Medium", owner: "Compliance", trend: "-1d" },
 ];
 
+const quickLinks = [
+  { to: "/projects/$projectId/timeline", label: "Timeline", icon: GanttChart },
+  { to: "/projects/$projectId/tasks", label: "Tasks", icon: ListChecks },
+  { to: "/projects/$projectId/milestones", label: "Milestones", icon: Flag },
+  { to: "/projects/$projectId/workforce", label: "Workforce", icon: HardHat },
+  { to: "/projects/$projectId/equipment", label: "Equipment", icon: Truck },
+  { to: "/projects/$projectId/documents", label: "Documents", icon: FileText },
+  { to: "/projects/$projectId/daily-logs", label: "Daily logs", icon: ClipboardList },
+  { to: "/projects/$projectId/risks", label: "Risks", icon: ShieldAlert },
+  { to: "/projects/$projectId/issues", label: "Issues", icon: Bug },
+  { to: "/projects/$projectId/quality", label: "Quality", icon: BadgeCheck },
+  { to: "/projects/$projectId/analytics", label: "Analytics", icon: LineChart },
+] as const;
+
 function ProjectDetailPage() {
   const { project } = Route.useLoaderData() as { project: Project };
+  const navigate = useNavigate();
+  const [aiOpen, setAiOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+
+  const shareLink = () => {
+    if (typeof navigator !== "undefined") navigator.clipboard?.writeText(window.location.href);
+    toast.success("Project link copied");
+  };
+  const exportProject = () => {
+    const blob = new Blob([JSON.stringify(project, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${project.code}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success("Project export downloaded");
+  };
 
   return (
     <>
@@ -164,14 +196,55 @@ function ProjectDetailPage() {
                 </div>
               </div>
               <div className="flex flex-wrap gap-2">
-                <Button variant="outline" className="rounded-xl">
-                  <FileText className="h-4 w-4" /> Open documents
+                <Button
+                  variant="outline"
+                  className="rounded-xl"
+                  asChild
+                >
+                  <Link to="/projects/$projectId/documents" params={{ projectId: project.code }}>
+                    <FileText className="h-4 w-4" /> Open documents
+                  </Link>
                 </Button>
-                <Button className="rounded-xl">
+                <Button className="rounded-xl" onClick={() => setAiOpen(true)}>
                   <Sparkles className="h-4 w-4" /> Ask AI about this project
                 </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="icon" className="rounded-xl">
+                      <MoreHorizontal className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-52">
+                    <DropdownMenuItem onSelect={() => toast.info("Edit project opened")}>
+                      <Settings className="h-4 w-4" /> Edit project
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => toast.success(`${project.code} duplicated`)}>
+                      <Copy className="h-4 w-4" /> Duplicate
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={shareLink}>
+                      <Share2 className="h-4 w-4" /> Share link
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={exportProject}>
+                      <Download className="h-4 w-4" /> Export JSON
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => window.print()}>
+                      <Printer className="h-4 w-4" /> Print
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onSelect={() => toast.success(`${project.code} archived`)}>
+                      <Archive className="h-4 w-4" /> Archive
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      className="text-destructive"
+                      onSelect={() => setDeleteOpen(true)}
+                    >
+                      <Trash2 className="h-4 w-4" /> Delete
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
+
 
             <Separator />
 
