@@ -582,7 +582,68 @@ function ProjectDetailPage() {
           </TabsContent>
         </Tabs>
       </div>
+
+      <Sheet open={aiOpen} onOpenChange={setAiOpen}>
+        <SheetContent className="w-full sm:max-w-lg">
+          <SheetHeader>
+            <SheetTitle className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-ai" /> Project intelligence
+            </SheetTitle>
+            <SheetDescription>{project.name} — real-time AI analysis</SheetDescription>
+          </SheetHeader>
+          <div className="mt-6 space-y-4 text-sm">
+            <div className="rounded-xl border border-ai/20 bg-ai-soft/40 p-4">
+              <div className="text-xs font-medium uppercase tracking-wider text-ai">Key insight</div>
+              <p className="mt-1 leading-relaxed">
+                Curtain wall delivery remains the dominant constraint. Reassigning Crew 4 to interior
+                drywall reduces idle exposure by an estimated{" "}
+                <span className="font-semibold">$48k</span> and preserves the {project.due} handover.
+              </p>
+            </div>
+            <div className="space-y-2">
+              <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                Recommendations
+              </div>
+              {[
+                "Accelerate MEP rough-in on Level 3 to unblock finishes",
+                "Escalate change order CO-118 to executive review",
+                "Add 2 crane operators to backfill capacity for Week 26",
+              ].map((r) => (
+                <div key={r} className="rounded-lg border border-border/60 p-3">{r}</div>
+              ))}
+            </div>
+            <Button className="w-full rounded-xl" onClick={() => toast.success("Insight sent to team channel")}>
+              Share with team
+            </Button>
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      <AlertDialog open={deleteOpen} onOpenChange={setDeleteOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete {project.name}?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This removes the project and all associated tasks, documents, and history. This action
+              cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-destructive hover:bg-destructive/90"
+              onClick={() => {
+                toast.success(`${project.code} deleted`);
+                navigate({ to: "/projects" });
+              }}
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
+
   );
 }
 
