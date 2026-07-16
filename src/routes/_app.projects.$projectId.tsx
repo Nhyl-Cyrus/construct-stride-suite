@@ -1,4 +1,6 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
+import { toast } from "sonner";
 import type { Project } from "@/lib/pm-data";
 import {
   ArrowLeft,
@@ -13,6 +15,24 @@ import {
   Sparkles,
   ChevronRight,
   TrendingUp,
+  MoreHorizontal,
+  Copy,
+  Archive,
+  Trash2,
+  Download,
+  Printer,
+  Share2,
+  Settings,
+  GanttChart,
+  ListChecks,
+  Flag,
+  HardHat,
+  Truck,
+  ClipboardList,
+  ShieldAlert,
+  Bug,
+  BadgeCheck,
+  LineChart,
 } from "lucide-react";
 import { TopBar } from "@/components/top-bar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,6 +41,30 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { projects, toneClasses, riskClasses } from "@/lib/pm-data";
 
 export const Route = createFileRoute("/_app/projects/$projectId")({
