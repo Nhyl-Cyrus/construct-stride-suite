@@ -1,4 +1,6 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
+import { toast } from "sonner";
 import type { Project } from "@/lib/pm-data";
 import {
   ArrowLeft,
@@ -13,6 +15,24 @@ import {
   Sparkles,
   ChevronRight,
   TrendingUp,
+  MoreHorizontal,
+  Copy,
+  Archive,
+  Trash2,
+  Download,
+  Printer,
+  Share2,
+  Settings,
+  GanttChart,
+  ListChecks,
+  Flag,
+  HardHat,
+  Truck,
+  ClipboardList,
+  ShieldAlert,
+  Bug,
+  BadgeCheck,
+  LineChart,
 } from "lucide-react";
 import { TopBar } from "@/components/top-bar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,6 +41,30 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { projects, toneClasses, riskClasses } from "@/lib/pm-data";
 
 export const Route = createFileRoute("/_app/projects/$projectId")({
@@ -79,8 +123,40 @@ const risks = [
   { name: "Permit revision pending", severity: "Medium", owner: "Compliance", trend: "-1d" },
 ];
 
+const quickLinks = [
+  { to: "/projects/$projectId/timeline", label: "Timeline", icon: GanttChart },
+  { to: "/projects/$projectId/tasks", label: "Tasks", icon: ListChecks },
+  { to: "/projects/$projectId/milestones", label: "Milestones", icon: Flag },
+  { to: "/projects/$projectId/workforce", label: "Workforce", icon: HardHat },
+  { to: "/projects/$projectId/equipment", label: "Equipment", icon: Truck },
+  { to: "/projects/$projectId/documents", label: "Documents", icon: FileText },
+  { to: "/projects/$projectId/daily-logs", label: "Daily logs", icon: ClipboardList },
+  { to: "/projects/$projectId/risks", label: "Risks", icon: ShieldAlert },
+  { to: "/projects/$projectId/issues", label: "Issues", icon: Bug },
+  { to: "/projects/$projectId/quality", label: "Quality", icon: BadgeCheck },
+  { to: "/projects/$projectId/analytics", label: "Analytics", icon: LineChart },
+] as const;
+
 function ProjectDetailPage() {
   const { project } = Route.useLoaderData() as { project: Project };
+  const navigate = useNavigate();
+  const [aiOpen, setAiOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+
+  const shareLink = () => {
+    if (typeof navigator !== "undefined") navigator.clipboard?.writeText(window.location.href);
+    toast.success("Project link copied");
+  };
+  const exportProject = () => {
+    const blob = new Blob([JSON.stringify(project, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${project.code}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success("Project export downloaded");
+  };
 
   return (
     <>
@@ -120,14 +196,55 @@ function ProjectDetailPage() {
                 </div>
               </div>
               <div className="flex flex-wrap gap-2">
-                <Button variant="outline" className="rounded-xl">
-                  <FileText className="h-4 w-4" /> Open documents
+                <Button
+                  variant="outline"
+                  className="rounded-xl"
+                  asChild
+                >
+                  <Link to="/projects/$projectId/documents" params={{ projectId: project.code }}>
+                    <FileText className="h-4 w-4" /> Open documents
+                  </Link>
                 </Button>
-                <Button className="rounded-xl">
+                <Button className="rounded-xl" onClick={() => setAiOpen(true)}>
                   <Sparkles className="h-4 w-4" /> Ask AI about this project
                 </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="icon" className="rounded-xl">
+                      <MoreHorizontal className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-52">
+                    <DropdownMenuItem onSelect={() => toast.info("Edit project opened")}>
+                      <Settings className="h-4 w-4" /> Edit project
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => toast.success(`${project.code} duplicated`)}>
+                      <Copy className="h-4 w-4" /> Duplicate
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={shareLink}>
+                      <Share2 className="h-4 w-4" /> Share link
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={exportProject}>
+                      <Download className="h-4 w-4" /> Export JSON
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => window.print()}>
+                      <Printer className="h-4 w-4" /> Print
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onSelect={() => toast.success(`${project.code} archived`)}>
+                      <Archive className="h-4 w-4" /> Archive
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      className="text-destructive"
+                      onSelect={() => setDeleteOpen(true)}
+                    >
+                      <Trash2 className="h-4 w-4" /> Delete
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
+
 
             <Separator />
 
@@ -167,6 +284,24 @@ function ProjectDetailPage() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Quick-access to sub-modules */}
+        <Card className="rounded-2xl border-border/70 shadow-sm">
+          <CardContent className="grid grid-cols-2 gap-2 p-3 sm:grid-cols-3 md:grid-cols-6 lg:grid-cols-11">
+            {quickLinks.map((q) => (
+              <Link
+                key={q.label}
+                to={q.to}
+                params={{ projectId: project.code }}
+                className="flex flex-col items-center gap-1.5 rounded-xl border border-transparent p-3 text-center text-xs font-medium text-muted-foreground hover:border-border/60 hover:bg-muted/40 hover:text-foreground"
+              >
+                <q.icon className="h-4 w-4" />
+                {q.label}
+              </Link>
+            ))}
+          </CardContent>
+        </Card>
+
 
         <Tabs defaultValue="overview" className="space-y-5">
           <TabsList className="h-10 rounded-xl">
@@ -447,7 +582,68 @@ function ProjectDetailPage() {
           </TabsContent>
         </Tabs>
       </div>
+
+      <Sheet open={aiOpen} onOpenChange={setAiOpen}>
+        <SheetContent className="w-full sm:max-w-lg">
+          <SheetHeader>
+            <SheetTitle className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-ai" /> Project intelligence
+            </SheetTitle>
+            <SheetDescription>{project.name} — real-time AI analysis</SheetDescription>
+          </SheetHeader>
+          <div className="mt-6 space-y-4 text-sm">
+            <div className="rounded-xl border border-ai/20 bg-ai-soft/40 p-4">
+              <div className="text-xs font-medium uppercase tracking-wider text-ai">Key insight</div>
+              <p className="mt-1 leading-relaxed">
+                Curtain wall delivery remains the dominant constraint. Reassigning Crew 4 to interior
+                drywall reduces idle exposure by an estimated{" "}
+                <span className="font-semibold">$48k</span> and preserves the {project.due} handover.
+              </p>
+            </div>
+            <div className="space-y-2">
+              <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                Recommendations
+              </div>
+              {[
+                "Accelerate MEP rough-in on Level 3 to unblock finishes",
+                "Escalate change order CO-118 to executive review",
+                "Add 2 crane operators to backfill capacity for Week 26",
+              ].map((r) => (
+                <div key={r} className="rounded-lg border border-border/60 p-3">{r}</div>
+              ))}
+            </div>
+            <Button className="w-full rounded-xl" onClick={() => toast.success("Insight sent to team channel")}>
+              Share with team
+            </Button>
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      <AlertDialog open={deleteOpen} onOpenChange={setDeleteOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete {project.name}?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This removes the project and all associated tasks, documents, and history. This action
+              cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-destructive hover:bg-destructive/90"
+              onClick={() => {
+                toast.success(`${project.code} deleted`);
+                navigate({ to: "/projects" });
+              }}
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
+
   );
 }
 
