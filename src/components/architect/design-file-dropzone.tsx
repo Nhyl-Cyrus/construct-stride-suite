@@ -21,7 +21,7 @@ import { Input } from "@/components/ui/input";
 
 interface Props {
   files: WizardFile[];
-  onChange: (files: WizardFile[]) => void;
+  onChange: (updater: WizardFile[] | ((prev: WizardFile[]) => WizardFile[])) => void;
   categories?: string[];
 }
 
