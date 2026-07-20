@@ -11,6 +11,10 @@ const SUBJECTS: Subject[] = [
   "report",
   "document",
   "notification",
+  "design",
+  "blueprint",
+  "review",
+  "revision",
 ];
 
 const all: Ability[] = ACTIONS.flatMap((action) =>
@@ -19,6 +23,11 @@ const all: Ability[] = ACTIONS.flatMap((action) =>
 
 const view = (subjects: Subject[]): Ability[] =>
   subjects.map((subject) => ({ action: "view" as const, subject }));
+
+const architectFull = (["design", "blueprint", "review", "revision", "document"] as Subject[])
+  .flatMap((s) =>
+    (["view", "create", "update", "approve"] as Action[]).map((action) => ({ action, subject: s })),
+  );
 
 export const ABILITIES: Record<RoleId, Ability[]> = {
   "project-manager": all.filter((a) => a.subject !== "payroll"),
@@ -35,10 +44,16 @@ export const ABILITIES: Record<RoleId, Ability[]> = {
     ...view(["project", "employee", "attendance", "payroll", "report"]),
     { action: "approve", subject: "payroll" },
   ],
-  architect: view(["project", "document", "workflow"]),
-  engineer: view(["project", "document", "workflow", "report"]),
-  "site-personnel": view(["project", "attendance", "document"]),
-  consultant: view(["project", "report", "document"]),
+  architect: [
+    ...architectFull,
+    ...view(["project", "workflow"]),
+  ],
+  engineer: [
+    ...view(["project", "document", "workflow", "report", "design", "blueprint", "revision"]),
+    { action: "approve", subject: "review" },
+  ],
+  "site-personnel": view(["project", "attendance", "document", "blueprint"]),
+  consultant: view(["project", "report", "document", "design", "blueprint", "review"]),
 };
 
 export function can(role: RoleId, action: Action, subject: Subject): boolean {
