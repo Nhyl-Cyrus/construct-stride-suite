@@ -7,7 +7,11 @@ export type Subject =
   | "workflow"
   | "report"
   | "document"
-  | "notification";
+  | "notification"
+  | "design"
+  | "blueprint"
+  | "review"
+  | "revision";
 
 export interface Ability {
   action: Action;
