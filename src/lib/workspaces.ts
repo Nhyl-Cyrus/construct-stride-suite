@@ -326,28 +326,34 @@ const architect: Workspace = {
   primaryAction: { label: "New design", icon: PencilRuler },
   searchPlaceholder: "Search designs, blueprints, reviews…",
   tabs: [
-    { title: "Designs", url: "/architect#designs", icon: PencilRuler },
-    { title: "Blueprints", url: "/architect#blueprints", icon: Layers },
-    { title: "Reviews", url: "/architect#reviews", icon: CheckSquare },
-    { title: "Revisions", url: "/architect#revisions", icon: GitBranch },
-    { title: "Documentation", url: "/architect#docs", icon: BookOpen },
+    { title: "Designs", url: "/architect/designs", icon: PencilRuler },
+    { title: "Blueprints", url: "/architect/blueprints", icon: Layers },
+    { title: "Reviews", url: "/architect/reviews", icon: CheckSquare },
+    { title: "Revisions", url: "/architect/revisions", icon: GitBranch },
+    { title: "Documentation", url: "/architect/documentation", icon: BookOpen },
   ],
   sidebar: [
     {
       label: "Studio",
       items: [
-        { title: "Studio Dashboard", url: "/architect#overview", icon: LayoutDashboard },
-        { title: "Designs", url: "/architect#designs", icon: PencilRuler },
-        { title: "Blueprints", url: "/architect#blueprints", icon: Layers },
+        { title: "Studio Dashboard", url: "/architect", icon: LayoutDashboard },
+        { title: "Designs", url: "/architect/designs", icon: PencilRuler },
+        { title: "New Design", url: "/architect/designs/new", icon: PencilRuler },
+        { title: "Blueprint Library", url: "/architect/blueprints", icon: Layers },
       ],
     },
     {
       label: "Collaboration",
       items: [
-        { title: "Reviews", url: "/architect#reviews", icon: CheckSquare },
-        { title: "Revisions", url: "/architect#revisions", icon: GitBranch },
-        { title: "Documentation", url: "/architect#docs", icon: BookOpen },
-        { title: "AI Design Assist", url: "/architect#ai", icon: Sparkles },
+        { title: "Review Queue", url: "/architect/reviews", icon: CheckSquare },
+        { title: "Revisions", url: "/architect/revisions", icon: GitBranch },
+        { title: "Documentation", url: "/architect/documentation", icon: BookOpen },
+      ],
+    },
+    {
+      label: "Intelligence",
+      items: [
+        { title: "AI Design Assist", url: "/architect/ai", icon: Sparkles },
       ],
     },
   ],
