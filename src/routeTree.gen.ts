@@ -54,6 +54,12 @@ import { Route as AppFinanceExpensesRouteImport } from './routes/_app.finance.ex
 import { Route as AppFinanceBudgetsRouteImport } from './routes/_app.finance.budgets'
 import { Route as AppFinanceApprovalsRouteImport } from './routes/_app.finance.approvals'
 import { Route as AppFinanceAiRouteImport } from './routes/_app.finance.ai'
+import { Route as AppArchitectRevisionsRouteImport } from './routes/_app.architect.revisions'
+import { Route as AppArchitectReviewsRouteImport } from './routes/_app.architect.reviews'
+import { Route as AppArchitectDocumentationRouteImport } from './routes/_app.architect.documentation'
+import { Route as AppArchitectDesignsRouteImport } from './routes/_app.architect.designs'
+import { Route as AppArchitectBlueprintsRouteImport } from './routes/_app.architect.blueprints'
+import { Route as AppArchitectAiRouteImport } from './routes/_app.architect.ai'
 import { Route as AppProjectsProjectIdWorkforceRouteImport } from './routes/_app.projects.$projectId.workforce'
 import { Route as AppProjectsProjectIdTimelineRouteImport } from './routes/_app.projects.$projectId.timeline'
 import { Route as AppProjectsProjectIdTasksRouteImport } from './routes/_app.projects.$projectId.tasks'
@@ -78,6 +84,12 @@ import { Route as AppFinanceBudgetsAnalyticsRouteImport } from './routes/_app.fi
 import { Route as AppFinanceBudgetsAllocationRouteImport } from './routes/_app.finance.budgets.allocation'
 import { Route as AppFinanceBudgetsAdjustmentsRouteImport } from './routes/_app.finance.budgets.adjustments'
 import { Route as AppFinanceBudgetsBudgetIdRouteImport } from './routes/_app.finance.budgets.$budgetId'
+import { Route as AppArchitectRevisionsRevisionIdRouteImport } from './routes/_app.architect.revisions.$revisionId'
+import { Route as AppArchitectReviewsReviewIdRouteImport } from './routes/_app.architect.reviews.$reviewId'
+import { Route as AppArchitectDocumentationDocIdRouteImport } from './routes/_app.architect.documentation.$docId'
+import { Route as AppArchitectDesignsNewRouteImport } from './routes/_app.architect.designs.new'
+import { Route as AppArchitectDesignsDesignIdRouteImport } from './routes/_app.architect.designs.$designId'
+import { Route as AppArchitectBlueprintsBlueprintIdRouteImport } from './routes/_app.architect.blueprints.$blueprintId'
 
 const AppRoute = AppRouteImport.update({
   id: '/_app',
@@ -303,6 +315,37 @@ const AppFinanceAiRoute = AppFinanceAiRouteImport.update({
   path: '/ai',
   getParentRoute: () => AppFinanceRoute,
 } as any)
+const AppArchitectRevisionsRoute = AppArchitectRevisionsRouteImport.update({
+  id: '/revisions',
+  path: '/revisions',
+  getParentRoute: () => AppArchitectRoute,
+} as any)
+const AppArchitectReviewsRoute = AppArchitectReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => AppArchitectRoute,
+} as any)
+const AppArchitectDocumentationRoute =
+  AppArchitectDocumentationRouteImport.update({
+    id: '/documentation',
+    path: '/documentation',
+    getParentRoute: () => AppArchitectRoute,
+  } as any)
+const AppArchitectDesignsRoute = AppArchitectDesignsRouteImport.update({
+  id: '/designs',
+  path: '/designs',
+  getParentRoute: () => AppArchitectRoute,
+} as any)
+const AppArchitectBlueprintsRoute = AppArchitectBlueprintsRouteImport.update({
+  id: '/blueprints',
+  path: '/blueprints',
+  getParentRoute: () => AppArchitectRoute,
+} as any)
+const AppArchitectAiRoute = AppArchitectAiRouteImport.update({
+  id: '/ai',
+  path: '/ai',
+  getParentRoute: () => AppArchitectRoute,
+} as any)
 const AppProjectsProjectIdWorkforceRoute =
   AppProjectsProjectIdWorkforceRouteImport.update({
     id: '/workforce',
@@ -443,12 +486,47 @@ const AppFinanceBudgetsBudgetIdRoute =
     path: '/$budgetId',
     getParentRoute: () => AppFinanceBudgetsRoute,
   } as any)
+const AppArchitectRevisionsRevisionIdRoute =
+  AppArchitectRevisionsRevisionIdRouteImport.update({
+    id: '/$revisionId',
+    path: '/$revisionId',
+    getParentRoute: () => AppArchitectRevisionsRoute,
+  } as any)
+const AppArchitectReviewsReviewIdRoute =
+  AppArchitectReviewsReviewIdRouteImport.update({
+    id: '/$reviewId',
+    path: '/$reviewId',
+    getParentRoute: () => AppArchitectReviewsRoute,
+  } as any)
+const AppArchitectDocumentationDocIdRoute =
+  AppArchitectDocumentationDocIdRouteImport.update({
+    id: '/$docId',
+    path: '/$docId',
+    getParentRoute: () => AppArchitectDocumentationRoute,
+  } as any)
+const AppArchitectDesignsNewRoute = AppArchitectDesignsNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => AppArchitectDesignsRoute,
+} as any)
+const AppArchitectDesignsDesignIdRoute =
+  AppArchitectDesignsDesignIdRouteImport.update({
+    id: '/$designId',
+    path: '/$designId',
+    getParentRoute: () => AppArchitectDesignsRoute,
+  } as any)
+const AppArchitectBlueprintsBlueprintIdRoute =
+  AppArchitectBlueprintsBlueprintIdRouteImport.update({
+    id: '/$blueprintId',
+    path: '/$blueprintId',
+    getParentRoute: () => AppArchitectBlueprintsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ai-insights': typeof AppAiInsightsRoute
   '/approvals': typeof AppApprovalsRoute
-  '/architect': typeof AppArchitectRoute
+  '/architect': typeof AppArchitectRouteWithChildren
   '/audit': typeof AppAuditRoute
   '/consultant': typeof AppConsultantRoute
   '/dashboard': typeof AppDashboardRoute
@@ -464,6 +542,12 @@ export interface FileRoutesByFullPath {
   '/site': typeof AppSiteRoute
   '/support': typeof AppSupportRoute
   '/workflows': typeof AppWorkflowsRoute
+  '/architect/ai': typeof AppArchitectAiRoute
+  '/architect/blueprints': typeof AppArchitectBlueprintsRouteWithChildren
+  '/architect/designs': typeof AppArchitectDesignsRouteWithChildren
+  '/architect/documentation': typeof AppArchitectDocumentationRouteWithChildren
+  '/architect/reviews': typeof AppArchitectReviewsRouteWithChildren
+  '/architect/revisions': typeof AppArchitectRevisionsRouteWithChildren
   '/finance/ai': typeof AppFinanceAiRoute
   '/finance/approvals': typeof AppFinanceApprovalsRoute
   '/finance/budgets': typeof AppFinanceBudgetsRouteWithChildren
@@ -489,6 +573,12 @@ export interface FileRoutesByFullPath {
   '/projects/$projectId': typeof AppProjectsProjectIdRouteWithChildren
   '/projects/new': typeof AppProjectsNewRoute
   '/finance/': typeof AppFinanceIndexRoute
+  '/architect/blueprints/$blueprintId': typeof AppArchitectBlueprintsBlueprintIdRoute
+  '/architect/designs/$designId': typeof AppArchitectDesignsDesignIdRoute
+  '/architect/designs/new': typeof AppArchitectDesignsNewRoute
+  '/architect/documentation/$docId': typeof AppArchitectDocumentationDocIdRoute
+  '/architect/reviews/$reviewId': typeof AppArchitectReviewsReviewIdRoute
+  '/architect/revisions/$revisionId': typeof AppArchitectRevisionsRevisionIdRoute
   '/finance/budgets/$budgetId': typeof AppFinanceBudgetsBudgetIdRoute
   '/finance/budgets/adjustments': typeof AppFinanceBudgetsAdjustmentsRoute
   '/finance/budgets/allocation': typeof AppFinanceBudgetsAllocationRoute
@@ -518,7 +608,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ai-insights': typeof AppAiInsightsRoute
   '/approvals': typeof AppApprovalsRoute
-  '/architect': typeof AppArchitectRoute
+  '/architect': typeof AppArchitectRouteWithChildren
   '/audit': typeof AppAuditRoute
   '/consultant': typeof AppConsultantRoute
   '/dashboard': typeof AppDashboardRoute
@@ -533,6 +623,12 @@ export interface FileRoutesByTo {
   '/site': typeof AppSiteRoute
   '/support': typeof AppSupportRoute
   '/workflows': typeof AppWorkflowsRoute
+  '/architect/ai': typeof AppArchitectAiRoute
+  '/architect/blueprints': typeof AppArchitectBlueprintsRouteWithChildren
+  '/architect/designs': typeof AppArchitectDesignsRouteWithChildren
+  '/architect/documentation': typeof AppArchitectDocumentationRouteWithChildren
+  '/architect/reviews': typeof AppArchitectReviewsRouteWithChildren
+  '/architect/revisions': typeof AppArchitectRevisionsRouteWithChildren
   '/finance/ai': typeof AppFinanceAiRoute
   '/finance/approvals': typeof AppFinanceApprovalsRoute
   '/finance/budgets': typeof AppFinanceBudgetsRouteWithChildren
@@ -558,6 +654,12 @@ export interface FileRoutesByTo {
   '/projects/$projectId': typeof AppProjectsProjectIdRouteWithChildren
   '/projects/new': typeof AppProjectsNewRoute
   '/finance': typeof AppFinanceIndexRoute
+  '/architect/blueprints/$blueprintId': typeof AppArchitectBlueprintsBlueprintIdRoute
+  '/architect/designs/$designId': typeof AppArchitectDesignsDesignIdRoute
+  '/architect/designs/new': typeof AppArchitectDesignsNewRoute
+  '/architect/documentation/$docId': typeof AppArchitectDocumentationDocIdRoute
+  '/architect/reviews/$reviewId': typeof AppArchitectReviewsReviewIdRoute
+  '/architect/revisions/$revisionId': typeof AppArchitectRevisionsRevisionIdRoute
   '/finance/budgets/$budgetId': typeof AppFinanceBudgetsBudgetIdRoute
   '/finance/budgets/adjustments': typeof AppFinanceBudgetsAdjustmentsRoute
   '/finance/budgets/allocation': typeof AppFinanceBudgetsAllocationRoute
@@ -589,7 +691,7 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteWithChildren
   '/_app/ai-insights': typeof AppAiInsightsRoute
   '/_app/approvals': typeof AppApprovalsRoute
-  '/_app/architect': typeof AppArchitectRoute
+  '/_app/architect': typeof AppArchitectRouteWithChildren
   '/_app/audit': typeof AppAuditRoute
   '/_app/consultant': typeof AppConsultantRoute
   '/_app/dashboard': typeof AppDashboardRoute
@@ -605,6 +707,12 @@ export interface FileRoutesById {
   '/_app/site': typeof AppSiteRoute
   '/_app/support': typeof AppSupportRoute
   '/_app/workflows': typeof AppWorkflowsRoute
+  '/_app/architect/ai': typeof AppArchitectAiRoute
+  '/_app/architect/blueprints': typeof AppArchitectBlueprintsRouteWithChildren
+  '/_app/architect/designs': typeof AppArchitectDesignsRouteWithChildren
+  '/_app/architect/documentation': typeof AppArchitectDocumentationRouteWithChildren
+  '/_app/architect/reviews': typeof AppArchitectReviewsRouteWithChildren
+  '/_app/architect/revisions': typeof AppArchitectRevisionsRouteWithChildren
   '/_app/finance/ai': typeof AppFinanceAiRoute
   '/_app/finance/approvals': typeof AppFinanceApprovalsRoute
   '/_app/finance/budgets': typeof AppFinanceBudgetsRouteWithChildren
@@ -630,6 +738,12 @@ export interface FileRoutesById {
   '/_app/projects/$projectId': typeof AppProjectsProjectIdRouteWithChildren
   '/_app/projects/new': typeof AppProjectsNewRoute
   '/_app/finance/': typeof AppFinanceIndexRoute
+  '/_app/architect/blueprints/$blueprintId': typeof AppArchitectBlueprintsBlueprintIdRoute
+  '/_app/architect/designs/$designId': typeof AppArchitectDesignsDesignIdRoute
+  '/_app/architect/designs/new': typeof AppArchitectDesignsNewRoute
+  '/_app/architect/documentation/$docId': typeof AppArchitectDocumentationDocIdRoute
+  '/_app/architect/reviews/$reviewId': typeof AppArchitectReviewsReviewIdRoute
+  '/_app/architect/revisions/$revisionId': typeof AppArchitectRevisionsRevisionIdRoute
   '/_app/finance/budgets/$budgetId': typeof AppFinanceBudgetsBudgetIdRoute
   '/_app/finance/budgets/adjustments': typeof AppFinanceBudgetsAdjustmentsRoute
   '/_app/finance/budgets/allocation': typeof AppFinanceBudgetsAllocationRoute
@@ -677,6 +791,12 @@ export interface FileRouteTypes {
     | '/site'
     | '/support'
     | '/workflows'
+    | '/architect/ai'
+    | '/architect/blueprints'
+    | '/architect/designs'
+    | '/architect/documentation'
+    | '/architect/reviews'
+    | '/architect/revisions'
     | '/finance/ai'
     | '/finance/approvals'
     | '/finance/budgets'
@@ -702,6 +822,12 @@ export interface FileRouteTypes {
     | '/projects/$projectId'
     | '/projects/new'
     | '/finance/'
+    | '/architect/blueprints/$blueprintId'
+    | '/architect/designs/$designId'
+    | '/architect/designs/new'
+    | '/architect/documentation/$docId'
+    | '/architect/reviews/$reviewId'
+    | '/architect/revisions/$revisionId'
     | '/finance/budgets/$budgetId'
     | '/finance/budgets/adjustments'
     | '/finance/budgets/allocation'
@@ -746,6 +872,12 @@ export interface FileRouteTypes {
     | '/site'
     | '/support'
     | '/workflows'
+    | '/architect/ai'
+    | '/architect/blueprints'
+    | '/architect/designs'
+    | '/architect/documentation'
+    | '/architect/reviews'
+    | '/architect/revisions'
     | '/finance/ai'
     | '/finance/approvals'
     | '/finance/budgets'
@@ -771,6 +903,12 @@ export interface FileRouteTypes {
     | '/projects/$projectId'
     | '/projects/new'
     | '/finance'
+    | '/architect/blueprints/$blueprintId'
+    | '/architect/designs/$designId'
+    | '/architect/designs/new'
+    | '/architect/documentation/$docId'
+    | '/architect/reviews/$reviewId'
+    | '/architect/revisions/$revisionId'
     | '/finance/budgets/$budgetId'
     | '/finance/budgets/adjustments'
     | '/finance/budgets/allocation'
@@ -817,6 +955,12 @@ export interface FileRouteTypes {
     | '/_app/site'
     | '/_app/support'
     | '/_app/workflows'
+    | '/_app/architect/ai'
+    | '/_app/architect/blueprints'
+    | '/_app/architect/designs'
+    | '/_app/architect/documentation'
+    | '/_app/architect/reviews'
+    | '/_app/architect/revisions'
     | '/_app/finance/ai'
     | '/_app/finance/approvals'
     | '/_app/finance/budgets'
@@ -842,6 +986,12 @@ export interface FileRouteTypes {
     | '/_app/projects/$projectId'
     | '/_app/projects/new'
     | '/_app/finance/'
+    | '/_app/architect/blueprints/$blueprintId'
+    | '/_app/architect/designs/$designId'
+    | '/_app/architect/designs/new'
+    | '/_app/architect/documentation/$docId'
+    | '/_app/architect/reviews/$reviewId'
+    | '/_app/architect/revisions/$revisionId'
     | '/_app/finance/budgets/$budgetId'
     | '/_app/finance/budgets/adjustments'
     | '/_app/finance/budgets/allocation'
@@ -1190,6 +1340,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppFinanceAiRouteImport
       parentRoute: typeof AppFinanceRoute
     }
+    '/_app/architect/revisions': {
+      id: '/_app/architect/revisions'
+      path: '/revisions'
+      fullPath: '/architect/revisions'
+      preLoaderRoute: typeof AppArchitectRevisionsRouteImport
+      parentRoute: typeof AppArchitectRoute
+    }
+    '/_app/architect/reviews': {
+      id: '/_app/architect/reviews'
+      path: '/reviews'
+      fullPath: '/architect/reviews'
+      preLoaderRoute: typeof AppArchitectReviewsRouteImport
+      parentRoute: typeof AppArchitectRoute
+    }
+    '/_app/architect/documentation': {
+      id: '/_app/architect/documentation'
+      path: '/documentation'
+      fullPath: '/architect/documentation'
+      preLoaderRoute: typeof AppArchitectDocumentationRouteImport
+      parentRoute: typeof AppArchitectRoute
+    }
+    '/_app/architect/designs': {
+      id: '/_app/architect/designs'
+      path: '/designs'
+      fullPath: '/architect/designs'
+      preLoaderRoute: typeof AppArchitectDesignsRouteImport
+      parentRoute: typeof AppArchitectRoute
+    }
+    '/_app/architect/blueprints': {
+      id: '/_app/architect/blueprints'
+      path: '/blueprints'
+      fullPath: '/architect/blueprints'
+      preLoaderRoute: typeof AppArchitectBlueprintsRouteImport
+      parentRoute: typeof AppArchitectRoute
+    }
+    '/_app/architect/ai': {
+      id: '/_app/architect/ai'
+      path: '/ai'
+      fullPath: '/architect/ai'
+      preLoaderRoute: typeof AppArchitectAiRouteImport
+      parentRoute: typeof AppArchitectRoute
+    }
     '/_app/projects/$projectId/workforce': {
       id: '/_app/projects/$projectId/workforce'
       path: '/workforce'
@@ -1358,8 +1550,138 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppFinanceBudgetsBudgetIdRouteImport
       parentRoute: typeof AppFinanceBudgetsRoute
     }
+    '/_app/architect/revisions/$revisionId': {
+      id: '/_app/architect/revisions/$revisionId'
+      path: '/$revisionId'
+      fullPath: '/architect/revisions/$revisionId'
+      preLoaderRoute: typeof AppArchitectRevisionsRevisionIdRouteImport
+      parentRoute: typeof AppArchitectRevisionsRoute
+    }
+    '/_app/architect/reviews/$reviewId': {
+      id: '/_app/architect/reviews/$reviewId'
+      path: '/$reviewId'
+      fullPath: '/architect/reviews/$reviewId'
+      preLoaderRoute: typeof AppArchitectReviewsReviewIdRouteImport
+      parentRoute: typeof AppArchitectReviewsRoute
+    }
+    '/_app/architect/documentation/$docId': {
+      id: '/_app/architect/documentation/$docId'
+      path: '/$docId'
+      fullPath: '/architect/documentation/$docId'
+      preLoaderRoute: typeof AppArchitectDocumentationDocIdRouteImport
+      parentRoute: typeof AppArchitectDocumentationRoute
+    }
+    '/_app/architect/designs/new': {
+      id: '/_app/architect/designs/new'
+      path: '/new'
+      fullPath: '/architect/designs/new'
+      preLoaderRoute: typeof AppArchitectDesignsNewRouteImport
+      parentRoute: typeof AppArchitectDesignsRoute
+    }
+    '/_app/architect/designs/$designId': {
+      id: '/_app/architect/designs/$designId'
+      path: '/$designId'
+      fullPath: '/architect/designs/$designId'
+      preLoaderRoute: typeof AppArchitectDesignsDesignIdRouteImport
+      parentRoute: typeof AppArchitectDesignsRoute
+    }
+    '/_app/architect/blueprints/$blueprintId': {
+      id: '/_app/architect/blueprints/$blueprintId'
+      path: '/$blueprintId'
+      fullPath: '/architect/blueprints/$blueprintId'
+      preLoaderRoute: typeof AppArchitectBlueprintsBlueprintIdRouteImport
+      parentRoute: typeof AppArchitectBlueprintsRoute
+    }
   }
 }
+
+interface AppArchitectBlueprintsRouteChildren {
+  AppArchitectBlueprintsBlueprintIdRoute: typeof AppArchitectBlueprintsBlueprintIdRoute
+}
+
+const AppArchitectBlueprintsRouteChildren: AppArchitectBlueprintsRouteChildren =
+  {
+    AppArchitectBlueprintsBlueprintIdRoute:
+      AppArchitectBlueprintsBlueprintIdRoute,
+  }
+
+const AppArchitectBlueprintsRouteWithChildren =
+  AppArchitectBlueprintsRoute._addFileChildren(
+    AppArchitectBlueprintsRouteChildren,
+  )
+
+interface AppArchitectDesignsRouteChildren {
+  AppArchitectDesignsDesignIdRoute: typeof AppArchitectDesignsDesignIdRoute
+  AppArchitectDesignsNewRoute: typeof AppArchitectDesignsNewRoute
+}
+
+const AppArchitectDesignsRouteChildren: AppArchitectDesignsRouteChildren = {
+  AppArchitectDesignsDesignIdRoute: AppArchitectDesignsDesignIdRoute,
+  AppArchitectDesignsNewRoute: AppArchitectDesignsNewRoute,
+}
+
+const AppArchitectDesignsRouteWithChildren =
+  AppArchitectDesignsRoute._addFileChildren(AppArchitectDesignsRouteChildren)
+
+interface AppArchitectDocumentationRouteChildren {
+  AppArchitectDocumentationDocIdRoute: typeof AppArchitectDocumentationDocIdRoute
+}
+
+const AppArchitectDocumentationRouteChildren: AppArchitectDocumentationRouteChildren =
+  {
+    AppArchitectDocumentationDocIdRoute: AppArchitectDocumentationDocIdRoute,
+  }
+
+const AppArchitectDocumentationRouteWithChildren =
+  AppArchitectDocumentationRoute._addFileChildren(
+    AppArchitectDocumentationRouteChildren,
+  )
+
+interface AppArchitectReviewsRouteChildren {
+  AppArchitectReviewsReviewIdRoute: typeof AppArchitectReviewsReviewIdRoute
+}
+
+const AppArchitectReviewsRouteChildren: AppArchitectReviewsRouteChildren = {
+  AppArchitectReviewsReviewIdRoute: AppArchitectReviewsReviewIdRoute,
+}
+
+const AppArchitectReviewsRouteWithChildren =
+  AppArchitectReviewsRoute._addFileChildren(AppArchitectReviewsRouteChildren)
+
+interface AppArchitectRevisionsRouteChildren {
+  AppArchitectRevisionsRevisionIdRoute: typeof AppArchitectRevisionsRevisionIdRoute
+}
+
+const AppArchitectRevisionsRouteChildren: AppArchitectRevisionsRouteChildren = {
+  AppArchitectRevisionsRevisionIdRoute: AppArchitectRevisionsRevisionIdRoute,
+}
+
+const AppArchitectRevisionsRouteWithChildren =
+  AppArchitectRevisionsRoute._addFileChildren(
+    AppArchitectRevisionsRouteChildren,
+  )
+
+interface AppArchitectRouteChildren {
+  AppArchitectAiRoute: typeof AppArchitectAiRoute
+  AppArchitectBlueprintsRoute: typeof AppArchitectBlueprintsRouteWithChildren
+  AppArchitectDesignsRoute: typeof AppArchitectDesignsRouteWithChildren
+  AppArchitectDocumentationRoute: typeof AppArchitectDocumentationRouteWithChildren
+  AppArchitectReviewsRoute: typeof AppArchitectReviewsRouteWithChildren
+  AppArchitectRevisionsRoute: typeof AppArchitectRevisionsRouteWithChildren
+}
+
+const AppArchitectRouteChildren: AppArchitectRouteChildren = {
+  AppArchitectAiRoute: AppArchitectAiRoute,
+  AppArchitectBlueprintsRoute: AppArchitectBlueprintsRouteWithChildren,
+  AppArchitectDesignsRoute: AppArchitectDesignsRouteWithChildren,
+  AppArchitectDocumentationRoute: AppArchitectDocumentationRouteWithChildren,
+  AppArchitectReviewsRoute: AppArchitectReviewsRouteWithChildren,
+  AppArchitectRevisionsRoute: AppArchitectRevisionsRouteWithChildren,
+}
+
+const AppArchitectRouteWithChildren = AppArchitectRoute._addFileChildren(
+  AppArchitectRouteChildren,
+)
 
 interface AppFinanceBudgetsRouteChildren {
   AppFinanceBudgetsBudgetIdRoute: typeof AppFinanceBudgetsBudgetIdRoute
@@ -1537,7 +1859,7 @@ const AppProjectsRouteWithChildren = AppProjectsRoute._addFileChildren(
 interface AppRouteChildren {
   AppAiInsightsRoute: typeof AppAiInsightsRoute
   AppApprovalsRoute: typeof AppApprovalsRoute
-  AppArchitectRoute: typeof AppArchitectRoute
+  AppArchitectRoute: typeof AppArchitectRouteWithChildren
   AppAuditRoute: typeof AppAuditRoute
   AppConsultantRoute: typeof AppConsultantRoute
   AppDashboardRoute: typeof AppDashboardRoute
@@ -1558,7 +1880,7 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppAiInsightsRoute: AppAiInsightsRoute,
   AppApprovalsRoute: AppApprovalsRoute,
-  AppArchitectRoute: AppArchitectRoute,
+  AppArchitectRoute: AppArchitectRouteWithChildren,
   AppAuditRoute: AppAuditRoute,
   AppConsultantRoute: AppConsultantRoute,
   AppDashboardRoute: AppDashboardRoute,
@@ -1585,13 +1907,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
