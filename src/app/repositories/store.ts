@@ -14,7 +14,7 @@ export interface Collection<T> {
   reset(): void;
 }
 
-const EMPTY: unknown[] = Object.freeze([]) as unknown[];
+const EMPTY: readonly unknown[] = Object.freeze([]);
 
 function storageKey(key: string) {
   return `easyconstruct:${key}`;
