@@ -26,7 +26,7 @@ export function createCollection<T>(key: string): Collection<T> {
 
   const load = (): T[] => {
     if (items) return items;
-    if (typeof window === "undefined") return EMPTY as T[];
+    if (typeof window === "undefined") return EMPTY as unknown as T[];
     try {
       const raw = window.localStorage.getItem(storageKey(key));
       items = raw ? (JSON.parse(raw) as T[]) : [];
