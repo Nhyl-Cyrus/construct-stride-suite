@@ -11,7 +11,8 @@ export type Subject =
   | "design"
   | "blueprint"
   | "review"
-  | "revision";
+  | "revision"
+  | "transaction";
 
 export interface Ability {
   action: Action;

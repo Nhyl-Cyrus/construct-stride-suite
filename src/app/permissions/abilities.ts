@@ -15,6 +15,7 @@ const SUBJECTS: Subject[] = [
   "blueprint",
   "review",
   "revision",
+  "transaction",
 ];
 
 const all: Ability[] = ACTIONS.flatMap((action) =>
@@ -24,36 +25,42 @@ const all: Ability[] = ACTIONS.flatMap((action) =>
 const view = (subjects: Subject[]): Ability[] =>
   subjects.map((subject) => ({ action: "view" as const, subject }));
 
-const architectFull = (["design", "blueprint", "review", "revision", "document"] as Subject[])
-  .flatMap((s) =>
-    (["view", "create", "update", "approve"] as Action[]).map((action) => ({ action, subject: s })),
-  );
+const manage = (subjects: Subject[], actions: Action[]): Ability[] =>
+  subjects.flatMap((subject) => actions.map((action) => ({ action, subject })));
+
+const architectFull = manage(
+  ["design", "blueprint", "review", "revision", "document"],
+  ["view", "create", "update", "approve"],
+);
 
 export const ABILITIES: Record<RoleId, Ability[]> = {
   "project-manager": all.filter((a) => a.subject !== "payroll"),
   "human-resources": [
     ...view(["project", "workflow"]),
-    ...(["employee", "attendance", "payroll"] as Subject[]).flatMap((s) =>
-      (["view", "create", "update", "approve"] as Action[]).map((action) => ({
-        action,
-        subject: s,
-      })),
+    ...manage(
+      ["employee", "attendance", "payroll"],
+      ["view", "create", "update", "approve"],
     ),
   ],
   finance: [
     ...view(["project", "employee", "attendance", "payroll", "report"]),
+    ...manage(["transaction"], ["view", "create", "update", "approve"]),
     { action: "approve", subject: "payroll" },
   ],
-  architect: [
-    ...architectFull,
-    ...view(["project", "workflow"]),
-  ],
+  architect: [...architectFull, ...view(["project", "workflow"])],
   engineer: [
-    ...view(["project", "document", "workflow", "report", "design", "blueprint", "revision"]),
+    ...view(["project", "document", "workflow", "design", "blueprint", "revision"]),
+    ...manage(["report"], ["view", "create", "update"]),
     { action: "approve", subject: "review" },
   ],
-  "site-personnel": view(["project", "attendance", "document", "blueprint"]),
-  consultant: view(["project", "report", "document", "design", "blueprint", "review"]),
+  "site-personnel": [
+    ...view(["project", "attendance", "document", "blueprint"]),
+    ...manage(["report"], ["view", "create"]),
+  ],
+  consultant: [
+    ...view(["project", "report", "document", "design", "blueprint"]),
+    ...manage(["review"], ["view", "create", "update"]),
+  ],
 };
 
 export function can(role: RoleId, action: Action, subject: Subject): boolean {
