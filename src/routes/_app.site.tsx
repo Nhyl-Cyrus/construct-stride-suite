@@ -10,8 +10,12 @@ import {
   Camera,
   MapPin,
 } from "lucide-react";
+import { useState } from "react";
 import { RoleWorkspacePage } from "@/components/role-workspace-page";
 import { Badge } from "@/components/ui/badge";
+import { WorkflowDialog } from "@/components/workflows/workflow-dialog";
+import { SITE_REPORT_TYPES } from "@/app/models/site-reports";
+import { useWorkflows, useSiteReports } from "@/app/controllers/shared/useWorkflows";
 
 export const Route = createFileRoute("/_app/site")({
   head: () => ({
@@ -24,6 +28,10 @@ export const Route = createFileRoute("/_app/site")({
 });
 
 function SitePage() {
+  const { permissions, actions } = useWorkflows("site-personnel");
+  const created = useSiteReports();
+  const [open, setOpen] = useState(false);
+
   return (
     <RoleWorkspacePage
       defaultSection="tasks"
@@ -44,7 +52,12 @@ function SitePage() {
         { label: "Clock in / out", icon: MapPin, description: "Geofence + photo verified" },
         { label: "Photo check-in", icon: Camera, description: "Submit on-site photo proof" },
         { label: "Report safety issue", icon: ShieldAlert, description: "Escalate to safety officer" },
-        { label: "File daily report", icon: ClipboardList, description: "Submit end-of-shift summary" },
+        {
+          label: "Submit report",
+          icon: ClipboardList,
+          description: "Submit end-of-shift summary",
+          onSelect: () => setOpen(true),
+        },
       ]}
       sections={[
         {
@@ -69,10 +82,60 @@ function SitePage() {
           ),
         },
         { id: "attendance", title: "Attendance log", content: <p className="text-sm text-muted-foreground">Geofence + photo verified clock-in and clock-out history.</p> },
-        { id: "reports", title: "Daily reports", content: <p className="text-sm text-muted-foreground">End-of-shift reports submitted to your supervisor.</p> },
+        {
+          id: "reports",
+          title: "Daily reports",
+          content: created.length ? (
+            <div className="space-y-2">
+              {created.map((r) => (
+                <div key={r.id} className="flex items-center justify-between rounded-xl border p-3">
+                  <div>
+                    <div className="font-mono text-xs text-muted-foreground">{r.id}</div>
+                    <div className="text-sm font-medium">
+                      {r.project} · <span className="text-muted-foreground">{r.siteArea}</span>
+                    </div>
+                  </div>
+                  <Badge variant="outline" className="rounded-full text-[10px]">{r.status}</Badge>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-muted-foreground">End-of-shift reports submitted to your supervisor.</p>
+          ),
+        },
         { id: "equipment", title: "Equipment checklist", content: <p className="text-sm text-muted-foreground">Tools and machinery assigned to you with daily safety checks.</p> },
         { id: "safety", title: "Safety briefings", content: <p className="text-sm text-muted-foreground">Toolbox talks, PPE compliance and incident reporting.</p> },
       ]}
-    />
+    >
+      <WorkflowDialog
+        open={open}
+        onOpenChange={setOpen}
+        title="Submit site report"
+        description="End-of-shift summary for your site area."
+        submitLabel="Submit report"
+        disabled={!permissions.canCreateReport}
+        onSubmit={async (v) => {
+          const saved = await actions.createSiteReport({
+            ...v,
+            date: v.date || new Date().toISOString().slice(0, 10),
+            workforceCount: Number(v.workforceCount || 0),
+          });
+          return saved !== null;
+        }}
+        fields={[
+          { name: "project", label: "Project", placeholder: "Westgate Tower" },
+          { name: "date", label: "Report date", type: "date" },
+          { name: "siteArea", label: "Site area", placeholder: "Zone B, Level 3" },
+          { name: "type", label: "Report type", type: "select", options: [...SITE_REPORT_TYPES] },
+          { name: "workforceCount", label: "Workforce on site", type: "number", defaultValue: "0" },
+          { name: "siteConditions", label: "Site conditions", placeholder: "Dry, 32°C" },
+          { name: "workCompleted", label: "Work completed", type: "textarea", span: 2 },
+          { name: "workInProgress", label: "Work in progress (optional)", type: "textarea", span: 2 },
+          { name: "issues", label: "Issues (optional)", type: "textarea", span: 2 },
+          { name: "safetyObservations", label: "Safety observations (optional)", type: "textarea", span: 2 },
+          { name: "notes", label: "Notes (optional)", type: "textarea", span: 2 },
+        ]}
+      />
+    </RoleWorkspacePage>
   );
 }

@@ -10,8 +10,15 @@ import {
   Plus,
   Upload,
 } from "lucide-react";
+import { useState } from "react";
 import { RoleWorkspacePage } from "@/components/role-workspace-page";
 import { Badge } from "@/components/ui/badge";
+import { WorkflowDialog } from "@/components/workflows/workflow-dialog";
+import { ENGINEERING_REPORT_TYPES } from "@/app/models/engineering-reports";
+import {
+  useWorkflows,
+  useEngineeringReports,
+} from "@/app/controllers/shared/useWorkflows";
 
 export const Route = createFileRoute("/_app/engineer")({
   head: () => ({
@@ -23,7 +30,13 @@ export const Route = createFileRoute("/_app/engineer")({
   component: EngineerPage,
 });
 
+const TODAY = () => new Date().toISOString().slice(0, 10);
+
 function EngineerPage() {
+  const { permissions, actions } = useWorkflows("engineer");
+  const created = useEngineeringReports();
+  const [open, setOpen] = useState(false);
+
   return (
     <RoleWorkspacePage
       defaultSection="reports"
@@ -50,7 +63,12 @@ function EngineerPage() {
         },
       ]}
       quickActions={[
-        { label: "File site report", icon: Plus, description: "Daily progress + observations" },
+        {
+          label: "New report",
+          icon: Plus,
+          description: "Technical / inspection report",
+          onSelect: () => setOpen(true),
+        },
         { label: "Upload drawing", icon: Upload, description: "Versioned upload with notes" },
         { label: "Schedule inspection", icon: ShieldCheck, description: "Coordinate with safety officer" },
         { label: "Run AI analysis", icon: Sparkles, description: "Detect technical conflicts" },
@@ -62,6 +80,12 @@ function EngineerPage() {
           content: (
             <div className="space-y-2">
               {[
+                ...created.map((r) => ({
+                  id: r.id,
+                  site: `${r.project} · ${r.title}`,
+                  author: r.engineer,
+                  status: r.status,
+                })),
                 { id: "SR-2218", site: "Westgate Tower", author: "K. Okafor", status: "Submitted" },
                 { id: "SR-2219", site: "Harborline Hub", author: "L. Mendes", status: "Approved" },
                 { id: "SR-2220", site: "Phoenix HQ", author: "T. Nakamura", status: "Revisions" },
@@ -84,6 +108,36 @@ function EngineerPage() {
         { id: "drawings", title: "Drawing register", content: <p className="text-sm text-muted-foreground">Versioned register with cross-references and clash detection.</p> },
         { id: "resources", title: "Resource bookings", content: <p className="text-sm text-muted-foreground">Equipment, lab time and engineering capacity allocations.</p> },
       ]}
-    />
+    >
+      <WorkflowDialog
+        open={open}
+        onOpenChange={setOpen}
+        title="New engineering report"
+        description="Submit a technical, inspection or safety report."
+        submitLabel="Submit report"
+        disabled={!permissions.canCreateReport}
+        onSubmit={async (v) => {
+          const saved = await actions.createEngineeringReport({
+            ...v,
+            date: v.date || TODAY(),
+          });
+          return saved !== null;
+        }}
+        fields={[
+          { name: "title", label: "Report title", span: 2, placeholder: "Foundation cure inspection — zone B" },
+          { name: "type", label: "Report type", type: "select", options: [...ENGINEERING_REPORT_TYPES] },
+          { name: "priority", label: "Priority", type: "select", options: ["Low", "Medium", "High", "Critical"], defaultValue: "Medium" },
+          { name: "project", label: "Project", placeholder: "Westgate Tower" },
+          { name: "location", label: "Location / zone", placeholder: "Zone B, Level 3" },
+          { name: "date", label: "Report date", type: "date" },
+          { name: "engineer", label: "Engineer", placeholder: "K. Okafor" },
+          { name: "description", label: "Description", type: "textarea", span: 2 },
+          { name: "findings", label: "Findings", type: "textarea", span: 2 },
+          { name: "measurements", label: "Measurements (optional)", type: "textarea", span: 2 },
+          { name: "recommendations", label: "Recommendations", type: "textarea", span: 2 },
+          { name: "requiredActions", label: "Required actions (optional)", type: "textarea", span: 2 },
+        ]}
+      />
+    </RoleWorkspacePage>
   );
 }

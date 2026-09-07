@@ -78,7 +78,8 @@ export interface EnterprisePageProps<T> {
     title: string;
     description: string;
     fields: { name: string; label: string; placeholder?: string; textarea?: boolean }[];
-    onSubmit: (values: Record<string, string>) => void;
+    /** Return a promise to take over persistence and feedback; resolve false to keep the dialog open. */
+    onSubmit: (values: Record<string, string>) => void | Promise<boolean>;
   };
   rowActions?: RowAction<T>[];
   filters?: ReactNode;
@@ -112,9 +113,14 @@ export function EnterprisePage<T extends { id?: string | number }>(
     toast.success("Export downloaded", { description: `${props.rows.length} rows exported.` });
   };
 
-  const submit = () => {
-    props.createDialog?.onSubmit(form);
-    toast.success(`${props.createDialog?.label ?? "Record"} created`);
+  const submit = async () => {
+    const result = props.createDialog?.onSubmit(form);
+    if (result instanceof Promise) {
+      const ok = await result;
+      if (!ok) return;
+    } else {
+      toast.success(`${props.createDialog?.label ?? "Record"} created`);
+    }
     setForm({});
     setDialogOpen(false);
   };
