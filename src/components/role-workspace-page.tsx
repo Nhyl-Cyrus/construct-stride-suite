@@ -160,6 +160,7 @@ export function RoleWorkspacePage({
           Use the tabs above to switch sections in this workspace.
         </p>
       </div>
+      {children}
     </>
   );
 }
