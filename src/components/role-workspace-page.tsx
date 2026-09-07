@@ -29,7 +29,14 @@ interface Props {
   /** AI insights specific to this workspace */
   aiInsights: { title: string; body: string; tone?: "info" | "warning" | "success" }[];
   /** Quick actions in right rail */
-  quickActions: { label: string; icon: LucideIcon; description: string }[];
+  quickActions: {
+    label: string;
+    icon: LucideIcon;
+    description: string;
+    onSelect?: () => void;
+  }[];
+  /** Extra nodes (dialogs, sheets) rendered alongside the page. */
+  children?: React.ReactNode;
 }
 
 export function RoleWorkspacePage({
@@ -38,6 +45,7 @@ export function RoleWorkspacePage({
   sections,
   aiInsights,
   quickActions,
+  children,
 }: Props) {
   const hash = useRouterState({ select: (s) => s.location.hash });
   const [active, setActive] = useState(defaultSection);
@@ -128,6 +136,7 @@ export function RoleWorkspacePage({
                     key={a.label}
                     variant="ghost"
                     className="h-auto w-full justify-start gap-3 rounded-xl px-3 py-2 text-left"
+                    onClick={a.onSelect}
                   >
                     <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted">
                       <a.icon className="h-4 w-4" />
