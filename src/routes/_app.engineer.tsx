@@ -107,6 +107,36 @@ function EngineerPage() {
         { id: "drawings", title: "Drawing register", content: <p className="text-sm text-muted-foreground">Versioned register with cross-references and clash detection.</p> },
         { id: "resources", title: "Resource bookings", content: <p className="text-sm text-muted-foreground">Equipment, lab time and engineering capacity allocations.</p> },
       ]}
-    />
+    >
+      <WorkflowDialog
+        open={open}
+        onOpenChange={setOpen}
+        title="New engineering report"
+        description="Submit a technical, inspection or safety report."
+        submitLabel="Submit report"
+        disabled={!permissions.canCreateReport}
+        onSubmit={async (v) => {
+          const saved = await actions.createEngineeringReport({
+            ...v,
+            date: v.date || TODAY(),
+          });
+          return saved !== null;
+        }}
+        fields={[
+          { name: "title", label: "Report title", span: 2, placeholder: "Foundation cure inspection — zone B" },
+          { name: "type", label: "Report type", type: "select", options: ["Inspection", "Structural", "Safety", "Quality", "Progress", "Incident"] },
+          { name: "priority", label: "Priority", type: "select", options: ["Low", "Medium", "High", "Critical"], defaultValue: "Medium" },
+          { name: "project", label: "Project", placeholder: "Westgate Tower" },
+          { name: "location", label: "Location / zone", placeholder: "Zone B, Level 3" },
+          { name: "date", label: "Report date", type: "date" },
+          { name: "engineer", label: "Engineer", placeholder: "K. Okafor" },
+          { name: "description", label: "Description", type: "textarea", span: 2 },
+          { name: "findings", label: "Findings", type: "textarea", span: 2 },
+          { name: "measurements", label: "Measurements (optional)", type: "textarea", span: 2 },
+          { name: "recommendations", label: "Recommendations", type: "textarea", span: 2 },
+          { name: "requiredActions", label: "Required actions (optional)", type: "textarea", span: 2 },
+        ]}
+      />
+    </RoleWorkspacePage>
   );
 }
