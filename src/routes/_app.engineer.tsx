@@ -10,8 +10,14 @@ import {
   Plus,
   Upload,
 } from "lucide-react";
+import { useState } from "react";
 import { RoleWorkspacePage } from "@/components/role-workspace-page";
 import { Badge } from "@/components/ui/badge";
+import { WorkflowDialog } from "@/components/workflows/workflow-dialog";
+import {
+  useWorkflows,
+  useEngineeringReports,
+} from "@/app/controllers/shared/useWorkflows";
 
 export const Route = createFileRoute("/_app/engineer")({
   head: () => ({
@@ -23,7 +29,13 @@ export const Route = createFileRoute("/_app/engineer")({
   component: EngineerPage,
 });
 
+const TODAY = () => new Date().toISOString().slice(0, 10);
+
 function EngineerPage() {
+  const { permissions, actions } = useWorkflows("engineer");
+  const created = useEngineeringReports();
+  const [open, setOpen] = useState(false);
+
   return (
     <RoleWorkspacePage
       defaultSection="reports"
@@ -50,7 +62,12 @@ function EngineerPage() {
         },
       ]}
       quickActions={[
-        { label: "File site report", icon: Plus, description: "Daily progress + observations" },
+        {
+          label: "New report",
+          icon: Plus,
+          description: "Technical / inspection report",
+          onSelect: () => setOpen(true),
+        },
         { label: "Upload drawing", icon: Upload, description: "Versioned upload with notes" },
         { label: "Schedule inspection", icon: ShieldCheck, description: "Coordinate with safety officer" },
         { label: "Run AI analysis", icon: Sparkles, description: "Detect technical conflicts" },
@@ -62,6 +79,12 @@ function EngineerPage() {
           content: (
             <div className="space-y-2">
               {[
+                ...created.map((r) => ({
+                  id: r.id,
+                  site: `${r.project} · ${r.title}`,
+                  author: r.engineer,
+                  status: r.status,
+                })),
                 { id: "SR-2218", site: "Westgate Tower", author: "K. Okafor", status: "Submitted" },
                 { id: "SR-2219", site: "Harborline Hub", author: "L. Mendes", status: "Approved" },
                 { id: "SR-2220", site: "Phoenix HQ", author: "T. Nakamura", status: "Revisions" },
