@@ -14,6 +14,7 @@ import { useState } from "react";
 import { RoleWorkspacePage } from "@/components/role-workspace-page";
 import { Badge } from "@/components/ui/badge";
 import { WorkflowDialog } from "@/components/workflows/workflow-dialog";
+import { ENGINEERING_REPORT_TYPES } from "@/app/models/engineering-reports";
 import {
   useWorkflows,
   useEngineeringReports,
@@ -124,7 +125,7 @@ function EngineerPage() {
         }}
         fields={[
           { name: "title", label: "Report title", span: 2, placeholder: "Foundation cure inspection — zone B" },
-          { name: "type", label: "Report type", type: "select", options: ["Inspection", "Structural", "Safety", "Quality", "Progress", "Incident"] },
+          { name: "type", label: "Report type", type: "select", options: [...ENGINEERING_REPORT_TYPES] },
           { name: "priority", label: "Priority", type: "select", options: ["Low", "Medium", "High", "Critical"], defaultValue: "Medium" },
           { name: "project", label: "Project", placeholder: "Westgate Tower" },
           { name: "location", label: "Location / zone", placeholder: "Zone B, Level 3" },
