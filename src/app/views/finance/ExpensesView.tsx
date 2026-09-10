@@ -27,6 +27,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Receipt, Search, Plus, Truck, Wallet, ListChecks, Sparkles, Paperclip } from "lucide-react";
 import { formatUSD } from "@/app/utils/currency";
+import { WorkflowDialog } from "@/components/workflows/workflow-dialog";
+import { useWorkflows } from "@/app/controllers/shared/useWorkflows";
 import {
   Bar,
   BarChart,
@@ -40,6 +42,8 @@ import {
 export function ExpensesView({ tab = "tracking" }: { tab?: string }) {
   const c = useExpensesController();
   const [active, setActive] = useState(tab);
+  const [recordOpen, setRecordOpen] = useState(false);
+  const { permissions, actions } = useWorkflows("finance");
 
   return (
     <div className="space-y-6 pb-10">
@@ -49,7 +53,7 @@ export function ExpensesView({ tab = "tracking" }: { tab?: string }) {
         icon={Receipt}
         breadcrumbs={[{ label: "Expense Management" }]}
         actions={
-          <Button size="sm" className="rounded-xl">
+          <Button size="sm" className="rounded-xl" onClick={() => setRecordOpen(true)}>
             <Plus className="h-3.5 w-3.5" />
             Record expense
           </Button>
@@ -289,5 +293,38 @@ export function ExpensesView({ tab = "tracking" }: { tab?: string }) {
         </Tabs>
       </div>
     </div>
+      <WorkflowDialog
+        open={recordOpen}
+        onOpenChange={setRecordOpen}
+        title="Record transaction"
+        description="Logs an expense against a project budget and writes an audit entry."
+        submitLabel="Record transaction"
+        disabled={!permissions.canCreateTransaction}
+        disabledReason="Your role cannot record financial transactions."
+        fields={[
+          { name: "type", label: "Type", type: "select", options: ["Expense", "Income", "Payment", "Reimbursement", "Adjustment", "Procurement"], defaultValue: "Expense" },
+          { name: "project", label: "Project", placeholder: "Bonifacio Tower" },
+          { name: "date", label: "Date", type: "date", defaultValue: new Date().toISOString().slice(0, 10) },
+          { name: "category", label: "Category", type: "select", options: ["Materials", "Equipment", "Labor", "PPE", "Transport", "Services", "Other"] },
+          { name: "description", label: "Description", type: "textarea", span: 2, placeholder: "What was purchased and why" },
+          { name: "subtotal", label: "Subtotal", type: "number", placeholder: "12500" },
+          { name: "taxRate", label: "Tax rate (%)", type: "number", defaultValue: "12" },
+          { name: "currency", label: "Currency", defaultValue: "USD" },
+          { name: "vendor", label: "Vendor / payee", placeholder: "Northline Supply" },
+          { name: "paymentMethod", label: "Payment method", type: "select", options: ["Bank Transfer", "Company Card", "Check", "Cash", "Petty Cash"] },
+          { name: "costCenter", label: "Cost center", placeholder: "CC-CONSTRUCTION" },
+          { name: "budgetCategory", label: "Budget category", placeholder: "Direct Costs" },
+          { name: "referenceNumber", label: "Reference number", placeholder: "INV-00921" },
+          { name: "notes", label: "Notes", type: "textarea", span: 2 },
+        ]}
+        onSubmit={async (v) => {
+          const saved = await actions.createTransaction({
+            ...v,
+            subtotal: Number(v.subtotal),
+            taxRate: Number(v.taxRate),
+          });
+          return Boolean(saved);
+        }}
+      />
   );
 }
