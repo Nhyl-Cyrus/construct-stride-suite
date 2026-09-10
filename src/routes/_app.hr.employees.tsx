@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { EnterprisePage, toast, Badge } from "@/components/enterprise/enterprise-page";
-import { employees } from "@/lib/hr-data";
+import { employees as fixtureEmployees } from "@/lib/hr-data";
+import { useWorkflows, useCreatedEmployees } from "@/app/controllers/shared/useWorkflows";
 
 const tone: Record<string, string> = {
   Active: "bg-success/10 text-success border-success/20",
@@ -15,6 +16,10 @@ export const Route = createFileRoute("/_app/hr/employees")({
 });
 
 function Page() {
+  const { permissions, actions } = useWorkflows("human-resources");
+  const created = useCreatedEmployees();
+  const employees = [...created, ...fixtureEmployees];
+
   return (
     <EnterprisePage
       title="Employees"
@@ -42,12 +47,24 @@ function Page() {
         title: "Add employee",
         description: "Create an employee record.",
         fields: [
-          { name: "name", label: "Full name" },
-          { name: "role", label: "Role" },
-          { name: "department", label: "Department" },
-          { name: "site", label: "Home site" },
+          { name: "name", label: "Full name", placeholder: "Juan Dela Cruz" },
+          { name: "role", label: "Role", placeholder: "Site Engineer" },
+          { name: "department", label: "Department", placeholder: "Engineering" },
+          { name: "site", label: "Home site", placeholder: "Bonifacio Tower" },
+          { name: "hourlyRate", label: "Hourly rate (USD)", placeholder: "28.50" },
         ],
-        onSubmit: () => {},
+        onSubmit: async (values) => {
+          if (!permissions.canCreateEmployee) return false;
+          const saved = await actions.createEmployee({
+            name: values.name ?? "",
+            role: values.role ?? "",
+            department: values.department ?? "",
+            site: values.site ?? "",
+            status: "Active",
+            hourlyRate: Number(values.hourlyRate) || 0,
+          });
+          return Boolean(saved);
+        },
       }}
       rowActions={[
         { label: "View profile", onSelect: (r) => toast.info(`Opening ${r.name}`) },
