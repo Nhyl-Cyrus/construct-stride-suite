@@ -49,7 +49,7 @@ function Page() {
         fields: [
           { name: "name", label: "Full name", placeholder: "Juan Dela Cruz" },
           { name: "role", label: "Role", placeholder: "Site Engineer" },
-          { name: "department", label: "Department", placeholder: "Engineering" },
+          { name: "department", label: "Department (Field Ops, Engineering, Architecture, Finance, Admin, Safety)", placeholder: "Engineering" },
           { name: "site", label: "Home site", placeholder: "Bonifacio Tower" },
           { name: "hourlyRate", label: "Hourly rate (USD)", placeholder: "28.50" },
         ],
@@ -58,7 +58,13 @@ function Page() {
           const saved = await actions.createEmployee({
             name: values.name ?? "",
             role: values.role ?? "",
-            department: values.department ?? "",
+            department: (values.department || "Field Ops") as
+              | "Field Ops"
+              | "Engineering"
+              | "Architecture"
+              | "Finance"
+              | "Admin"
+              | "Safety",
             site: values.site ?? "",
             status: "Active",
             hourlyRate: Number(values.hourlyRate) || 0,
