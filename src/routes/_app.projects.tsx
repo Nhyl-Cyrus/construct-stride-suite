@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { projects, toneClasses, riskClasses } from "@/lib/pm-data";
+import { useCreatedProjects } from "@/app/controllers/shared/useWorkflows";
 
 export const Route = createFileRoute("/_app/projects")({
   head: () => ({
@@ -33,8 +34,10 @@ export const Route = createFileRoute("/_app/projects")({
 function ProjectsPage() {
   const [view, setView] = useState<"table" | "grid">("table");
   const [query, setQuery] = useState("");
+  const created = useCreatedProjects();
+  const allProjects = [...created, ...projects];
 
-  const filtered = projects.filter(
+  const filtered = allProjects.filter(
     (p) =>
       p.name.toLowerCase().includes(query.toLowerCase()) ||
       p.code.toLowerCase().includes(query.toLowerCase()),

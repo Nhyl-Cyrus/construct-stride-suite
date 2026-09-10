@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { architectService } from "@/app/services/architect.service";
+import { useCreatedDesigns } from "@/app/controllers/shared/useWorkflows";
 import {
   MOCK_DESIGNS,
   MOCK_BLUEPRINTS,
@@ -19,10 +20,11 @@ import {
 // render synchronously so the mocked pipeline behaves like SWR data.
 export function useDesigns() {
   const [rows, setRows] = useState<Design[]>(MOCK_DESIGNS);
+  const created = useCreatedDesigns();
   useEffect(() => {
     architectService.designs().then(setRows);
   }, []);
-  return rows;
+  return useMemo(() => [...created, ...rows], [created, rows]);
 }
 export function useDesign(id: string) {
   const [row, setRow] = useState<Design | undefined>(
