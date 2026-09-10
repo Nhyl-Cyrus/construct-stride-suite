@@ -36,6 +36,7 @@ import {
 import { cn } from "@/lib/utils";
 import { DesignFileDropzone } from "@/components/architect/design-file-dropzone";
 import { architectService } from "@/app/services/architect.service";
+import { useWorkflows } from "@/app/controllers/shared/useWorkflows";
 import {
   ARCHITECT_PROJECTS,
   ARCHITECT_PEOPLE,
@@ -75,6 +76,7 @@ type StepKey = (typeof STEPS)[number]["key"];
 
 function NewDesignPage() {
   const navigate = useNavigate();
+  const { actor, permissions, actions } = useWorkflows("architect");
   const [step, setStep] = useState<StepKey>("basics");
   const [draft, setDraft] = useState<DesignWizardDraft>(emptyDesignDraft);
   const [code, setCode] = useState(generateDesignCode());
@@ -128,13 +130,44 @@ function NewDesignPage() {
     setStep(STEPS[prev].key);
   };
 
-  const submit = () => {
+  const submit = async () => {
+    if (!permissions.canCreateDesign) {
+      toast.error("Not permitted", {
+        description: "Your role cannot create designs.",
+      });
+      return;
+    }
     const parsed = architectService.validateDraft(draft);
     if (!parsed.success) {
       toast.error("Draft invalid", { description: parsed.error.issues[0]?.message });
       return;
     }
-    toast.success("Design created", { description: `${code} · ${draft.name}` });
+    const created = await actions.createDesign({
+      code,
+      name: draft.name,
+      project: project?.name ?? draft.projectId,
+      projectId: draft.projectId,
+      discipline: draft.discipline as Discipline,
+      category: draft.category as DesignCategory,
+      phase: draft.phase as ConstructionPhase,
+      building: draft.building,
+      floor: draft.floor,
+      zone: draft.zone,
+      client: draft.client,
+      status: "Draft",
+      reviewStatus: draft.reviewers.length ? "Pending" : "Pending",
+      approvalStatus: "Not Submitted",
+      version: draft.version,
+      revision: draft.revisionNumber,
+      leadArchitect: actor.userName,
+      collaborators: [...draft.reviewers, ...draft.engineers, ...draft.consultants],
+      description: draft.description,
+      aiConfidence: draft.reviewers.length > 0 ? 82 : 61,
+      aiCompleteness: Math.min(100, 40 + draft.files.length * 12),
+      fileCount: draft.files.length,
+      commentCount: 0,
+    });
+    if (!created) return;
     navigate({ to: "/architect/designs" });
   };
 
