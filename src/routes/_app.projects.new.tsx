@@ -22,6 +22,7 @@ import {
   ClipboardCheck,
 } from "lucide-react";
 import { TopBar } from "@/components/top-bar";
+import { useWorkflows } from "@/app/controllers/shared/useWorkflows";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -86,6 +87,7 @@ const STEPS = [
 type StepKey = (typeof STEPS)[number]["key"];
 
 function NewProjectPage() {
+  const { permissions, actions } = useWorkflows("project-manager");
   const navigate = useNavigate();
   const [stepIndex, setStepIndex] = useState(0);
   const [draft, setDraft] = useState<NewProjectDraft>(emptyDraft);
@@ -134,7 +136,11 @@ function NewProjectPage() {
     toast.success("Draft saved", { description: `${draft.name || "Untitled project"} kept locally.` });
   };
 
-  const createProject = () => {
+  const createProject = async () => {
+    if (!permissions.canCreateProject) {
+      toast.error("Not permitted", { description: "Your role cannot create projects." });
+      return;
+    }
     // Final validation across all required steps
     const all: Record<string, string> = {};
     (["basics", "location", "financial", "workforce"] as StepKey[]).forEach((s) => {
@@ -145,10 +151,9 @@ function NewProjectPage() {
       toast.error("Fix outstanding validation errors before creating.");
       return;
     }
-    toast.success("Project created", {
-      description: `${draft.name} · ${draft.code} is ready in your workspace.`,
-    });
-    // Future: POST /api/projects
+    // Persists through service -> repository -> audit trail (future POST /api/projects)
+    const created = await actions.createProject(draft);
+    if (!created) return;
     navigate({ to: "/projects" });
   };
 
