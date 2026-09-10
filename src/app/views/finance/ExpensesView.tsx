@@ -46,6 +46,7 @@ export function ExpensesView({ tab = "tracking" }: { tab?: string }) {
   const { permissions, actions } = useWorkflows("finance");
 
   return (
+    <>
     <div className="space-y-6 pb-10">
       <FinancePageHeader
         title="Expense Management"
@@ -326,5 +327,6 @@ export function ExpensesView({ tab = "tracking" }: { tab?: string }) {
           return Boolean(saved);
         }}
       />
+    </>
   );
 }
